@@ -1,2 +1,5 @@
-# PRI-Project
-Project for the PRI course at Instituto Superior Técnico
+# PRI Project
+
+Joel Almeida 81609
+Matilde Gonçalves 82091
+Rita Ramos 86274

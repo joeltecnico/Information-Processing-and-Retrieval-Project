@@ -2,98 +2,80 @@
 # Matilde Gonçalves	82091
 # Rita Ramos			86274
 
-# coding: utf-8
 
-# In[34]:
 
-import re
+import re  
 from collections import Counter
 import sys
 import numpy as np
-def index():
-    f = open("script1.txt")
+
+docMax={}
+def indexInverted():    #this is the invertedIndex for each term: see lab2 ex1.  (Ex: to: 1,[0,4])
+    f = open("Frases.txt")
     lines=f.readlines()
     d={}
     docIndex=1
-    
     for line in lines:
-        words=re.findall(r'\w+', line.strip().lower())
-        counterWords=Counter(words)
-        words=set(words)
+        n_max=0
+        words=re.findall(r'\w+', line.strip().lower())   # isto separa por palavras e numeros , tipo split, sem pontuacao
+        counterWords=Counter(words)   #faz um dicionario term: count . Atenção que tem stop words este counter
+        
+        stopWords=re.findall(r'\w+', open('stopwords_en.txt').read().lower())   #devia ser o portugues eheh
+        words=set(words)-set(stopWords)  #palavras sm stop words
+    
         for word in words:
-            if word not in d:
+            n_max=max(counterWords[word], n_max)
+            if word not in d:    #no caso do termo ainda não existir colocar [to: 1, [doc1, count desse term]]
                 d[word]=[1, [[docIndex, counterWords[word]]]]
-            else:
+            else:               #se já existe o termo, então fazer append  [to: 1, [doc1, count desse term], [doc2, count desse term]]
                 d[word][1].append([docIndex, counterWords[word]])                
                 d[word][0]+=1
-        
+            
+        docMax[docIndex]=n_max  #ver TF_max do documento
         docIndex+=1
+
     return d
+
     
-indexInverted=index();
+indexInverted=indexInverted()
+print("doc_max", docMax)
 print("My indexInverted", indexInverted)
 
-
-# In[2]:
 
 terms=[np.array(item[1])[:,0].max() for item in indexInverted.values()]
 numberOfSentences= np.max(terms)
 
 
-# In[3]:
-
-terms=[np.array(item[0])for item in indexInverted.values()]
+terms=[np.array(item[0])for item in indexInverted.values()]  
 dfs= np.array(terms)
 
-
-# In[5]:
 
 idfs=np.log(numberOfSentences/dfs)      ###É np?? acho q isto faz ln!!!
 
 
-# In[7]:
-
-def representVectors():
+def representVectors():     #função que vai representar cada frase em vector, com os respectivos pesos ex: sent1=[0.5,0.6,0,0.7,etc]
     terms=list(indexInverted.keys())
     sentence_vectors={}
-    doc_representation=dict.fromkeys(terms,1)
+    doc_representation=dict.fromkeys(terms,1) 
     for i in range(1,numberOfSentences+1):
         sentence_vectors[i]=dict.fromkeys(terms,0)
-    for term in terms:
-        idf_t=idfs[terms.index(term)]
-        I_t=indexInverted[term][1]
+    for term in terms:   #pseudo-codigo do lab2, ex3. 
+        idf_t=idfs[terms.index(term)]   
+        I_t=indexInverted[term][1]  #Ex: to: (0,[[doc1,coun],[doc2,count]])->  (0,[[doc1,coun],[doc2,count]])
         for (s,TF) in I_t:
-            sentence_vectors[s][term]=TF*idf_t      ##TF é normalizado??
-
+            sentence_vectors[s][term]=(TF/docMax[s])*idf_t   
     return sentence_vectors,doc_representation
 
 
-# In[8]:
+
 
 representVectors()
 
 
-# In[24]:
 
 sentence_vectors,doc_representation=representVectors()
 
 
-# In[25]:
-
-from sklearn.metrics.pairwise import cosine_similarity
-def myCosineSimilarity():
-    cosSim={}
-    for i in range(1,numberOfSentences+1):
-         cosSim[i]=cosine_similarity(list(sentence_vectors[i].values()),list(doc_representation.values()))
-    return cosSim
-
-
-# In[27]:
-
-myCosineSimilarity()
-
-
-# In[28]:
 
 def cosineSimilarity():
     cosSim={}
@@ -104,62 +86,17 @@ def cosineSimilarity():
     return cosSim
 
 
-# In[23]:
-
-cosineSimilarity()
 
 
-# In[29]:
+cosineSimilarity()  
+
+
 
 print("3 most similar doc",sorted(cosineSimilarity().values(),reverse=True)[0:3])
 
 
-# In[ ]:
 
 
-
-
-# In[31]:
-
-set(["ola","adeus", "pois"])-set(["ola"])
-
-
-# In[32]:
-
-import re
-from collections import Counter
-import sys
-import numpy as np
-def index():
-    arrayWords=re.findall(r'\w+', open('script1.txt').read().lower())
-    indexInverted= Counter(arrayWords)
-    f = open("script1.txt")
-    lines=f.readlines()
-    d={}
-    docIndex=1
-    
-    for line in lines:
-        
-        words=re.findall(r'\w+', line.strip().lower())
-        counterWords=Counter(words)
-        
-        stopWords=re.findall(r'\w+', open('stopwords_en.txt').read().lower())   #devia ser o portugues eheh
-        words=set(words)-set(stopWords)
-        for word in words:
-            if word not in d:
-                d[word]=[1, [[docIndex, counterWords[word]]]]
-            else:
-                d[word][1].append([docIndex, counterWords[word]])                
-                d[word][0]+=1
-        
-        docIndex+=1
-    return d
-    
-indexInverted=index();
-print("My indexInverted", indexInverted)
-
-
-# In[ ]:
 
 
 

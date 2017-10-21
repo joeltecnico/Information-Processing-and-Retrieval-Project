@@ -7,16 +7,26 @@ import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 
-def sentencesToVectorSpace(file):
-    file_content = open(file).read()
-    sentences = nltk.sent_tokenize(file_content)  #o doc dividido em frases
+
+def readFile(file):
+    return open(file).read()
+    
+
+def counts_and_tfs(file_content):
     vec = CountVectorizer()
-    matrix_termsCounts = vec.fit_transform(sentences)  #matrix esparsa com docs e as respectivas contages dos termos (doc,termo) contagem 
-    np_termsCounts=matrix_termsCounts.toarray()# igual a matrix só q em numpy para depois dar para fazer calculos
-    tf_of_terms=np_termsCounts/np.max(np_termsCounts, axis=1)[:, None]  #tf= freq/max termo
-    idf_of_terms=np.log10(len(np_termsCounts)/(np_termsCounts != 0).sum(0))  # idfs= log10(len dos docs/ contagem dos docs q tem esse termo)
-    return tf_of_terms*idf_of_terms
+    counts_of_terms=vec.fit_transform(sentences).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
+    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
+    return counts_of_terms,tfs
 
-sentencesToVectorSpace("script1.txt")   #1 ponto done
+def sentencesAndDocToVectorSpace(file_content):
+    sentences = nltk.sent_tokenize(file_content)   #o doc dividido em frases
+    counts_of_terms_sent, tfs_sent=counts_and_tfs(sentences) #as contagens e os tfs para as frases
+    idfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))  # idfs= log10(len dos docs/ contagem dos docs q tem esse termo)
+    counts_of_terms_doc, tfs_doc=counts_and_tfs(file_content)  # as contagens e tfs para o documento
+    return tfs_sent*idfs, tfs_doc*idfs
 
 
+#Results:
+file_content=readFile("script1.txt")
+sentencesVectors, docVector=sentencesVectors=sentencesToVectorSpace(file_content)  #Pont 1 e 2 done
+print("The vectors of the sentences:\n", sentencesVectors,"\n\n The vector of the document:\n", docVector)    

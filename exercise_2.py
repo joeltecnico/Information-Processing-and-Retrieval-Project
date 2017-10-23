@@ -1,8 +1,8 @@
-# Joel Almeida		81609
-# Matilde Gonรงalves	82091
-# Rita Ramos		    86274
 #!/usr/bin/python3
 
+# Joel Almeida		81609
+# Matilde Goncalves	82091
+# Rita Ramos        86274
 
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer

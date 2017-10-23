@@ -40,16 +40,19 @@ def show_summary(scored_sentences, sentences):
     summary=sorted(scores_sentences_sorted[0:3], key=operator.itemgetter(0))  #Ponto 4 done
     return [sentences[line] for line,sim in summary], summary
     
+
+if __name__ == "__main__":
+    file_content=read_file("script1.txt")
+    sentences = nltk.sent_tokenize(file_content) #o doc dividido em frases
     
+    sentences_vectors, isfs=sentences_ToVectorSpace(sentences)  #Ponto 1
+    doc_vector=doc_ToVectorSpace(file_content, isfs)    #Ponto 2
+    print("The vectors of the sentences:\n", sentences_vectors,"\n\n The vector of the document:\n", doc_vector)    
+    
+    scored_sentences=cosine_similarity(sentences_vectors,doc_vector[0])  #Ponto 3 done
+    summary_to_user, summary=show_summary(scored_sentences, sentences)
+    print("\n Summary: ", summary, "\n\n Result to the user",summary_to_user )  #Ponto 5 done, end!
 
-#Results:
-file_content=read_file("script1.txt")
-sentences = nltk.sent_tokenize(file_content) #o doc dividido em frases
+   
+   
 
-sentences_vectors, isfs=sentences_ToVectorSpace(sentences)  #Ponto 1
-doc_vector=doc_ToVectorSpace(file_content, isfs)    #Ponto 2
-print("The vectors of the sentences:\n", sentences_vectors,"\n\n The vector of the document:\n", doc_vector)    
-
-scored_sentences=cosine_similarity(sentences_vectors,doc_vector[0])  #Ponto 3 done
-summary_to_user, summary=show_summary(scored_sentences, sentences)
-print("\n Summary: ", summary, "\n\n Result to the user",summary_to_user )  #Ponto 5 done, end!

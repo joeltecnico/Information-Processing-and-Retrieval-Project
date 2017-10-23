@@ -10,7 +10,7 @@ import numpy as np
 import operator
 import os
 import codecs
-import proj1
+import exercise_1
 import re
 
 def counts_and_tfs(file_content, vec):
@@ -61,8 +61,8 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
                                          
                                          
             #print("\n\n Frases como tinhamos ", sentences)
-            ex1_docs_sentences_vectors[i], isfs=proj1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
-            ex1_docs_vectors[i]=proj1.doc_ToVectorSpace(file_content, isfs)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
+            ex1_docs_sentences_vectors[i], isfs=exercise_1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
+            ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
             
             docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
             docs_content.append(file_content) #vão sendo guardado os documentos todos para depois calcular-se para ex2
@@ -83,15 +83,15 @@ def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_
     ex1_cosSim_of_docs={}
     ex2_cosSim_of_docs={}
     for i in range(number_of_docs):
-        ex1_cosSim_of_docs[i]=proj1.cosine_similarity(ex1_vector_of_docsSentences[i] , ex1_vectors_of_docs[i][0])
-        ex2_cosSim_of_docs[i]=proj1.cosine_similarity(ex2_vector_of_docsSentences[i] , ex2_vectors_of_docs[i])
+        ex1_cosSim_of_docs[i]=exercise_1.cosine_similarity(ex1_vector_of_docsSentences[i] , ex1_vectors_of_docs[i][0])
+        ex2_cosSim_of_docs[i]=exercise_1.cosine_similarity(ex2_vector_of_docsSentences[i] , ex2_vectors_of_docs[i])
         show_summary_for_the_2_exs(ex1_cosSim_of_docs[i],ex2_cosSim_of_docs[i], i)
 
     
 def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
-    ex1_summary_to_user, ex1_summary=proj1.show_summary(ex1_cosSim, doc_sentences)
-    ex2_summary_to_user, ex2_summary= proj1.show_summary(ex2_cosSim, doc_sentences)
+    ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences)
+    ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences)
     print("\n For Doc1: ", id_doc)
     print("\n Ex1 summary: ", ex1_summary_to_user)
     print("\n Ex2 summary: ", ex2_summary_to_user)
@@ -101,18 +101,19 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     precision=sum(1 for (line, sim) in ex1_summary if line<5)/len(ex1_summary)
 
     print("\n precision", precision)
+    
     #Calcular aqui o recall  
     
 
 
 #Results:
-ex1_vector_of_docsSentences, ex1_vectors_of_docs, docs_sentences, docs_content =ex1_sentences_and_docs_ToVectorSpace('Textos-fonte-com-titulo')
+ex1_vector_of_docsSentences, ex1_vectors_of_docs, docs_sentences, docs_content =ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
 number_of_docs=len(docs_sentences)
 ex2_vector_of_docsSentences, ex2_vectors_of_docs=ex2_sentences_and_docs_ToVectorSpace(docs_content, docs_sentences,number_of_docs )
 calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences, ex1_vectors_of_docs,ex2_vector_of_docsSentences, ex2_vectors_of_docs,number_of_docs)
 
 #Comentários:
-    # o output do ficheiro 1 (proj1.py) está a ser chamado, quando devia estar a correr apenas as funcoes que chamei)
+    # o output do ficheiro 1 (exercise_1.py) está a ser chamado, quando devia estar a correr apenas as funcoes que chamei)
     
     
     

@@ -9,6 +9,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import operator
 import os
+from os import listdir
+from os.path import isfile, join
 import codecs
 import exercise_1
 import re
@@ -41,33 +43,33 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
     
     for root, dirs, files in os.walk(path):
         for f in files:
-            file_content = open(os.path.join(root, f), "rb").read().decode('iso-8859-1')
+            file_content = open(os.path.join(root, f), 'rb').read().decode('iso-8859-1')
             file_with_splitLines = file_content.splitlines()
             
             sentences=[]
             for line in file_with_splitLines:
                 sentences+=nltk.sent_tokenize(line)
-            print("Novo frases", sentences) 
+            #print('Novo frases', sentences) 
             
             
-            #file_content=str(file_content).replace("\n", ".")
+            #file_content=str(file_content).replace('\n', '.')
             
             
-            #file_content=re.sub(r'(\\r|\\n)+', ". ", file_content)
+            #file_content=re.sub(r'(\\r|\\n)+', '. ', file_content)
             
            
            
             #sentences=nltk.sent_tokenize(file_content) #o doc dividido em frases
                                          
                                          
-            #print("\n\n Frases como tinhamos ", sentences)
+            #print('\n\n Frases como tinhamos ', sentences)
             ex1_docs_sentences_vectors[i], isfs=exercise_1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
             ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
             
             docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
             docs_content.append(file_content) #vão sendo guardado os documentos todos para depois calcular-se para ex2
             i+=1
-            break
+            
     return  ex1_docs_sentences_vectors, ex1_docs_vectors, docs_sentences,docs_content
 
 
@@ -92,15 +94,49 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
     ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences)
     ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences)
-    print("\n For Doc1: ", id_doc)
-    print("\n Ex1 summary: ", ex1_summary_to_user)
-    print("\n Ex2 summary: ", ex2_summary_to_user)
+    print('\n For Doc1: ', id_doc)
+    #print('\n Ex1 summary: ', ex1_summary_to_user)
+    print('\n Ex2 summary: ', ex2_summary_to_user)
     
-    print("\n ex1_summary", ex1_summary)
-    print("\n contagem dos valores q estão correctos", sum(1 for (line, sim) in ex1_summary if line<5))  ##assumi q os resultados estão certos se forem impressas as 1º 5 linhas, visto q essas são as mais importantes na noticia  
-    precision=sum(1 for (line, sim) in ex1_summary if line<5)/len(ex1_summary)
-
-    print("\n precision", precision)
+    common_sentences = list(set(ex1_summary_to_user).intersection(ex2_summary_to_user))
+    #print('\n Palavras em comum nos dois exercicios:', common_sentences)
+    print('\n Contagem: ', len(common_sentences))
+    
+    #print('\n ex1_summary', ex1_summary)
+    
+    # confusing??
+    #print('\n contagem dos valores q estão correctos', sum(1 for (line, sim) in ex1_summary if line<5))  ##assumi q os resultados estão certos se forem impressas as 1º 5 linhas, visto q essas são as mais importantes na noticia  
+    
+    ##HORRIBE DANGER
+    mypath = 'TeMario/Sumários/Extratos ideais automáticos'
+    onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))] #Isto ficaria melhor se mantivessemos uma lista com os nomes dos ficheiros...
+    ##/HORRIBLE DANGER
+    
+    
+    summary_content = open(mypath + '/' + onlyfiles[id_doc], 'rb').read().decode('iso-8859-1')
+    summary_splitted = summary_content.splitlines()
+    
+    summary_sentences=[]
+    for line in summary_splitted:
+        summary_sentences+=nltk.sent_tokenize(line)
+        
+    RuA1 = sum(1 for x in ex1_summary_to_user if x in summary_content)
+    print("OLA", RuA1)
+    precision1 = RuA1 / len(ex1_summary_to_user)
+    recall1 = RuA1 / len(summary_sentences)
+    f11 = 2 * np.float64(precision1 * recall1) / (precision1 + recall1) #Sometimes F1 can end up dividing by zero, this will give either inf or NaN as a result
+    
+    RuA2 = sum(1 for x in ex2_summary_to_user if x in summary_content)
+    precision2 = RuA2 / len(ex2_summary_to_user)
+    recall2 = RuA2 / len(summary_sentences)
+    f12 = 2 * np.float64(precision2 * recall2) / (precision2 + recall2)
+    
+    print('\nPrecision on Ex1', precision1)
+    print('Recall on Ex1', recall1)
+    print('F1 on Ex1', f11)
+    print('\nPrecision on Ex2', precision2)
+    print('Recall on Ex2', recall2)
+    print('F1 on Ex2', recall2)
     
     #Calcular aqui o recall  
     

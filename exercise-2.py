@@ -70,10 +70,18 @@ def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_
     
 def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
+    ex1_summary_to_user, ex1_summary=proj1.show_summary(ex1_cosSim, doc_sentences)
+    ex2_summary_to_user, ex2_summary= proj1.show_summary(ex2_cosSim, doc_sentences)
     print("\n For Doc1: ", id_doc)
-    print("\n Ex1 summary: ", proj1.show_summary(ex1_cosSim, doc_sentences))
-    print("\n Ex2 summary: ", proj1.show_summary(ex2_cosSim, doc_sentences))
-    #Calcular aqui o Precision e o recall
+    print("\n Ex1 summary: ", ex1_summary_to_user)
+    print("\n Ex2 summary: ", ex2_summary_to_user)
+    
+    print("\n ex1_summary", ex1_summary)
+    print("contagem dos valores q estão correctos", sum(1 for (line, sim) in ex1_summary if line<5))  ##assumi q os resultados estão certos se forem impressas as 1º 5 linhas, visto q essas são as mais importantes na noticia  
+    precision=sum(1 for (line, sim) in ex1_summary if line<5)/len(ex1_summary)
+
+    print("precision", precision)
+    #Calcular aqui o recall  
     
 
 

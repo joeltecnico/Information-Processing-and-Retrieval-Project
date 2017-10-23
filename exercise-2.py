@@ -11,6 +11,7 @@ import operator
 import os
 import codecs
 import proj1
+import re
 
 def counts_and_tfs(file_content, vec):
     counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
@@ -21,6 +22,7 @@ def sentences_ToVectorSpace(content, docs_vocabulary):
     vec = CountVectorizer(vocabulary=docs_vocabulary)  #é dado o vocabulario dos documentos
     counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #as contagens e os tfs para as frases
     idfs=np.log10(len(counts_of_terms_sent)/((counts_of_terms_sent != 0).sum(0) +1) ) # idfs com smoothing, para não dar zero!
+    #print(vec.vocabulary_)
     return tfs_sent*idfs
 
 def doc_ToVectorSpace(content, number_of_docs):
@@ -40,14 +42,32 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
     for root, dirs, files in os.walk(path):
         for f in files:
             file_content = open(os.path.join(root, f), "rb").read().decode('iso-8859-1')
-            sentences=nltk.sent_tokenize(file_content) #o doc dividido em frases
+            file_content = file_content.splitlines()
             
+            sentences=[]
+            for i in file_content:
+                sentences+=nltk.sent_tokenize(i )
+            print("Novo frases", sentences) 
+            
+            
+            #file_content=str(file_content).replace("\n", ".")
+            
+            
+            #file_content=re.sub(r'(\\r|\\n)+', ". ", file_content)
+            
+           
+           
+            #sentences=nltk.sent_tokenize(file_content) #o doc dividido em frases
+                                         
+                                         
+            #print("\n\n Frases como tinhamos ", sentences)
             ex1_docs_sentences_vectors[i], isfs=proj1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
             ex1_docs_vectors[i]=proj1.doc_ToVectorSpace(file_content, isfs)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
             
             docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
             docs_content.append(file_content) #vão sendo guardado os documentos todos para depois calcular-se para ex2
             i+=1
+            break
     return  ex1_docs_sentences_vectors, ex1_docs_vectors, docs_sentences,docs_content
 
 

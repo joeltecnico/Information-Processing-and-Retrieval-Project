@@ -42,11 +42,11 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
     for root, dirs, files in os.walk(path):
         for f in files:
             file_content = open(os.path.join(root, f), "rb").read().decode('iso-8859-1')
-            file_content = file_content.splitlines()
+            file_with_splitLines = file_content.splitlines()
             
             sentences=[]
-            for i in file_content:
-                sentences+=nltk.sent_tokenize(i )
+            for line in file_with_splitLines:
+                sentences+=nltk.sent_tokenize(line)
             print("Novo frases", sentences) 
             
             
@@ -97,10 +97,10 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     print("\n Ex2 summary: ", ex2_summary_to_user)
     
     print("\n ex1_summary", ex1_summary)
-    print("contagem dos valores q estão correctos", sum(1 for (line, sim) in ex1_summary if line<5))  ##assumi q os resultados estão certos se forem impressas as 1º 5 linhas, visto q essas são as mais importantes na noticia  
+    print("\n contagem dos valores q estão correctos", sum(1 for (line, sim) in ex1_summary if line<5))  ##assumi q os resultados estão certos se forem impressas as 1º 5 linhas, visto q essas são as mais importantes na noticia  
     precision=sum(1 for (line, sim) in ex1_summary if line<5)/len(ex1_summary)
 
-    print("precision", precision)
+    print("\n precision", precision)
     #Calcular aqui o recall  
     
 

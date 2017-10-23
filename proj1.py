@@ -36,12 +36,9 @@ def cosine_similarity(sentences_vectors,doc_vector):
 
 
 def show_summary(scored_sentences, sentences):
-    #print("\n The cosine similiraty: ", scored_sentences)
     scores_sentences_sorted = sorted(scored_sentences.items(), key=operator.itemgetter(1),reverse=True) 
-    #print("\n The cosine similarity sorted",scores_sentences_sorted)
     summary=sorted(scores_sentences_sorted[0:3], key=operator.itemgetter(0))  #Ponto 4 done
-    #print("\n Sorted sentences to show to the user:",summary)
-    return [sentences[line] for line,sim in summary]
+    return [sentences[line] for line,sim in summary], summary
     
     
 
@@ -54,4 +51,5 @@ doc_vector=doc_ToVectorSpace(file_content, isfs)    #Ponto 2
 print("The vectors of the sentences:\n", sentences_vectors,"\n\n The vector of the document:\n", doc_vector)    
 
 scored_sentences=cosine_similarity(sentences_vectors,doc_vector[0])  #Ponto 3 done
-print("\n Result to the user", show_summary(scored_sentences,sentences ))  #Ponto 5 done, end!
+summary_to_user, summary=show_summary(scored_sentences, sentences)
+print("\n Summary: ", summary, "\n\n Result to the user",summary_to_user )  #Ponto 5 done, end!

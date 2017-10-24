@@ -82,16 +82,26 @@ def ex2_sentences_and_docs_ToVectorSpace(docs_content,docs_sentences,number_of_d
     return ex2_docs_sentences_vectors, ex2_docs_vectors
     
 
-def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_docs, ex2_vector_of_docsSentences, ex2_vectors_of_docs, number_of_docs  ):    
+def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_docs, ex2_vector_of_docsSentences, ex2_vectors_of_docs, number_of_docs):    
+    AP_sum = 0
+    precision_sum = 0
+    recall_sum = 0
     ex1_cosSim_of_docs={}
     ex2_cosSim_of_docs={}
     for i in range(number_of_docs):
         ex1_cosSim_of_docs[i]=exercise_1.cosine_similarity(ex1_vector_of_docsSentences[i] , ex1_vectors_of_docs[i][0])
         ex2_cosSim_of_docs[i]=exercise_1.cosine_similarity(ex2_vector_of_docsSentences[i] , ex2_vectors_of_docs[i])
-        show_summary_for_the_2_exs(ex1_cosSim_of_docs[i],ex2_cosSim_of_docs[i], i)
+        AP, precision, recall = show_summary_for_the_2_exs(ex1_cosSim_of_docs[i],ex2_cosSim_of_docs[i], i, AP_sum)
+        AP_sum += AP
+        precision_sum += precision
+        recall_sum += recall
+    MAP = AP_sum / number_of_docs
+    print('MAP ex1 ', MAP)
+    print('Recall ex1 ', recall_sum / number_of_docs)
+    print('Precision ex1 ', precision_sum / number_of_docs)
 
     
-def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
+def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc, AP_sum):
     doc_sentences=docs_sentences[id_doc]
     ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences)
     ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences)
@@ -157,7 +167,10 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
             
         last_index=truncated_index+1
     
-    AP = total / correct_until_now
+    AP = 0
+    if correct_until_now > 0:
+        AP = total / correct_until_now
+    return AP, precision1, recall1
     
 
 

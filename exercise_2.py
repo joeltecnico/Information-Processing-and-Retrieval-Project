@@ -14,6 +14,7 @@ from os.path import isfile, join
 import codecs
 import exercise_1
 import re
+import math
 
 def counts_and_tfs(file_content, vec):
     counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
@@ -95,12 +96,8 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences)
     ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences)
     print('\n For Doc1: ', id_doc)
-    #print('\n Ex1 summary: ', ex1_summary_to_user)
+    print('\n Ex1 summary: ', ex1_summary_to_user)
     print('\n Ex2 summary: ', ex2_summary_to_user)
-    
-    common_sentences = list(set(ex1_summary_to_user).intersection(ex2_summary_to_user))
-    #print('\n Palavras em comum nos dois exercicios:', common_sentences)
-    print('\n Contagem: ', len(common_sentences))
     
     #print('\n ex1_summary', ex1_summary)
     
@@ -121,7 +118,6 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
         summary_sentences+=nltk.sent_tokenize(line)
         
     RuA1 = sum(1 for x in ex1_summary_to_user if x in summary_content)
-    print("OLA", RuA1)
     precision1 = RuA1 / len(ex1_summary_to_user)
     recall1 = RuA1 / len(summary_sentences)
     f11 = 2 * np.float64(precision1 * recall1) / (precision1 + recall1) #Sometimes F1 can end up dividing by zero, this will give either inf or NaN as a result
@@ -138,7 +134,30 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     print('Recall on Ex2', recall2)
     print('F1 on Ex2', recall2)
     
-    #Calcular aqui o recall  
+    #Calculate PA
+    # Ex1
+    precision_recall_curve_ex1 = []
+    correct_until_now = 0
+    for i in range(len(ex1_summary_to_user)) :
+        if ex1_summary_to_user[i] in summary_content :
+            correct_until_now +=1
+            precision = correct_until_now / (i+1)
+            recall = correct_until_now / len(summary_sentences)
+            precision_recall_curve_ex1.append((recall, precision))
+    print('Iguais ', correct_until_now)
+    print(precision_recall_curve_ex1)
+    
+    total=0
+    last_index=1
+    for (R,P) in precision_recall_curve_ex1:
+        part,truncated_index = math.modf(R * 10)
+        truncated_index=int(truncated_index)
+        for R in range(last_index, truncated_index+1):
+            total += (truncated_index * 0.1) *P
+            
+        last_index=truncated_index+1
+    
+    AP = total / correct_until_now
     
 
 

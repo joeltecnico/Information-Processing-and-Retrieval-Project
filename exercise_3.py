@@ -2,115 +2,179 @@
 
 # Joel Almeida		81609
 # Matilde Goncalves	82091
-# Rita Ramos		86274
-
+# Rita Ramos        86274
 
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import operator
-from nltk import bigrams
-from collections import Counter
+import os
+from os import listdir
+from os.path import isfile, join
+import codecs
+import exercise_1
 import re
+import math
 
-def read_file(file):
-    return open(file).read()
+def tag_string(s) :
+    sentence = ''
+    tokens = nltk.pos_tag(s)
+    for (a, b) in tokens:
+        sentence = ' '.join([sentence, b])
+    return sentence
 
-def sentences_separation(file_content):
-    sentences = nltk.sent_tokenize(file_content) #o doc dividido em frases
-    return sentences
+def counts_and_tfs_biGrams(file_content, vec):
+    #sentences_found = []
+    #separation = words_separation(file_content)
+    #print(separation)
+    #for s in separation :
+    #    sentence = tag_string(s)
+    #    print("joel", sentence)
+    #    m = re.search(r'(((JJ ?)*(NN.* ?)+(IN))?(JJ ?)*(NN.*)+)+', sentence, re.UNICODE)
+    #    if m:
+            sentences_found.append(m.group(1).strip())
+        
+    #print("encontrei",  sentences_found)
+            
+    counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
+    
+    #for s in range(len(sentences_found)) :
+    #    found = []
+
+    #    for i in range(len(file_content)) :
+    #        found.append(file_content[i].lower().count(sentences_found[s]))
+    #    found = np.array([found])
+    #    counts_of_terms = np.concatenate((counts_of_terms, found.T), axis=1)
+    
+    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
+    return counts_of_terms,tfs
 
 def words_separation(sentences):
     words=[]
     for t in sentences:
-        words.append(nltk.word_tokenize(t))
-        
-    return words
-
-def words_separation2(sentences):
-    words=[]
-    for t in sentences:
         words.append(re.findall(r'\w+',t.strip().lower()))
-        
     return words
-
-def counts_and_tfs_biGrams(file_content):
-    sentences_found = []
-    for s in words_separation2(file_content) :
-        tokens = nltk.pos_tag(s)
-        sentence = ''
-        for (a, b) in tokens:
-            j = '_'.join([b, a])
-            sentence = ' '.join([sentence, j])
-
-        m = re.search(r'(((JJ_\w+ ?)*(NN.*_\w+ ?)+(IN_\r+ ?))?(JJ_\w+ ?)*(NN.*_\w+ ?)+)+', sentence, re.UNICODE)
-        if m:
-            sentence_part = ''
-            sep = words_separation2([m.group(1)])[0]
-            for word in sep :
-                sentence_part = ' '.join([sentence_part, original_word(word)])
-            sentences_found.append(sentence_part.strip())
-    
-    vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b', min_df=1)
-    counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
-    
-    for s in range(len(sentences_found)) :
-        found = []
-        for i in range(len(file_content)) :
-            found.append(file_content[i].lower().count(sentences_found[s]))
-        found = np.array([found])
-        counts_of_terms = np.concatenate((counts_of_terms, found.T), axis=1)
-    
-    return 10,20
-   # tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
-    #print ("bigramassa",bi_grams) 
-   # return counts_of_terms,tfs
-   
-def original_word(t):
-    return t[t.index("_")+1:]
-    
+ 
 def sentences_ToVectorSpace(content):
-    print("connnteg",content)
-    counts_of_terms_sent, tfs_sent=counts_and_tfs_biGrams(content) #as contagens e os tfs para as frases
+    vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b')  #é dado o vocabulario dos documentos
+    counts_of_terms_sent, tfs_sent=counts_and_tfs_biGrams(content, vec) #as contagens e os tfs para as frases
     isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))  # inverve sentence frequency= log10(len dos docs/ contagem dos docs q tem esse termo)
-    return tfs_sent*isfs, isfs
+    return tfs_sent*isfs, isfs, vec.vocabulary_
 
-def doc_ToVectorSpace(content, isfs):
-    counts_of_terms_doc, tfs_doc=counts_and_tfs_biGrams([content])  # as contagens e tfs para o documento
+
+def doc_ToVectorSpace(content, isfs,docs_vocabulary ):
+    vec = CountVectorizer(vocabulary=docs_vocabulary)
+    counts_of_terms_doc, tfs_doc=counts_and_tfs_biGrams([content], vec)  # as contagens e tfs para o documento
     return tfs_doc*isfs
 
-def cosine_similarity(sentences_vectors,doc_vector):
-    cosSim={}
+def sentences_and_docs_ToVectorSpace(path):
+    docs_sentences={}
     i=0
-    for sentence_vector in sentences_vectors:
-        cosSim[i]= np.dot(sentence_vector,doc_vector)/(np.sqrt(  np.sum(sentence_vector*sentence_vector) )* np.sqrt(np.sum(doc_vector*doc_vector) ))
-        i+=1
-    return cosSim
+    docs_content=[]
+    docs_sentences_vectors={}
+    docs_vectors={}
+    
+    for root, dirs, files in os.walk(path):
+        for f in files:
+            file_content = open(os.path.join(root, f), 'rb').read().decode('iso-8859-1')
+            file_with_splitLines = file_content.splitlines()
+            
+            sentences=[]
+            for line in file_with_splitLines:
+                sentences+=nltk.sent_tokenize(line)
+                
+            docs_sentences_vectors[i], isfs, vocabulary=sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
+            docs_vectors[i]=doc_ToVectorSpace(file_content, isfs, vocabulary)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
+            
+          
+            docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
+            docs_content.append(file_content) #vão sendo guardado os documentos todos para depois calcular-se para ex2
+            i+=1
+            
+            
+    return docs_sentences_vectors,docs_vectors,  docs_sentences,docs_content
 
 
-def show_summary(scored_sentences, sentences):
-    scores_sentences_sorted = sorted(scored_sentences.items(), key=operator.itemgetter(1),reverse=True) 
-    summary=sorted(scores_sentences_sorted[0:3], key=operator.itemgetter(0))  #Ponto 4 done
-    return [sentences[line] for line,sim in summary], summary
+
+def calculate_cosine_for_the_ex(vector_of_docsSentences,  vectors_of_docs, number_of_docs):    
+    AP_sum = 0
+    precision_sum = 0
+    recall_sum = 0
+    cosSim_of_docs={}
+    for i in range(number_of_docs):
+        cosSim_of_docs[i]=exercise_1.cosine_similarity(vector_of_docsSentences[i] , vectors_of_docs[i][0])
+        
+        AP, precision, recall = show_summary(cosSim_of_docs[i], i, AP_sum)
+        AP_sum += AP
+        precision_sum += precision
+        recall_sum += recall
+    MAP = AP_sum / number_of_docs
+    print('MAP ex1 ', MAP)
+    print('Recall ex1 ', recall_sum / number_of_docs)
+    print('Precision ex1 ', precision_sum / number_of_docs)
+
+    
+def show_summary(ex1_cosSim, id_doc, AP_sum):
+    doc_sentences=docs_sentences[id_doc]
+    ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences)
+    print('\n For Doc1: ', id_doc)
+    print('\n Ex3 summary: ', ex1_summary_to_user)
+    
+   
+    mypath = 'TeMario/Sumários/Extratos ideais automáticos'
+    onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))] #Isto ficaria melhor se mantivessemos uma lista com os nomes dos ficheiros...
+    ##/HORRIBLE DANGER
+    
+    
+    summary_content = open(mypath + '/' + onlyfiles[id_doc], 'rb').read().decode('iso-8859-1')
+    summary_splitted = summary_content.splitlines()
+    
+    summary_sentences=[]
+    for line in summary_splitted:
+        summary_sentences+=nltk.sent_tokenize(line)
+        
+    RuA1 = sum(1 for x in ex1_summary_to_user if x in summary_content)
+    precision1 = RuA1 / len(ex1_summary_to_user)
+    recall1 = RuA1 / len(summary_sentences)
+    f11 = 2 * np.float64(precision1 * recall1) / (precision1 + recall1) #Sometimes F1 can end up dividing by zero, this will give either inf or NaN as a result
+    
+   
+    print('\nPrecision on Ex3', precision1)
+    print('Recall on Ex3', recall1)
+    print('F1 on Ex3', f11)
+   
+    
+    #Calculate PA
+    # Ex1
+    precision_recall_curve_ex1 = []
+    correct_until_now = 0
+    for i in range(len(ex1_summary_to_user)) :
+        if ex1_summary_to_user[i] in summary_content :
+            correct_until_now +=1
+            precision = correct_until_now / (i+1)
+            recall = correct_until_now / len(summary_sentences)
+            precision_recall_curve_ex1.append((recall, precision))
+    print('Iguais ', correct_until_now)
+    print(precision_recall_curve_ex1)
+    
+    total=0
+    last_index=1
+    for (R,P) in precision_recall_curve_ex1:
+        part,truncated_index = math.modf(R * 10)
+        truncated_index=int(truncated_index)
+        for R in range(last_index, truncated_index+1):
+            total += (truncated_index * 0.1) *P
+            
+        last_index=truncated_index+1
+    
+    AP = 0
+    if correct_until_now > 0:
+        AP = total / correct_until_now
+    return AP, precision1, recall1
     
 
-if __name__ == "__main__":
-    file_content=read_file("script1.txt")
-    sentences=sentences_separation(file_content)
-    #words=words_separation2(sentences)
-    
-    sentences_vectors, isfs=counts_and_tfs_biGrams(sentences)
-    #sentences_ToVectorSpace(sentences)  #Ponto 1
-    
-   # doc_vector=doc_ToVectorSpace(file_content, isfs)    #Ponto 2
-   # print("The vectors of the sentences:\n", sentences_vectors,"\n\n The vector of the document:\n", doc_vector)    
-    
-    #scored_sentences=cosine_similarity(sentences_vectors,doc_vector[0])  #Ponto 3 done
-   # summary_to_user, summary=show_summary(scored_sentences, sentences)
-   # print("\n Summary: ", summary, "\n\n Result to the user",summary_to_user )  #Ponto 5 done, end!
-   
-   
 
-   
-   
-
+#Results:
+vector_of_docsSentences,vectors_of_docs, docs_sentences, docs_content =sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
+number_of_docs=len(docs_sentences)
+calculate_cosine_for_the_ex(vector_of_docsSentences, vectors_of_docs,number_of_docs)

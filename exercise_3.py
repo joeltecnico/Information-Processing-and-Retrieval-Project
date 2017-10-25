@@ -9,6 +9,7 @@ import numpy as np
 import operator
 from nltk import bigrams
 from collections import Counter
+import re
 
 def read_file(file):
     return open(file).read()
@@ -24,15 +25,27 @@ def words_separation(sentences):
     print ("woooords",words)
     return words
 
+def words_separation2(sentences):
+    words=[]
+    for t in sentences:
+        print ("TTTTTT",t)
+        words.append(re.findall(r'\w+',t.strip().lower()))
+        
+    print ("frasesssssssss",sentences)
+    print ("woooords",words)
+    return words
+
 def counts_and_tfs_biGrams(file_content):
-                    
-    vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b', min_df=1)  
-    bi_grams=list(bigrams(file_content)) #diz os bi-grams
-    counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
+    bi_grams=[]
+    for i in file_content :              
+        bi_grams.append(list(bigrams(i))) #diz os bi-grams
+   # vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b')
+    vec = CountVectorizer()
+    counts_of_terms=vec.fit_transform(bi_grams).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
    
-    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
+   # tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
     print ("bigramassa",bi_grams) 
-    return counts_of_terms,tfs
+   # return counts_of_terms,tfs
     
 def sentences_ToVectorSpace(content):
     print("connnteg",content)
@@ -63,15 +76,15 @@ if __name__ == "__main__":
     file_content=read_file("script1.txt")
     sentences=sentences_separation(file_content)
     print("fraaasssses:",(sentences))
-    words=words_separation(sentences)
-    sentences_vectors, isfs=sentences_ToVectorSpace(sentences)  #Ponto 1
-    counts_and_tfs_biGrams(words[0])
-    doc_vector=doc_ToVectorSpace(file_content, isfs)    #Ponto 2
-    print("The vectors of the sentences:\n", sentences_vectors,"\n\n The vector of the document:\n", doc_vector)    
+    words=words_separation2(sentences)
+    sentences_vectors, isfs=sentences_ToVectorSpace(words)  #Ponto 1
     
-    scored_sentences=cosine_similarity(sentences_vectors,doc_vector[0])  #Ponto 3 done
-    summary_to_user, summary=show_summary(scored_sentences, sentences)
-    print("\n Summary: ", summary, "\n\n Result to the user",summary_to_user )  #Ponto 5 done, end!
+   # doc_vector=doc_ToVectorSpace(file_content, isfs)    #Ponto 2
+   # print("The vectors of the sentences:\n", sentences_vectors,"\n\n The vector of the document:\n", doc_vector)    
+    
+    #scored_sentences=cosine_similarity(sentences_vectors,doc_vector[0])  #Ponto 3 done
+   # summary_to_user, summary=show_summary(scored_sentences, sentences)
+   # print("\n Summary: ", summary, "\n\n Result to the user",summary_to_user )  #Ponto 5 done, end!
 
    
    

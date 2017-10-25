@@ -32,7 +32,7 @@ def counts_and_tfs_biGrams(file_content, vec):
     #    print("joel", sentence)
     #    m = re.search(r'(((JJ ?)*(NN.* ?)+(IN))?(JJ ?)*(NN.*)+)+', sentence, re.UNICODE)
     #    if m:
-            sentences_found.append(m.group(1).strip())
+    #        sentences_found.append(m.group(1).strip())
         
     #print("encontrei",  sentences_found)
             

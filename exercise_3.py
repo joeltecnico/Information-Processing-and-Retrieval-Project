@@ -36,16 +36,19 @@ def words_separation2(sentences):
     return words
 
 def counts_and_tfs_biGrams(file_content):
-    bi_grams=[]
-    for i in file_content :              
-        bi_grams.append(list(bigrams(i))) #diz os bi-grams
-   # vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b')
-    vec = CountVectorizer()
-    counts_of_terms=vec.fit_transform(bi_grams).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
-   
+    #bi_grams=[]
+    #for i in file_content :              
+        #bi_grams.append(list(bigrams(i))) #diz os bi-grams
+    print("FILE CONTENT",file_content )
+    vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b', min_df=1)
+    #vec = CountVectorizer()
+    counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
+    print("VOCABULARY", vec.vocabulary_)
+    return 10,20
    # tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
-    print ("bigramassa",bi_grams) 
+    #print ("bigramassa",bi_grams) 
    # return counts_of_terms,tfs
+   
     
 def sentences_ToVectorSpace(content):
     print("connnteg",content)
@@ -76,8 +79,10 @@ if __name__ == "__main__":
     file_content=read_file("script1.txt")
     sentences=sentences_separation(file_content)
     print("fraaasssses:",(sentences))
-    words=words_separation2(sentences)
-    sentences_vectors, isfs=sentences_ToVectorSpace(words)  #Ponto 1
+    #words=words_separation2(sentences)
+    
+    sentences_vectors, isfs=counts_and_tfs_biGrams(sentences)
+    #sentences_ToVectorSpace(sentences)  #Ponto 1
     
    # doc_vector=doc_ToVectorSpace(file_content, isfs)    #Ponto 2
    # print("The vectors of the sentences:\n", sentences_vectors,"\n\n The vector of the document:\n", doc_vector)    

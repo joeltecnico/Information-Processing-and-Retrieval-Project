@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # Joel Almeida		81609
 # Matilde Goncalves	82091
 # Rita Ramos		86274
@@ -22,33 +24,50 @@ def words_separation(sentences):
     words=[]
     for t in sentences:
         words.append(nltk.word_tokenize(t))
-    print ("woooords",words)
+        
     return words
 
 def words_separation2(sentences):
     words=[]
     for t in sentences:
-        print ("TTTTTT",t)
         words.append(re.findall(r'\w+',t.strip().lower()))
         
-    print ("frasesssssssss",sentences)
-    print ("woooords",words)
     return words
 
 def counts_and_tfs_biGrams(file_content):
-    #bi_grams=[]
-    #for i in file_content :              
-        #bi_grams.append(list(bigrams(i))) #diz os bi-grams
-    print("FILE CONTENT",file_content )
+    sentences_found = []
+    for s in words_separation2(file_content) :
+        tokens = nltk.pos_tag(s)
+        sentence = ''
+        for (a, b) in tokens:
+            j = '_'.join([b, a])
+            sentence = ' '.join([sentence, j])
+
+        m = re.search(r'(((JJ_\w+ ?)*(NN.*_\w+ ?)+(IN_\r+ ?))?(JJ_\w+ ?)*(NN.*_\w+ ?)+)+', sentence, re.UNICODE)
+        if m:
+            sentence_part = ''
+            sep = words_separation2([m.group(1)])[0]
+            for word in sep :
+                sentence_part = ' '.join([sentence_part, original_word(word)])
+            sentences_found.append(sentence_part.strip())
+    
     vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b', min_df=1)
-    #vec = CountVectorizer()
     counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
-    print("VOCABULARY", vec.vocabulary_)
+    
+    for s in range(len(sentences_found)) :
+        found = []
+        for i in range(len(file_content)) :
+            found.append(file_content[i].lower().count(sentences_found[s]))
+        found = np.array([found])
+        counts_of_terms = np.concatenate((counts_of_terms, found.T), axis=1)
+    
     return 10,20
    # tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
     #print ("bigramassa",bi_grams) 
    # return counts_of_terms,tfs
    
+def original_word(t):
+    return t[t.index("_")+1:]
     
 def sentences_ToVectorSpace(content):
     print("connnteg",content)
@@ -78,7 +97,6 @@ def show_summary(scored_sentences, sentences):
 if __name__ == "__main__":
     file_content=read_file("script1.txt")
     sentences=sentences_separation(file_content)
-    print("fraaasssses:",(sentences))
     #words=words_separation2(sentences)
     
     sentences_vectors, isfs=counts_and_tfs_biGrams(sentences)
@@ -90,6 +108,8 @@ if __name__ == "__main__":
     #scored_sentences=cosine_similarity(sentences_vectors,doc_vector[0])  #Ponto 3 done
    # summary_to_user, summary=show_summary(scored_sentences, sentences)
    # print("\n Summary: ", summary, "\n\n Result to the user",summary_to_user )  #Ponto 5 done, end!
+   
+   
 
    
    

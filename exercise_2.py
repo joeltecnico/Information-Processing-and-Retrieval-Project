@@ -7,13 +7,8 @@
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
-import operator
 import os
-from os import listdir
-from os.path import isfile, join
-import codecs
 import exercise_1
-import re
 import math
 
 ex1_AP_sum = 0
@@ -106,12 +101,12 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     print('\n Ex1 summary: ', ex1_summary_to_user) 
     summary_sentences,summary_content =get_file_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
     global ex1_AP_sum, ex1_precision_sum,ex1_recall_sum, ex2_AP_sum, ex2_precision_sum,ex2_recall_sum
-    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum=  calculate_precision_recall_f1_ap(ex1_summary_to_user, summary_content, summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum,ex1_f1 )
+    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum=  calculate_precision_recall_f1_ap(ex1_summary_to_user, summary_content, summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum)
     print('\n Ex2 summary: ', ex2_summary_to_user)
-    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum= calculate_precision_recall_f1_ap(ex2_summary_to_user, summary_content, summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum, ex2_f1)
+    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum= calculate_precision_recall_f1_ap(ex2_summary_to_user, summary_content, summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum)
     
 
-def calculate_precision_recall_f1_ap(summary_to_user, ideal_summary,summary_sentences,AP_sum ,precision_sum,recall_sum, f1_sum ):
+def calculate_precision_recall_f1_ap(summary_to_user, ideal_summary,summary_sentences,AP_sum ,precision_sum,recall_sum ):
     RuA = sum(1 for x in summary_to_user if x in ideal_summary)
     recall = RuA / len(summary_sentences)
     precision = RuA / len(summary_to_user)
@@ -120,9 +115,7 @@ def calculate_precision_recall_f1_ap(summary_to_user, ideal_summary,summary_sent
     print("\n Recall", recall)
     recall_sum+=recall
     precision_sum+= precision
-    #f1_sum = 2 * np.float64(precision * recall) / (precision + recall) #Sometimes F1 can end up dividing by zero, this will give either inf or NaN as a result
-              
-    
+                  
     precision_recall_curve = []
     correct_until_now = 0
     for i in range(len(summary_to_user)) :

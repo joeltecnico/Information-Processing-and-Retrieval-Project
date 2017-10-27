@@ -19,11 +19,11 @@ import math
 ex1_AP_sum = 0
 ex1_precision_sum = 0
 ex1_recall_sum = 0
-ex1_f1=0
+#ex1_f1=0
 ex2_AP_sum = 0
 ex2_precision_sum = 0
 ex2_recall_sum = 0
-ex2_f1=0
+#ex2_f1=0
 
 
 def get_file_separete_into_sentences(f):
@@ -100,15 +100,15 @@ def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_
     
 def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
-    ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences)
-    ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences)
-    #print('\n For Doc1: ', id_doc)
-    #print('\n Ex1 summary: ', ex1_summary_to_user) 
+    ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences, 5)
+    ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences, 5)
+    print('\n For Doc1: ', id_doc)
+    print('\n Ex1 summary: ', ex1_summary_to_user) 
     summary_sentences,summary_content =get_file_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
-    global ex1_AP_sum, ex1_precision_sum,ex1_recall_sum, ex1_f1, ex2_AP_sum, ex2_precision_sum,ex2_recall_sum,ex2_f1
-    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum, ex1_f1=  calculate_precision_recall_f1_ap(ex1_summary_to_user, summary_content, summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum,ex1_f1 )
+    global ex1_AP_sum, ex1_precision_sum,ex1_recall_sum, ex2_AP_sum, ex2_precision_sum,ex2_recall_sum
+    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum=  calculate_precision_recall_f1_ap(ex1_summary_to_user, summary_content, summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum,ex1_f1 )
     print('\n Ex2 summary: ', ex2_summary_to_user)
-    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum,ex2_f1 = calculate_precision_recall_f1_ap(ex2_summary_to_user, summary_content, summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum, ex2_f1)
+    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum= calculate_precision_recall_f1_ap(ex2_summary_to_user, summary_content, summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum, ex2_f1)
     
 
 def calculate_precision_recall_f1_ap(summary_to_user, ideal_summary,summary_sentences,AP_sum ,precision_sum,recall_sum, f1_sum ):
@@ -120,8 +120,9 @@ def calculate_precision_recall_f1_ap(summary_to_user, ideal_summary,summary_sent
     print("\n Recall", recall)
     recall_sum+=recall
     precision_sum+= precision
-    f1_sum = 2 * np.float64(precision * recall) / (precision + recall) #Sometimes F1 can end up dividing by zero, this will give either inf or NaN as a result
-                   
+    #f1_sum = 2 * np.float64(precision * recall) / (precision + recall) #Sometimes F1 can end up dividing by zero, this will give either inf or NaN as a result
+              
+    
     precision_recall_curve = []
     correct_until_now = 0
     for i in range(len(summary_to_user)) :
@@ -146,13 +147,18 @@ def calculate_precision_recall_f1_ap(summary_to_user, ideal_summary,summary_sent
         AP = total / correct_until_now               
     AP_sum+=AP              
     
-    return AP_sum ,precision_sum,recall_sum, f1_sum
+    return AP_sum ,precision_sum,recall_sum
 #, recall, f, AP
 
 
 def print_results():
-    print("\n Results of exercise 1: \n Precision: ", (ex1_precision_sum / number_of_docs), "\n Recall:",  (ex1_recall_sum / number_of_docs), '\n MAP ex1: ', (ex1_AP_sum / number_of_docs))
-    print("\n Results of exercise 2: \n Precision: ", (ex2_precision_sum / number_of_docs), "\n Recall:",  (ex2_recall_sum / number_of_docs), '\n MAP ex1: ', (ex2_AP_sum / number_of_docs))
+    ex1_precision_mean=(ex1_precision_sum / number_of_docs)
+    ex2_precision_mean=(ex2_precision_sum / number_of_docs)
+    ex1_recall_mean=(ex1_recall_sum / number_of_docs)
+    ex2_recall_mean=(ex2_recall_sum / number_of_docs)
+
+    print("\n Results of exercise 1: \n Precision: ", (ex1_precision_sum / number_of_docs), "\n Recall:",  (ex1_recall_sum / number_of_docs), "\n F1:",  (2 * (ex1_precision_mean * ex1_recall_mean) / (ex1_precision_mean + ex1_recall_mean)), '\n MAP: ', (ex1_AP_sum / number_of_docs))
+    print("\n Results of exercise 2: \n Precision: ", (ex2_precision_sum / number_of_docs), "\n Recall:",  (ex2_recall_sum / number_of_docs), "\n F1:",  ( 2 * (ex2_precision_mean * ex2_recall_mean) / (ex2_precision_mean + ex2_recall_mean)), '\n MAP: ', (ex2_AP_sum / number_of_docs))
   
 
 

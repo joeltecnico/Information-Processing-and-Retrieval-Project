@@ -154,16 +154,10 @@ def print_results():
     print("\n Results of exercise 2: \n Precision: ", (ex2_precision_sum / number_of_docs), "\n Recall:",  (ex2_recall_sum / number_of_docs), "\n F1:",  ( 2 * (ex2_precision_mean * ex2_recall_mean) / (ex2_precision_mean + ex2_recall_mean)), '\n MAP: ', (ex2_AP_sum / number_of_docs))
   
 
-
-#Results:
-ideal_summaries_filesPath=get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
-ex1_vector_of_docsSentences, ex1_vectors_of_docs, docs_sentences, docs_content =ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
-number_of_docs=len(docs_sentences)
-ex2_vector_of_docsSentences, ex2_vectors_of_docs=ex2_sentences_and_docs_ToVectorSpace(docs_content, docs_sentences,number_of_docs )
-calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences, ex1_vectors_of_docs,ex2_vector_of_docsSentences, ex2_vectors_of_docs,number_of_docs)
-print_results()
-#Comentários:
-    # o output do ficheiro 1 (exercise_1.py) está a ser chamado, quando devia estar a correr apenas as funcoes que chamei)
-    
-    
-    
+if __name__ == "__main__":
+    ideal_summaries_filesPath=get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
+    ex1_vector_of_docsSentences, ex1_vectors_of_docs, docs_sentences, docs_content =ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
+    number_of_docs=len(docs_sentences)
+    ex2_vector_of_docsSentences, ex2_vectors_of_docs=ex2_sentences_and_docs_ToVectorSpace(docs_content, docs_sentences,number_of_docs )
+    calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences, ex1_vectors_of_docs,ex2_vector_of_docsSentences, ex2_vectors_of_docs,number_of_docs)
+    print_results()

@@ -16,6 +16,33 @@ import exercise_1
 import re
 import math
 
+ex1_AP_sum = 0
+ex1_precision_sum = 0
+ex1_recall_sum = 0
+#ex1_f1=0
+ex2_AP_sum = 0
+ex2_precision_sum = 0
+ex2_recall_sum = 0
+#ex2_f1=0
+
+
+def get_file_separete_into_sentences(f):
+    file_content = open(f, 'rb').read().decode('iso-8859-1')
+    file_content_splitted = file_content.splitlines()
+    sentences=[]
+    for line in file_content_splitted:
+        sentences+=nltk.sent_tokenize(line)
+    return sentences, file_content 
+
+def get_ideal_summaries_files(path):
+    ideal_summaries_filesPath={}
+    i=0
+    for root, dirs, files in os.walk(path):
+        for f in files:
+            ideal_summaries_filesPath[i]=os.path.join(root, f)
+            i+=1
+        return ideal_summaries_filesPath
+
 def counts_and_tfs(file_content, vec):
     counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
@@ -25,7 +52,6 @@ def sentences_ToVectorSpace(content, docs_vocabulary):
     vec = CountVectorizer(vocabulary=docs_vocabulary)  #é dado o vocabulario dos documentos
     counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #as contagens e os tfs para as frases
     idfs=np.log10(len(counts_of_terms_sent)/((counts_of_terms_sent != 0).sum(0) +1) ) # idfs com smoothing, para não dar zero!
-    #print(vec.vocabulary_)
     return tfs_sent*idfs
 
 def doc_ToVectorSpace(content, number_of_docs):
@@ -33,7 +59,6 @@ def doc_ToVectorSpace(content, number_of_docs):
     counts_of_terms_doc, tfs_doc=counts_and_tfs(content, vec)  # as contagens e tfs para o documento
     idfs=np.log10(number_of_docs/(counts_of_terms_doc != 0).sum(0))  # idfs= log10(len dos docs/ contagem dos docs q tem esse termo)
     return tfs_doc*idfs, vec.vocabulary_
-
 
 def ex1_sentences_and_docs_ToVectorSpace(path):
     docs_sentences={}
@@ -44,26 +69,8 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
     
     for root, dirs, files in os.walk(path):
         for f in files:
-            file_content = open(os.path.join(root, f), 'rb').read().decode('iso-8859-1')
-            file_with_splitLines = file_content.splitlines()
-            
-            sentences=[]
-            for line in file_with_splitLines:
-                sentences+=nltk.sent_tokenize(line)
-            #print('Novo frases', sentences) 
-            
-            
-            #file_content=str(file_content).replace('\n', '.')
-            
-            
-            #file_content=re.sub(r'(\\r|\\n)+', '. ', file_content)
-            
+            sentences,file_content= get_file_separete_into_sentences(os.path.join(root, f))
            
-           
-            #sentences=nltk.sent_tokenize(file_content) #o doc dividido em frases
-                                         
-                                         
-            #print('\n\n Frases como tinhamos ', sentences)
             ex1_docs_sentences_vectors[i], isfs=exercise_1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
             ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
             
@@ -83,103 +90,85 @@ def ex2_sentences_and_docs_ToVectorSpace(docs_content,docs_sentences,number_of_d
     
 
 def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_docs, ex2_vector_of_docsSentences, ex2_vectors_of_docs, number_of_docs):    
-    AP_sum = 0
-    precision_sum = 0
-    recall_sum = 0
     ex1_cosSim_of_docs={}
     ex2_cosSim_of_docs={}
     for i in range(number_of_docs):
         ex1_cosSim_of_docs[i]=exercise_1.cosine_similarity(ex1_vector_of_docsSentences[i] , ex1_vectors_of_docs[i][0])
         ex2_cosSim_of_docs[i]=exercise_1.cosine_similarity(ex2_vector_of_docsSentences[i] , ex2_vectors_of_docs[i])
-        AP, precision, recall = show_summary_for_the_2_exs(ex1_cosSim_of_docs[i],ex2_cosSim_of_docs[i], i, AP_sum)
-        AP_sum += AP
-        precision_sum += precision
-        recall_sum += recall
-    MAP = AP_sum / number_of_docs
-    print('MAP ex1 ', MAP)
-    print('Recall ex1 ', recall_sum / number_of_docs)
-    print('Precision ex1 ', precision_sum / number_of_docs)
+        show_summary_for_the_2_exs(ex1_cosSim_of_docs[i],ex2_cosSim_of_docs[i], i)
 
     
-def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc, AP_sum):
+def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
-    ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences)
-    ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences)
+    ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences, 5)
+    ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences, 5)
     print('\n For Doc1: ', id_doc)
-    print('\n Ex1 summary: ', ex1_summary_to_user)
+    print('\n Ex1 summary: ', ex1_summary_to_user) 
+    summary_sentences,summary_content =get_file_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
+    global ex1_AP_sum, ex1_precision_sum,ex1_recall_sum, ex2_AP_sum, ex2_precision_sum,ex2_recall_sum
+    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum=  calculate_precision_recall_f1_ap(ex1_summary_to_user, summary_content, summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum,ex1_f1 )
     print('\n Ex2 summary: ', ex2_summary_to_user)
+    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum= calculate_precision_recall_f1_ap(ex2_summary_to_user, summary_content, summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum, ex2_f1)
     
-    #print('\n ex1_summary', ex1_summary)
+
+def calculate_precision_recall_f1_ap(summary_to_user, ideal_summary,summary_sentences,AP_sum ,precision_sum,recall_sum, f1_sum ):
+    RuA = sum(1 for x in summary_to_user if x in ideal_summary)
+    recall = RuA / len(summary_sentences)
+    precision = RuA / len(summary_to_user)
     
-    # confusing??
-    #print('\n contagem dos valores q estão correctos', sum(1 for (line, sim) in ex1_summary if line<5))  ##assumi q os resultados estão certos se forem impressas as 1º 5 linhas, visto q essas são as mais importantes na noticia  
+    print("\n Precision", precision)
+    print("\n Recall", recall)
+    recall_sum+=recall
+    precision_sum+= precision
+    #f1_sum = 2 * np.float64(precision * recall) / (precision + recall) #Sometimes F1 can end up dividing by zero, this will give either inf or NaN as a result
+              
     
-    ##HORRIBE DANGER
-    mypath = 'TeMario/Sumários/Extratos ideais automáticos'
-    onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))] #Isto ficaria melhor se mantivessemos uma lista com os nomes dos ficheiros...
-    ##/HORRIBLE DANGER
-    
-    
-    summary_content = open(mypath + '/' + onlyfiles[id_doc], 'rb').read().decode('iso-8859-1')
-    summary_splitted = summary_content.splitlines()
-    
-    summary_sentences=[]
-    for line in summary_splitted:
-        summary_sentences+=nltk.sent_tokenize(line)
-        
-    RuA1 = sum(1 for x in ex1_summary_to_user if x in summary_content)
-    precision1 = RuA1 / len(ex1_summary_to_user)
-    recall1 = RuA1 / len(summary_sentences)
-    f11 = 2 * np.float64(precision1 * recall1) / (precision1 + recall1) #Sometimes F1 can end up dividing by zero, this will give either inf or NaN as a result
-    
-    RuA2 = sum(1 for x in ex2_summary_to_user if x in summary_content)
-    precision2 = RuA2 / len(ex2_summary_to_user)
-    recall2 = RuA2 / len(summary_sentences)
-    f12 = 2 * np.float64(precision2 * recall2) / (precision2 + recall2)
-    
-    print('\nPrecision on Ex1', precision1)
-    print('Recall on Ex1', recall1)
-    print('F1 on Ex1', f11)
-    print('\nPrecision on Ex2', precision2)
-    print('Recall on Ex2', recall2)
-    print('F1 on Ex2', recall2)
-    
-    #Calculate PA
-    # Ex1
-    precision_recall_curve_ex1 = []
+    precision_recall_curve = []
     correct_until_now = 0
-    for i in range(len(ex1_summary_to_user)) :
-        if ex1_summary_to_user[i] in summary_content :
+    for i in range(len(summary_to_user)) :
+        if summary_to_user[i] in ideal_summary :
             correct_until_now +=1
-            precision = correct_until_now / (i+1)
-            recall = correct_until_now / len(summary_sentences)
-            precision_recall_curve_ex1.append((recall, precision))
-    print('Iguais ', correct_until_now)
-    print(precision_recall_curve_ex1)
+            precision_curve= correct_until_now / (i+1)
+            recall_curve = correct_until_now / len(summary_sentences)
+            precision_recall_curve.append((recall_curve, precision_curve))
+    print(precision_recall_curve)
     
     total=0
     last_index=1
-    for (R,P) in precision_recall_curve_ex1:
+    for (R,P) in precision_recall_curve:
         part,truncated_index = math.modf(R * 10)
         truncated_index=int(truncated_index)
         for R in range(last_index, truncated_index+1):
             total += (truncated_index * 0.1) *P
             
-        last_index=truncated_index+1
-    
+        last_index=truncated_index+1   
     AP = 0
     if correct_until_now > 0:
-        AP = total / correct_until_now
-    return AP, precision1, recall1
+        AP = total / correct_until_now               
+    AP_sum+=AP              
     
+    return AP_sum ,precision_sum,recall_sum
+#, recall, f, AP
+
+
+def print_results():
+    ex1_precision_mean=(ex1_precision_sum / number_of_docs)
+    ex2_precision_mean=(ex2_precision_sum / number_of_docs)
+    ex1_recall_mean=(ex1_recall_sum / number_of_docs)
+    ex2_recall_mean=(ex2_recall_sum / number_of_docs)
+
+    print("\n Results of exercise 1: \n Precision: ", (ex1_precision_sum / number_of_docs), "\n Recall:",  (ex1_recall_sum / number_of_docs), "\n F1:",  (2 * (ex1_precision_mean * ex1_recall_mean) / (ex1_precision_mean + ex1_recall_mean)), '\n MAP: ', (ex1_AP_sum / number_of_docs))
+    print("\n Results of exercise 2: \n Precision: ", (ex2_precision_sum / number_of_docs), "\n Recall:",  (ex2_recall_sum / number_of_docs), "\n F1:",  ( 2 * (ex2_precision_mean * ex2_recall_mean) / (ex2_precision_mean + ex2_recall_mean)), '\n MAP: ', (ex2_AP_sum / number_of_docs))
+  
 
 
 #Results:
+ideal_summaries_filesPath=get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
 ex1_vector_of_docsSentences, ex1_vectors_of_docs, docs_sentences, docs_content =ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
 number_of_docs=len(docs_sentences)
 ex2_vector_of_docsSentences, ex2_vectors_of_docs=ex2_sentences_and_docs_ToVectorSpace(docs_content, docs_sentences,number_of_docs )
 calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences, ex1_vectors_of_docs,ex2_vector_of_docsSentences, ex2_vectors_of_docs,number_of_docs)
-
+print_results()
 #Comentários:
     # o output do ficheiro 1 (exercise_1.py) está a ser chamado, quando devia estar a correr apenas as funcoes que chamei)
     

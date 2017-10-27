@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 25 11:14:13 2017
-
-@author: RitaRamos
-"""
-
 #!/usr/bin/python3
 
 # Joel Almeida		81609
@@ -24,11 +16,45 @@ import exercise_1
 import re
 import math
 
+def tag_string(s) :
+    sentence = ''
+    tokens = nltk.pos_tag(s)
+    for (a, b) in tokens:
+        sentence = ' '.join([sentence, b])
+    return sentence
+
 def counts_and_tfs_biGrams(file_content, vec):
+    #sentences_found = []
+    #separation = words_separation(file_content)
+    #print(separation)
+    #for s in separation :
+    #    sentence = tag_string(s)
+    #    print("joel", sentence)
+    #    m = re.search(r'(((JJ ?)*(NN.* ?)+(IN))?(JJ ?)*(NN.*)+)+', sentence, re.UNICODE)
+    #    if m:
+    #        sentences_found.append(m.group(1).strip())
+        
+    #print("encontrei",  sentences_found)
+            
     counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
+    
+    #for s in range(len(sentences_found)) :
+    #    found = []
+
+    #    for i in range(len(file_content)) :
+    #        found.append(file_content[i].lower().count(sentences_found[s]))
+    #    found = np.array([found])
+    #    counts_of_terms = np.concatenate((counts_of_terms, found.T), axis=1)
+    
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
     return counts_of_terms,tfs
 
+def words_separation(sentences):
+    words=[]
+    for t in sentences:
+        words.append(re.findall(r'\w+',t.strip().lower()))
+    return words
+ 
 def sentences_ToVectorSpace(content):
     vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b')  #é dado o vocabulario dos documentos
     counts_of_terms_sent, tfs_sent=counts_and_tfs_biGrams(content, vec) #as contagens e os tfs para as frases
@@ -152,6 +178,3 @@ def show_summary(ex1_cosSim, id_doc, AP_sum):
 vector_of_docsSentences,vectors_of_docs, docs_sentences, docs_content =sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
 number_of_docs=len(docs_sentences)
 calculate_cosine_for_the_ex(vector_of_docsSentences, vectors_of_docs,number_of_docs)
-
-
-    

@@ -2,7 +2,7 @@
 
 # Joel Almeida		81609
 # Matilde Goncalves	82091
-# Rita Ramos        86274
+# Rita Ramos          86274
 
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
@@ -12,11 +12,9 @@ import exercise_1
 ex1_AP_sum = 0
 ex1_precision_sum = 0
 ex1_recall_sum = 0
-#ex1_f1=0
 ex2_AP_sum = 0
 ex2_precision_sum = 0
 ex2_recall_sum = 0
-#ex2_f1=0
 
 def get_ideal_summaries_files(path):
     ideal_summaries_filesPath={}
@@ -111,20 +109,14 @@ def calculate_precision_recall_ap(summary_to_user, ideal_summary_allContent,idea
     
     return AP_sum ,precision_sum,recall_sum
 
-def print_results():
-    ex1_precision_mean=(ex1_precision_sum / number_of_docs)
-    ex2_precision_mean=(ex2_precision_sum / number_of_docs)
-    ex1_recall_mean=(ex1_recall_sum / number_of_docs)
-    ex2_recall_mean=(ex2_recall_sum / number_of_docs)
-
-    print("\n Results of exercise 1: \n Precision: ", ex1_precision_mean, "\n Recall:",  ex1_recall_mean, "\n F1:",  (2 * (ex1_precision_mean * ex1_recall_mean) / (ex1_precision_mean + ex1_recall_mean)), '\n MAP: ', (ex1_AP_sum / number_of_docs))
-    print("\n Results of exercise 2: \n Precision: ", ex2_precision_mean, "\n Recall:",  ex2_recall_mean, "\n F1:",  ( 2 * (ex2_precision_mean * ex2_recall_mean) / (ex2_precision_mean + ex2_recall_mean)), '\n MAP: ', (ex2_AP_sum / number_of_docs))
+def print_results(exercise, precision_mean, recall_mean, MAP):
+    print("\n Results of", exercise,": \n Precision: ",precision_mean, "\n Recall:",  recall_mean, "\n F1:",  (2 * (precision_mean * recall_mean) / (precision_mean + recall_mean))," \n MAP: ", MAP)
   
-
 if __name__ == "__main__":
     ideal_summaries_filesPath=get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
     ex1_vector_of_docsSentences, ex1_vectors_of_docs, docs_sentences, docs_content =ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
     number_of_docs=len(docs_sentences)
     ex2_vector_of_docsSentences, ex2_vectors_of_docs=ex2_sentences_and_docs_ToVectorSpace(docs_content, docs_sentences,number_of_docs )
     calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences, ex1_vectors_of_docs,ex2_vector_of_docsSentences, ex2_vectors_of_docs,number_of_docs)
-    print_results()
+    print_results("exercise 1", (ex1_precision_sum / number_of_docs), (ex1_recall_sum / number_of_docs), (ex1_AP_sum / number_of_docs))
+    print_results("exercise 2", (ex2_precision_sum / number_of_docs), (ex2_recall_sum / number_of_docs),(ex2_AP_sum / number_of_docs))

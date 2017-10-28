@@ -4,12 +4,10 @@
 # Matilde Goncalves	82091
 # Rita Ramos        86274
 
-import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import os
 import exercise_1
-import math
 
 ex1_AP_sum = 0
 ex1_precision_sum = 0
@@ -19,15 +17,6 @@ ex2_AP_sum = 0
 ex2_precision_sum = 0
 ex2_recall_sum = 0
 #ex2_f1=0
-
-
-def get_file_separete_into_sentences(f):
-    file_content = open(f, 'rb').read().decode('iso-8859-1')
-    file_content_splitted = file_content.splitlines()
-    sentences=[]
-    for line in file_content_splitted:
-        sentences+=nltk.sent_tokenize(line)
-    return sentences, file_content 
 
 def get_ideal_summaries_files(path):
     ideal_summaries_filesPath={}
@@ -43,17 +32,16 @@ def counts_and_tfs(file_content, vec):
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
     return counts_of_terms,tfs
 
-def sentences_ToVectorSpace(content, docs_vocabulary):
+def sentences_ToVectorSpace(content, docs_vocabulary,idfs ):
     vec = CountVectorizer(vocabulary=docs_vocabulary)  #é dado o vocabulario dos documentos
     counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #as contagens e os tfs para as frases
-    idfs=np.log10(len(counts_of_terms_sent)/((counts_of_terms_sent != 0).sum(0) +1) ) # idfs com smoothing, para não dar zero!
     return tfs_sent*idfs
 
 def doc_ToVectorSpace(content, number_of_docs):
     vec = CountVectorizer()
     counts_of_terms_doc, tfs_doc=counts_and_tfs(content, vec)  # as contagens e tfs para o documento
     idfs=np.log10(number_of_docs/(counts_of_terms_doc != 0).sum(0))  # idfs= log10(len dos docs/ contagem dos docs q tem esse termo)
-    return tfs_doc*idfs, vec.vocabulary_
+    return tfs_doc*idfs, idfs, vec.vocabulary_
 
 def ex1_sentences_and_docs_ToVectorSpace(path):
     docs_sentences={}
@@ -64,10 +52,10 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
     
     for root, dirs, files in os.walk(path):
         for f in files:
-            sentences,file_content= get_file_separete_into_sentences(os.path.join(root, f))
+            file_content,sentences= exercise_1.getFile_and_separete_into_sentences(os.path.join(root, f))
            
-            ex1_docs_sentences_vectors[i], isfs=exercise_1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
-            ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
+            ex1_docs_sentences_vectors[i], isfs, vec=exercise_1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
+            ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs, vec)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
             
             docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
             docs_content.append(file_content) #vão sendo guardado os documentos todos para depois calcular-se para ex2
@@ -77,10 +65,10 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
 
 
 def ex2_sentences_and_docs_ToVectorSpace(docs_content,docs_sentences,number_of_docs ):
-    ex2_docs_vectors, vocabulary=doc_ToVectorSpace(docs_content, number_of_docs)  #converter docs em vector usando o ex2
-    ex2_docs_sentences_vectors={}                                
+    ex2_docs_vectors,idfs,  vocabulary=doc_ToVectorSpace(docs_content, number_of_docs)  #converter docs em vector usando o ex2
+    ex2_docs_sentences_vectors={}   
     for i in range(number_of_docs):
-        ex2_docs_sentences_vectors[i]=sentences_ToVectorSpace(docs_sentences[i], vocabulary)  #converter frases em vector usando o ex2 
+        ex2_docs_sentences_vectors[i]=sentences_ToVectorSpace(docs_sentences[i], vocabulary, idfs)  #converter frases em vector usando o ex2 
     return ex2_docs_sentences_vectors, ex2_docs_vectors
     
 
@@ -97,52 +85,31 @@ def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
     ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences, 5)
     ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences, 5)
-    print('\n For Doc1: ', id_doc)
-    print('\n Ex1 summary: ', ex1_summary_to_user) 
-    summary_sentences,summary_content =get_file_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
-    global ex1_AP_sum, ex1_precision_sum,ex1_recall_sum, ex2_AP_sum, ex2_precision_sum,ex2_recall_sum
-    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum=  calculate_precision_recall_f1_ap(ex1_summary_to_user, summary_content, summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum)
-    print('\n Ex2 summary: ', ex2_summary_to_user)
-    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum= calculate_precision_recall_f1_ap(ex2_summary_to_user, summary_content, summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum)
-    
+    evaluate_summaries(ex1_summary_to_user,ex2_summary_to_user,id_doc)
 
-def calculate_precision_recall_f1_ap(summary_to_user, ideal_summary,summary_sentences,AP_sum ,precision_sum,recall_sum ):
-    RuA = sum(1 for x in summary_to_user if x in ideal_summary)
-    recall = RuA / len(summary_sentences)
-    precision = RuA / len(summary_to_user)
-    
-    print("\n Precision", precision)
-    print("\n Recall", recall)
-    recall_sum+=recall
-    precision_sum+= precision
-                  
-    precision_recall_curve = []
+
+def evaluate_summaries( ex1_summary_to_user,ex2_summary_to_user,id_doc  ):
+    ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
+    global ex1_AP_sum, ex1_precision_sum,ex1_recall_sum, ex2_AP_sum, ex2_precision_sum,ex2_recall_sum
+    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum=  calculate_precision_recall_ap(ex1_summary_to_user, ideal_summary, ideal_summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum)
+    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum= calculate_precision_recall_ap(ex2_summary_to_user, ideal_summary, ideal_summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum)
+
+
+def calculate_precision_recall_ap(summary_to_user, ideal_summary_allContent,ideal_summary_sentences,AP_sum ,precision_sum,recall_sum ):
+    R=len(ideal_summary_sentences)  #relevant docs
+    RuA = sum(1 for x in summary_to_user if x in ideal_summary_allContent) #relevant docs of our output
+    recall_sum+=RuA / R
+    precision_sum+= RuA / len(summary_to_user)
+              
     correct_until_now = 0
+    precisions = 0
     for i in range(len(summary_to_user)) :
-        if summary_to_user[i] in ideal_summary :
+        if summary_to_user[i] in ideal_summary_allContent :
             correct_until_now +=1
-            precision_curve= correct_until_now / (i+1)
-            recall_curve = correct_until_now / len(summary_sentences)
-            precision_recall_curve.append((recall_curve, precision_curve))
-    print(precision_recall_curve)
-    
-    total=0
-    last_index=1
-    for (R,P) in precision_recall_curve:
-        part,truncated_index = math.modf(R * 10)
-        truncated_index=int(truncated_index)
-        for R in range(last_index, truncated_index+1):
-            total += (truncated_index * 0.1) *P
-            
-        last_index=truncated_index+1   
-    AP = 0
-    if correct_until_now > 0:
-        AP = total / correct_until_now               
-    AP_sum+=AP              
+            precisions+= correct_until_now / (i+1)
+    AP_sum+=(precisions/R)
     
     return AP_sum ,precision_sum,recall_sum
-#, recall, f, AP
-
 
 def print_results():
     ex1_precision_mean=(ex1_precision_sum / number_of_docs)
@@ -150,8 +117,8 @@ def print_results():
     ex1_recall_mean=(ex1_recall_sum / number_of_docs)
     ex2_recall_mean=(ex2_recall_sum / number_of_docs)
 
-    print("\n Results of exercise 1: \n Precision: ", (ex1_precision_sum / number_of_docs), "\n Recall:",  (ex1_recall_sum / number_of_docs), "\n F1:",  (2 * (ex1_precision_mean * ex1_recall_mean) / (ex1_precision_mean + ex1_recall_mean)), '\n MAP: ', (ex1_AP_sum / number_of_docs))
-    print("\n Results of exercise 2: \n Precision: ", (ex2_precision_sum / number_of_docs), "\n Recall:",  (ex2_recall_sum / number_of_docs), "\n F1:",  ( 2 * (ex2_precision_mean * ex2_recall_mean) / (ex2_precision_mean + ex2_recall_mean)), '\n MAP: ', (ex2_AP_sum / number_of_docs))
+    print("\n Results of exercise 1: \n Precision: ", ex1_precision_mean, "\n Recall:",  ex1_recall_mean, "\n F1:",  (2 * (ex1_precision_mean * ex1_recall_mean) / (ex1_precision_mean + ex1_recall_mean)), '\n MAP: ', (ex1_AP_sum / number_of_docs))
+    print("\n Results of exercise 2: \n Precision: ", ex2_precision_mean, "\n Recall:",  ex2_recall_mean, "\n F1:",  ( 2 * (ex2_precision_mean * ex2_recall_mean) / (ex2_precision_mean + ex2_recall_mean)), '\n MAP: ', (ex2_AP_sum / number_of_docs))
   
 
 if __name__ == "__main__":

@@ -7,13 +7,16 @@ import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import operator
+import re
 
 def getFile_and_separete_into_sentences(f): #quer para ingles, quer para português (semelhantes)
     file_content = open(f, 'rb').read().decode('iso-8859-1')
     file_content_splitted = file_content.splitlines()
     sentences=[]
     for line in file_content_splitted:
-        sentences+=nltk.sent_tokenize(line)
+        for sentence in nltk.sent_tokenize(line):
+            if len(re.findall(r'\w+',sentence))>0:  #check if the sentence is not only pontuaction
+                sentences.append(sentence)
     return file_content,sentences 
     
 def counts_and_tfs(file_content, vec):
@@ -41,7 +44,10 @@ def cosine_similarity(sentences_vectors,doc_vector):
 
 
 def show_summary(scored_sentences, sentences, number_of_top_sentences):
+    
     scores_sentences_sorted = sorted(scored_sentences.items(), key=operator.itemgetter(1),reverse=True)  # ordenar os scores
+    #print("scored sorted", sentences[scores_sentences_sorted[0][0]])
+                                    
     summary=sorted(scores_sentences_sorted[0:number_of_top_sentences], key=operator.itemgetter(0))  #extrair as x frases mais relevantes summary= (id_sentence, score)  (Ponto 4 done)
     return [sentences[line] for line,sim in summary], summary #imprimir as frases; imprimir summary= (id_sentence, score)
     

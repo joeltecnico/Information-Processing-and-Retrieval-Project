@@ -69,11 +69,11 @@ def show_summary_ordered(summary_of_docs, number_of_docs):
         evaluate_summaries(summary_to_user_MMR, summary_to_user_Top5, i)
 
         
-def evaluate_summaries( summary_to_user, summary_to_user_Top5, id_doc):
+def evaluate_summaries( summary_to_user_MMR, summary_to_user_Top5, id_doc):
     ideal_summaries_filesPath=exercise_2.get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
     ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
     global AP_sum_MMR, precision_sum_MMR,recall_sum_MMR,AP_sum_Top5, precision_sum_Top5,recall_sum_Top5
-    AP_sum_MMR, precision_sum_MMR,recall_sum_MMR=  exercise_2.calculate_precision_recall_ap(summary_to_user, ideal_summary, ideal_summary_sentences,AP_sum_MMR, precision_sum_MMR,recall_sum_MMR)
+    AP_sum_MMR, precision_sum_MMR,recall_sum_MMR=  exercise_2.calculate_precision_recall_ap(summary_to_user_MMR, ideal_summary, ideal_summary_sentences,AP_sum_MMR, precision_sum_MMR,recall_sum_MMR)
     AP_sum_Top5, precision_sum_Top5,recall_sum_Top5=  exercise_2.calculate_precision_recall_ap(summary_to_user_Top5, ideal_summary, ideal_summary_sentences,AP_sum_Top5, precision_sum_Top5,recall_sum_Top5)
 
 

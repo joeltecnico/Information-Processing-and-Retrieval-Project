@@ -57,7 +57,9 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
             
             docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
             docs_content.append(file_content) #vão sendo guardado os documentos todos para depois calcular-se para ex2
+            
             i+=1
+            #break
             
     return  ex1_docs_sentences_vectors, ex1_docs_vectors, docs_sentences,docs_content
 
@@ -116,6 +118,7 @@ if __name__ == "__main__":
     ideal_summaries_filesPath=get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
     ex1_vector_of_docsSentences, ex1_vectors_of_docs, docs_sentences, docs_content =ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
     number_of_docs=len(docs_sentences)
+    
     ex2_vector_of_docsSentences, ex2_vectors_of_docs=ex2_sentences_and_docs_ToVectorSpace(docs_content, docs_sentences,number_of_docs )
     calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences, ex1_vectors_of_docs,ex2_vector_of_docsSentences, ex2_vectors_of_docs,number_of_docs)
     print_results("exercise 1", (ex1_precision_sum / number_of_docs), (ex1_recall_sum / number_of_docs), (ex1_AP_sum / number_of_docs))

@@ -4,20 +4,106 @@
 # Matilde Goncalves	82091
 # Rita Ramos        86274
 
-import nltk
-from sklearn.feature_extraction.text import CountVectorizer
+
 import numpy as np
-import operator
-import os
-from os import listdir
-from os.path import isfile, join
-import codecs
 import exercise_1
 import exercise_2
-import re
-import math
-import collections
+from collections import defaultdict
+import copy
 
+AP_sum = 0
+precision_sum = 0
+recall_sum = 0
+
+
+def cosine_similarity_asNumpy(sentences_vectors,doc_vector):
+    cosSim=[]
+    i=0
+    for sentence_vector in sentences_vectors:
+        cosSim.append( np.dot(sentence_vector,doc_vector)/(np.sqrt(  np.sum(sentence_vector*sentence_vector) )* np.sqrt(np.sum(doc_vector*doc_vector)) ))
+        i+=1
+    return np.array(cosSim)
+
+def calculate_mmr_oficial(vector_of_docsSentences,vectors_of_docs, number_of_docs, docs_sentences):
+    summary_of_docs=defaultdict(list)
+    y=0.1
+    
+    for summary_level in range(5):
+        for i in range(number_of_docs):
+            cosSim_sents_vs_doc=cosine_similarity_asNumpy(vector_of_docsSentences[i] , vectors_of_docs[i][0])
+            cosSim_sents_vs_selectedSents=np.zeros(len(vector_of_docsSentences[i]))            
+            for previous_sentence_selected in summary_of_docs[i]:
+                cosSim_sents_vs_selectedSents+=cosine_similarity_asNumpy(vector_of_docsSentences[i] , previous_sentence_selected[0] )
+                
+            MMR_of_sentences=(1-y)*cosSim_sents_vs_doc-y*(cosSim_sents_vs_selectedSents)
+            
+            #Select sentence with highest MMR
+            index_of_sentence_selected=np.argmax(MMR_of_sentences)  
+            vector_of_sentence_selected=vector_of_docsSentences[i][index_of_sentence_selected]
+            string_of_sentence_selected=docs_sentences[i][index_of_sentence_selected]
+        
+            summary_of_docs[i].append((vector_of_sentence_selected,string_of_sentence_selected ))  #Append selected sentence as its (vector, string)
+
+            #Now that the string was selected, remove it so that it will not be chosen next time 
+            vector_of_docsSentences[i]=np.delete(vector_of_docsSentences[i], index_of_sentence_selected, 0)
+            docs_sentences[i].remove(string_of_sentence_selected)
+            
+    return summary_of_docs
+    
+
+def show_summary_ordered(summary_of_docs, number_of_docs):
+    for i in range(number_of_docs):
+        doc_sentences=docs_sentences[i]
+        indexs_of_selected_sentences=[]
+        for selected_sentence in summary_of_docs[i]:
+            indexs_of_selected_sentences.append(doc_sentences.index(selected_sentence[1]))
+        
+        summary=sorted(indexs_of_selected_sentences)
+
+        summary_to_user=[doc_sentences[line] for line in summary]
+        evaluate_summaries(summary_to_user,i)
+        
+        #if(i==58):
+            #break
+        
+        
+
+def evaluate_summaries( summary_to_user, id_doc):
+    ideal_summaries_filesPath=exercise_2.get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
+    ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
+    global AP_sum, precision_sum,recall_sum
+    AP_sum, precision_sum,recall_sum=  exercise_2.calculate_precision_recall_ap(summary_to_user, ideal_summary, ideal_summary_sentences,AP_sum, precision_sum,recall_sum)
+
+
+
+if __name__ == "__main__":
+    vector_of_docsSentences, vectors_of_docs, docs_sentences, docs_content = exercise_2.ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
+    
+    number_of_docs=len(docs_content)
+    
+    
+    summary_of_docs=calculate_mmr_oficial(vector_of_docsSentences,vectors_of_docs, number_of_docs, copy.deepcopy(docs_sentences))
+    show_summary_ordered(summary_of_docs,number_of_docs )
+    exercise_2.print_results("exercise 4", (precision_sum / number_of_docs),(recall_sum / number_of_docs),(AP_sum/number_of_docs))
+    
+
+            
+            
+            
+            
+    
+         
+            
+            
+    
+        
+        
+    
+
+    
+
+
+'''JOEL PART
 
 def calculate_mmr_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_docs, ex2_vector_of_docsSentences, ex2_vectors_of_docs, number_of_docs):    
     ex1_cosSim_of_docs={}
@@ -37,7 +123,8 @@ def calculate_mmr_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_doc
 
 
 if __name__ == "__main__":
-    ex1_vector_of_docsSentences, ex1_vectors_of_docs, docs_sentences, docs_content = exercise_2.ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
+    vector_of_docsSentences, vectors_of_docs, docs_sentences, docs_content = exercise_2.ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
     number_of_docs=len(docs_sentences)
     ex2_vector_of_docsSentences, ex2_vectors_of_docs=exercise_2.ex2_sentences_and_docs_ToVectorSpace(docs_content, docs_sentences,number_of_docs )
     calculate_mmr_for_the_2_exs(ex1_vector_of_docsSentences, ex1_vectors_of_docs,ex2_vector_of_docsSentences, ex2_vectors_of_docs,number_of_docs)
+    '''

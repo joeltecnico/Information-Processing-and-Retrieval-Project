@@ -55,6 +55,8 @@ def tag_string(s) :
     return sentence
 
 def counts_and_tfs(file_content, vec):
+    counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
+    len_of_vocabulary=len(vec.vocabulary_)
     counting = {}
     separation = words_separation(file_content)
     tagged_sentences = tagger1.tag_sents(separation)
@@ -67,10 +69,12 @@ def counts_and_tfs(file_content, vec):
                 if group not in counting:
                     counting[group] = [0] * len(file_content)
                     counting[group][i] = 1
-                else :
+                    vec.vocabulary_[group]=len_of_vocabulary
+                    len_of_vocabulary+=1
+                    
+                else:
                     counting[group][i] += 1
-                            
-    counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
+                   
     
     found = np.array(list(counting.values()))
     print(np.shape(found))
@@ -78,7 +82,7 @@ def counts_and_tfs(file_content, vec):
     counts_of_terms = np.concatenate((counts_of_terms, found.T), axis=1)
     print(np.shape(counts_of_terms))
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
-    return counts_of_terms,tfs
+    return counts_of_terms,tfs, vec
 
 def counts_and_tfs2(file_content, vec):
     counts_of_terms=vec.fit_transform(file_content).toarray()
@@ -88,7 +92,7 @@ def counts_and_tfs2(file_content, vec):
 
 def sentences_ToVectorSpace(content):
     vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b')  #vocabulario das frases do documento com unigrama e brigrama
-    counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #as contagens e os tfs para as frases
+    counts_of_terms_sent, tfs_sent, vec=counts_and_tfs(content, vec) #as contagens e os tfs para as frases
     
     isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))  # inverve sentence frequency= log10(len dos docs/ contagem dos docs q tem esse termo)
     return tfs_sent*isfs, isfs, vec.vocabulary_

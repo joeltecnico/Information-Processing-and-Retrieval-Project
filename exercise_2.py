@@ -52,8 +52,8 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
         for f in files:
             file_content,sentences= exercise_1.getFile_and_separete_into_sentences(os.path.join(root, f))
            
-            ex1_docs_sentences_vectors[i], isfs, vec=exercise_1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
-            ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs, vec)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
+            ex1_docs_sentences_vectors[i], isfs,counts_of_terms_sent=exercise_1.sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
+            ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs,counts_of_terms_sent)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
             
             docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
             docs_content.append(file_content) #vão sendo guardado os documentos todos para depois calcular-se para ex2

@@ -11,7 +11,7 @@ import operator
 def read_file(file):
     return open(file).read()
     
-def counts_and_tfs(file_content):
+def counts_and_tfs_BM25(file_content):
     k=1.2
     b=0.75
    
@@ -27,7 +27,7 @@ def counts_and_tfs(file_content):
     return counts_of_terms,tfs
     
 
-def sentences_ToVectorSpace(content):
+def sentences_ToVectorSpace_BM25(content):
     counts_of_terms_sent, tfs_sent=counts_and_tfs(content) #as contagens e os tfs para as frases
     print(counts_of_terms_sent)
 
@@ -57,7 +57,7 @@ def show_summary(scored_sentences, sentences):
     
 
 if __name__ == "__main__":
-    file_content=read_file("expLab2.txt")
+    file_content=read_file("TeMario/Textos-fonte/Textos-fonte com título")
     sentences = nltk.sent_tokenize(file_content) #o doc dividido em frases
     sentences_vectors, isfs=sentences_ToVectorSpace(sentences)  #Ponto 1
     doc_vector=doc_ToVectorSpace(file_content, isfs)    #Ponto 2

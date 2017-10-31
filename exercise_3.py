@@ -11,6 +11,7 @@ import os
 import exercise_1
 import exercise_2
 import re
+from nltk.corpus import floresta
 
 AP_sum = 0
 precision_sum = 0
@@ -22,18 +23,20 @@ def simplify_tag(t):
     else:
         return t
     
-from nltk.corpus import floresta
 tsents = floresta.tagged_sents()
 tsents = [[(w.lower(),simplify_tag(t)) for (w,t) in sent] for sent in tsents if sent]
-train = tsents[100:]
-test = tsents[:100]
 tagger0 = nltk.DefaultTagger('n')
-tagger1 = nltk.UnigramTagger(train, backoff=tagger0)
+tagger1 = nltk.UnigramTagger(tsents, backoff=tagger0)
+arrayStopWords=nltk.corpus.stopwords.words('portuguese')
+stemmer=nltk.stem.RSLPStemmer()
 
-def words_separation(sentences):
+
+
+def split_words(sentences):
     words=[]
-    for t in sentences:
-        words.append(re.findall(r'\w+',t.strip().lower()))
+    for sentence in sentences:
+        words.append([word for word in re.findall(r'\w+', sentence.strip().lower()) if word not in arrayStopWords])
+    #print("WORDS FINAL", words)
     return words
    
 def translate_tag(t):
@@ -54,18 +57,36 @@ def tag_string(s) :
         sentence = ' '.join([sentence, j])
     return sentence
 
+
+def remove_stop_words(sentences_words):
+    file_content=[]
+    for sentence in sentences_words:
+        file_content.append(' '.join(word for word in sentence)) 
+    return file_content
+
+
+
 def counts_and_tfs(file_content, vec):
+    words = split_words(file_content)#words separadas e removida
+    
+    
+    file_content=remove_stop_words(words)
+    
     counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
+    
+    
+    
     len_of_vocabulary=len(vec.vocabulary_)
     counting = {}
-    separation = words_separation(file_content)
-    tagged_sentences = tagger1.tag_sents(separation)
+    tagged_sentences = tagger1.tag_sents(words)
     for i in range(len(tagged_sentences)) :
         tag_sentence = tag_string(tagged_sentences[i])
         m = re.findall(r'((( \w+_JJ)*( \w+_NN)+( \w+_IN))?( \w+_JJ)*( \w+_NN)+)+', tag_sentence, re.UNICODE)
         for group_found in m:
             group = group_found[0].strip()
+            
             if len(group.strip().split(' ')) > 2:
+                
                 if group not in counting:
                     counting[group] = [0] * len(file_content)
                     counting[group][i] = 1
@@ -80,13 +101,48 @@ def counts_and_tfs(file_content, vec):
     print(np.shape(found))
     print(np.shape(counts_of_terms))
     counts_of_terms = np.concatenate((counts_of_terms, found.T), axis=1)
-    print(np.shape(counts_of_terms))
-    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
+    
+    #counts_of_terms=np.delete(counts_of_terms, np.argwhere( (counts_of_terms!=0).sum(axis=0) < 3), axis=1)
+
+
+    #counts_of_terms
+    #np.delete(counts_of_terms, 1, 0)
+    
+    print("shape do sent", np.shape(counts_of_terms))
+    
+    k=1.2
+    b=0.75
+    nominator=counts_of_terms*(k+1)
+    length_of_sentences_D=counts_of_terms.sum(1)
+    number_sentences=counts_of_terms.shape[0]
+    avgdl= sum(length_of_sentences_D)/number_sentences
+    denominator=counts_of_terms+(k*(1-b+b*((length_of_sentences_D)/(avgdl))))[:, None] 
+    tfs=nominator/denominator
+    
+    
+    
+    
+    #tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
     return counts_of_terms,tfs, vec
 
 def counts_and_tfs2(file_content, vec):
+    
     counts_of_terms=vec.fit_transform(file_content).toarray()
-    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
+    
+    print("DOC ANTES", np.shape(counts_of_terms))
+    
+    #counts_of_terms=np.delete(counts_of_terms, np.argwhere( counts_of_terms < 3), axis=1)
+    
+    print("COUNT", np.shape(counts_of_terms))
+    #tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
+    k=1.2
+    b=0.75
+    nominator=counts_of_terms*(k+1)
+    length_of_sentences_D=counts_of_terms.sum(1)
+    number_sentences=counts_of_terms.shape[0]
+    avgdl= sum(length_of_sentences_D)/number_sentences
+    denominator=counts_of_terms+(k*(1-b+b*((length_of_sentences_D)/(avgdl))))[:, None] 
+    tfs=nominator/denominator
     return counts_of_terms,tfs
     
 
@@ -94,7 +150,11 @@ def sentences_ToVectorSpace(content):
     vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b')  #vocabulario das frases do documento com unigrama e brigrama
     counts_of_terms_sent, tfs_sent, vec=counts_and_tfs(content, vec) #as contagens e os tfs para as frases
     
-    isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))  # inverve sentence frequency= log10(len dos docs/ contagem dos docs q tem esse termo)
+                                                      
+    total_number_sentences_N=counts_of_terms_sent.shape[0]
+    times_word_sentences_nt=(counts_of_terms_sent!=0).sum(0)
+    isfs=np.log10((total_number_sentences_N-times_word_sentences_nt+0.5)/(times_word_sentences_nt+0.5))  # inverve sentence frequency= log10(len dos docs/ contagem dos docs q tem esse termo)                                                
+    #isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))  # inverve sentence frequency= log10(len dos docs/ contagem dos docs q tem esse termo)
     return tfs_sent*isfs, isfs, vec.vocabulary_
 
 
@@ -118,7 +178,7 @@ def sentences_and_docs_ToVectorSpace(path):
         
             docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
             i+=1
-            break
+            
                   
     return docs_sentences_vectors,docs_vectors,  docs_sentences
 

@@ -13,6 +13,12 @@ import exercise_2
 import re
 from nltk.corpus import floresta
 
+def simplify_tag(t):
+    if "+" in t:
+        return t[t.index("+")+1:]
+    else:
+        return t
+        
 AP_sum = 0
 precision_sum = 0
 recall_sum = 0
@@ -69,7 +75,7 @@ def add_noun_phrases(counts_of_terms_Ngramas, vec, sentences_words ):
     tagged_sentences = tagger1.tag_sents(sentences_words)
     for i in range(len(tagged_sentences)) :
         tag_sentence = tag_string(tagged_sentences[i])
-        m = re.findall(r'((( \w+_JJ)*( \w+_NN)+( \w+_IN))?( \w+_JJ)*( \w+_NN)+)+', tag_sentence, re.UNICODE)
+        m = re.findall(r'(((\w+_adj )*(\w+_(n|prop) )+(\w+_(prp|conj-s|conj-c) ))?(\w+_adj )*(\w+_(n|prop) )+)+', tag_sentence, re.UNICODE)
         for group_found in m:
             group = group_found[0].strip()
             
@@ -107,13 +113,6 @@ def joining(sentences_words):
     for sentence in sentences_words:
         file_content.append(' '.join(word for word in sentence)) 
     return file_content
-
-
-def simplify_tag(t):
-    if "+" in t:
-        return t[t.index("+")+1:]
-    else:
-        return t
       
 def translate_tag(t):
     t = simplify_tag(t)
@@ -129,8 +128,9 @@ def translate_tag(t):
 def tag_string(s) :
     sentence = ''
     for (a, b) in s:
-        j = '_'.join([a, translate_tag(b)])
+        j = '_'.join([a, simplify_tag(b)])
         sentence = ' '.join([sentence, j])
+    sentence = sentence[1:] + ' '
     return sentence
 
 

@@ -35,19 +35,18 @@ stemmer=nltk.stem.RSLPStemmer()
 def remove_stop_words(sentences):
     words=[]
     for sentence in sentences:
-        #words.append([word for word in re.findall(r'\w+', sentence.strip().lower()) ])
-
-        words.append([word for word in re.findall(r'\w+', sentence.strip().lower()) if word not in arrayStopWords])
-    #print("WORDS FINAL", words)
+        words_of_sentence=[word for word in re.findall(r'\w+', sentence.lower()) if word not in arrayStopWords]
+        if len(words_of_sentence) >1: #After removing stop words, check that the sentence is not empty
+            words.append(words_of_sentence)
     return words
    
 def translate_tag(t):
     t = simplify_tag(t)
     if t == 'n' or t == 'prop':
         return 'NN'
-    if t == 'adj':
+    elif t == 'adj':
         return 'JJ'
-    if t == 'prp' or t == 'conj-s' or t == 'conj-c':
+    elif t == 'prp' or t == 'conj-s' or t == 'conj-c':
         return 'IN'
     else :
         return t
@@ -87,11 +86,12 @@ def get_isfs(counts_of_terms_sent):
 
 
 def Ngrams(doc_sentences):
+    words_of_sentences = remove_stop_words(doc_sentences)#words separadas e removida
+    sentences_without_stop_words= joining(words_of_sentences)
+    
     vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b')  #vocabulario das frases do documento com unigrama e brigrama
-    words = remove_stop_words(doc_sentences)#words separadas e removida
-    sentences_without_stop_words= joining(words)
     counts_of_terms=vec.fit_transform(sentences_without_stop_words).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
-    return counts_of_terms, vec, words
+    return counts_of_terms, vec, words_of_sentences
     
 def add_noun_phrases(counts_of_terms_Ngramas, vec, sentences_words ):
     len_of_vocabulary=len(vec.vocabulary_)
@@ -117,6 +117,11 @@ def add_noun_phrases(counts_of_terms_Ngramas, vec, sentences_words ):
     
     found = np.array(list(counting.values()))   
     counts_of_terms_Ngramas_and_nounPhrases = np.concatenate((counts_of_terms_Ngramas, found.T), axis=1)
+    
+    #counts_of_terms_Ngramas_and_nounPhrases=np.delete(counts_of_terms_Ngramas_and_nounPhrases, np.argwhere( (counts_of_terms_Ngramas_and_nounPhrases!=0).sum(axis=0) < 2), axis=1)
+    #counts_of_terms_Ngramas_and_nounPhrases=np.delete(counts_of_terms_Ngramas_and_nounPhrases, np.argwhere( (counts_of_terms_Ngramas_and_nounPhrases!=0).sum(axis=1) ==0), axis=0)
+    
+    #counts_of_terms_Ngramas_and_nounPhrases=np.delete(counts_of_terms_Ngramas_and_nounPhrases,np.argwhere( (((counts_of_terms_Ngramas_and_nounPhrases!=0).sum(axis=0))/len(counts_of_terms_Ngramas_and_nounPhrases))>0.9), axis=1)
     return counts_of_terms_Ngramas_and_nounPhrases
 
 
@@ -130,7 +135,10 @@ def sentences_ToVectorSpace(content):
 
 def doc_ToVectorSpace(content, isfs,docs_vocabulary,counts_of_terms_sent ):    
     counts_of_terms=np.sum(counts_of_terms_sent, axis=0)
-    counts_of_terms=np.expand_dims(counts_of_terms, axis=0)    
+    counts_of_terms=np.expand_dims(counts_of_terms, axis=0)   
+    print("SHPA DOC,", np.shape(counts_of_terms) )
+    print("DOC", counts_of_terms)
+
     score_BM5_without_ISF=get_score_BM5_without_ISF(counts_of_terms)
       
     return score_BM5_without_ISF*isfs
@@ -148,9 +156,8 @@ def sentences_and_docs_ToVectorSpace(path):
             docs_sentences_vectors[i], isfs, vocabulary, counts_of_terms_sent=sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
             docs_vectors[i]=doc_ToVectorSpace(file_content, isfs, vocabulary,counts_of_terms_sent)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
         
-            docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2
+            docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2 
             i+=1
-            
     return docs_sentences_vectors,docs_vectors,  docs_sentences
 
 
@@ -178,4 +185,4 @@ if __name__ == "__main__":
     vector_of_docsSentences,vectors_of_docs, docs_sentences =sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
     number_of_docs=len(docs_sentences)
     calculate_cosine_for_the_ex(vector_of_docsSentences, vectors_of_docs,number_of_docs)
-    exercise_2.print_results("exercise 3.1", (precision_sum / number_of_docs),(recall_sum / number_of_docs),(AP_sum/number_of_docs))
+    exercise_2.print_results("exercise 3", (precision_sum / number_of_docs),(recall_sum / number_of_docs),(AP_sum/number_of_docs))

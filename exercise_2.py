@@ -36,6 +36,7 @@ def sentences_ToVectorSpace(content, docs_vocabulary,idfs ):
     return tfs_sent*idfs
 
 def doc_ToVectorSpace(content, number_of_docs):
+
     vec = CountVectorizer()
     counts_of_terms_doc, tfs_doc=counts_and_tfs(content, vec)  # as contagens e tfs para o documento
     idfs=np.log10(number_of_docs/(counts_of_terms_doc != 0).sum(0))  # idfs= log10(len dos docs/ contagem dos docs q tem esse termo)
@@ -83,28 +84,28 @@ def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_
     
 def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
-    ex1_summary_to_user, ex1_summary=exercise_1.show_summary(ex1_cosSim, doc_sentences, 5)
-    ex2_summary_to_user, ex2_summary= exercise_1.show_summary(ex2_cosSim, doc_sentences, 5)
-    evaluate_summaries(ex1_summary_to_user,ex2_summary_to_user,id_doc)
+    ex1_summary, ex1_scores_sentences=exercise_1.show_summary(ex1_cosSim, doc_sentences, 5)
+    ex2_summary, ex1_scores_sentences= exercise_1.show_summary(ex2_cosSim, doc_sentences, 5)
+    evaluate_summaries(ex1_summary,ex2_summary,id_doc)
 
 
-def evaluate_summaries( ex1_summary_to_user,ex2_summary_to_user,id_doc  ):
+def evaluate_summaries( ex1_summary,ex2_summary,id_doc  ):
     ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
     global ex1_AP_sum, ex1_precision_sum,ex1_recall_sum, ex2_AP_sum, ex2_precision_sum,ex2_recall_sum
-    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum=  calculate_precision_recall_ap(ex1_summary_to_user, ideal_summary, ideal_summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum)
-    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum= calculate_precision_recall_ap(ex2_summary_to_user, ideal_summary, ideal_summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum)
+    ex1_AP_sum, ex1_precision_sum,ex1_recall_sum=  calculate_precision_recall_ap(ex1_summary, ideal_summary, ideal_summary_sentences,ex1_AP_sum, ex1_precision_sum,ex1_recall_sum)
+    ex2_AP_sum, ex2_precision_sum,ex2_recall_sum= calculate_precision_recall_ap(ex2_summary, ideal_summary, ideal_summary_sentences,ex2_AP_sum, ex2_precision_sum,ex2_recall_sum)
 
 
-def calculate_precision_recall_ap(summary_to_user, ideal_summary_allContent,ideal_summary_sentences,AP_sum ,precision_sum,recall_sum ):
+def calculate_precision_recall_ap(summary, ideal_summary_allContent,ideal_summary_sentences,AP_sum ,precision_sum,recall_sum ):
     R=len(ideal_summary_sentences)  #relevant docs
-    RuA = sum(1 for x in summary_to_user if x in ideal_summary_allContent) #relevant docs of our output
+    RuA = sum(1 for x in summary if x in ideal_summary_allContent) #relevant docs of our output
     recall_sum+=RuA / R
-    precision_sum+= RuA / len(summary_to_user)
+    precision_sum+= RuA / len(summary)
               
     correct_until_now = 0
     precisions = 0
-    for i in range(len(summary_to_user)) :
-        if summary_to_user[i] in ideal_summary_allContent :
+    for i in range(len(summary)) :
+        if summary[i] in ideal_summary_allContent :
             correct_until_now +=1
             precisions+= correct_until_now / (i+1)
     AP_sum+=(precisions/R)

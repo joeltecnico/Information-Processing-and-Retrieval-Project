@@ -24,7 +24,6 @@ arrayStopWords=nltk.corpus.stopwords.words('portuguese')
 stemmer=nltk.stem.RSLPStemmer()
 
 
-
 def sentences_and_docs_ToVectorSpace(path):
     docs_sentences={}
     i=0
@@ -52,9 +51,6 @@ def sentences_ToVectorSpace(content):
 def doc_ToVectorSpace(content, isfs,docs_vocabulary,counts_of_terms_sent ):    
     counts_of_terms=np.sum(counts_of_terms_sent, axis=0)
     counts_of_terms=np.expand_dims(counts_of_terms, axis=0)   
-    print("SHPA DOC,", np.shape(counts_of_terms) )
-    print("DOC", counts_of_terms)
-
     score_BM5_without_ISF=get_score_BM5_without_ISF(counts_of_terms)
     return score_BM5_without_ISF*isfs
 
@@ -165,14 +161,14 @@ def calculate_cosine_for_the_ex(vector_of_docsSentences,  vectors_of_docs, numbe
 
 def show_summary(cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
-    summary_to_user, summary=exercise_1.show_summary(cosSim, doc_sentences, 5)
-    evaluate_summaries(summary_to_user,id_doc)
+    summary, scores_sentences=exercise_1.show_summary(cosSim, doc_sentences, 5)
+    evaluate_summaries(summary,id_doc)
 
 
-def evaluate_summaries( summary_to_user, id_doc):
+def evaluate_summaries( summary, id_doc):
     ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
     global AP_sum, precision_sum,recall_sum
-    AP_sum, precision_sum,recall_sum=  exercise_2.calculate_precision_recall_ap(summary_to_user, ideal_summary, ideal_summary_sentences,AP_sum, precision_sum,recall_sum)
+    AP_sum, precision_sum,recall_sum=  exercise_2.calculate_precision_recall_ap(summary, ideal_summary, ideal_summary_sentences,AP_sum, precision_sum,recall_sum)
 
     
 if __name__ == "__main__":

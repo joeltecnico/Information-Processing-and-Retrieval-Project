@@ -12,6 +12,8 @@ import exercise_1
 import exercise_2
 import re
 from nltk.corpus import floresta
+from nltk.tag import hmm
+#from nltk.tag import perceptron
 
 def simplify_tag(t):
     if "+" in t:
@@ -24,10 +26,16 @@ precision_sum = 0
 recall_sum = 0
 tsents = floresta.tagged_sents()
 tsents = [[(w.lower(),simplify_tag(t)) for (w,t) in sent] for sent in tsents if sent]
-tagger0 = nltk.DefaultTagger('n')
-tagger1 = nltk.UnigramTagger(tsents, backoff=tagger0)
+#tagger0 = nltk.DefaultTagger('n')
+#tagger1 = nltk.UnigramTagger(tsents, backoff=tagger0)
 arrayStopWords=nltk.corpus.stopwords.words('portuguese')
 stemmer=nltk.stem.RSLPStemmer()
+
+trainer = hmm.HiddenMarkovModelTrainer()
+tagger = trainer.train_supervised(tsents)
+
+#tagger = perceptron.PerceptronTagger(load=False)
+#tagger.train(tsents)
 
 
 def sentences_and_docs_ToVectorSpace(path):
@@ -72,7 +80,7 @@ def Ngrams(doc_sentences):
 def add_noun_phrases(counts_of_terms_Ngramas, vec, sentences_words ):
     len_of_vocabulary=len(vec.vocabulary_)
     counting = {}
-    tagged_sentences = tagger1.tag_sents(sentences_words)
+    tagged_sentences = tagger.tag_sents(sentences_words)
     for i in range(len(tagged_sentences)) :
         tag_sentence = tag_string(tagged_sentences[i])
         m = re.findall(r'(((\w+_adj )*(\w+_(n|prop) )+(\w+_(prp|conj-s|conj-c) ))?(\w+_adj )*(\w+_(n|prop) )+)+', tag_sentence, re.UNICODE)

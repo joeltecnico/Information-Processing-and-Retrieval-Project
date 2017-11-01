@@ -16,13 +16,6 @@ from nltk.corpus import floresta
 AP_sum = 0
 precision_sum = 0
 recall_sum = 0
-
-def simplify_tag(t):
-    if "+" in t:
-        return t[t.index("+")+1:]
-    else:
-        return t
-    
 tsents = floresta.tagged_sents()
 tsents = [[(w.lower(),simplify_tag(t)) for (w,t) in sent] for sent in tsents if sent]
 tagger0 = nltk.DefaultTagger('n')
@@ -32,57 +25,38 @@ stemmer=nltk.stem.RSLPStemmer()
 
 
 
-def remove_stop_words(sentences):
-    words=[]
-    for sentence in sentences:
-        words_of_sentence=[word for word in re.findall(r'\w+', sentence.lower()) if word not in arrayStopWords]
-        if len(words_of_sentence) >1: #After removing stop words, check that the sentence is not empty
-            words.append(words_of_sentence)
-    return words
-   
-def translate_tag(t):
-    t = simplify_tag(t)
-    if t == 'n' or t == 'prop':
-        return 'NN'
-    elif t == 'adj':
-        return 'JJ'
-    elif t == 'prp' or t == 'conj-s' or t == 'conj-c':
-        return 'IN'
-    else :
-        return t
+def sentences_and_docs_ToVectorSpace(path):
+    docs_sentences={}
+    i=0
+    docs_sentences_vectors={}
+    docs_vectors={}
+    
+    for root, dirs, files in os.walk(path):
+        for f in files:
+            file_content,sentences= exercise_1.getFile_and_separete_into_sentences(os.path.join(root, f))
+           
+            docs_sentences_vectors[i], isfs, vocabulary, counts_of_terms_sent=sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
+            docs_vectors[i]=doc_ToVectorSpace(file_content, isfs, vocabulary,counts_of_terms_sent)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
         
-def tag_string(s) :
-    sentence = ''
-    for (a, b) in s:
-        j = '_'.join([a, translate_tag(b)])
-        sentence = ' '.join([sentence, j])
-    return sentence
+            docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2 
+            i+=1
+    return docs_sentences_vectors,docs_vectors,  docs_sentences
 
+def sentences_ToVectorSpace(content):
+    counts_of_terms_Ngramas,vec, sentences_words=Ngrams(content) #as contagens e os tfs para as frases
+    counts_of_terms_Ngramas_and_nounPhrases=add_noun_phrases(counts_of_terms_Ngramas, vec, sentences_words)                                       
+    score_BM5_without_ISF=get_score_BM5_without_ISF(counts_of_terms_Ngramas_and_nounPhrases)
+    isfs=get_isfs(counts_of_terms_Ngramas_and_nounPhrases)
+    return score_BM5_without_ISF*isfs, isfs, vec.vocabulary_,counts_of_terms_Ngramas_and_nounPhrases
 
-def joining(sentences_words):
-    file_content=[]
-    for sentence in sentences_words:
-        file_content.append(' '.join(word for word in sentence)) 
-    return file_content
+def doc_ToVectorSpace(content, isfs,docs_vocabulary,counts_of_terms_sent ):    
+    counts_of_terms=np.sum(counts_of_terms_sent, axis=0)
+    counts_of_terms=np.expand_dims(counts_of_terms, axis=0)   
+    print("SHPA DOC,", np.shape(counts_of_terms) )
+    print("DOC", counts_of_terms)
 
-
-
-def get_score_BM5_without_ISF(counts_of_terms):
-    k=1.2
-    b=0.75
-    nominator=counts_of_terms*(k+1)
-    length_of_sentences_D=counts_of_terms.sum(1)
-    number_sentences=counts_of_terms.shape[0]
-    avgdl= sum(length_of_sentences_D)/number_sentences
-    denominator=counts_of_terms+(k*(1-b+b*((length_of_sentences_D)/(avgdl))))[:, None] 
-    score_BM5_without_ISF=nominator/denominator
-    return score_BM5_without_ISF
-
-def get_isfs(counts_of_terms_sent):
-    total_number_sentences_N=counts_of_terms_sent.shape[0]
-    times_word_sentences_nt=(counts_of_terms_sent!=0).sum(0)
-    isfs=np.log10((total_number_sentences_N-times_word_sentences_nt+0.5)/(times_word_sentences_nt+0.5))  # inverve sentence frequency= log10(len dos docs/ contagem dos docs q tem esse termo)                   
-    return isfs
+    score_BM5_without_ISF=get_score_BM5_without_ISF(counts_of_terms)
+    return score_BM5_without_ISF*isfs
 
 
 def Ngrams(doc_sentences):
@@ -124,41 +98,62 @@ def add_noun_phrases(counts_of_terms_Ngramas, vec, sentences_words ):
     #counts_of_terms_Ngramas_and_nounPhrases=np.delete(counts_of_terms_Ngramas_and_nounPhrases,np.argwhere( (((counts_of_terms_Ngramas_and_nounPhrases!=0).sum(axis=0))/len(counts_of_terms_Ngramas_and_nounPhrases))>0.9), axis=1)
     return counts_of_terms_Ngramas_and_nounPhrases
 
+def remove_stop_words(sentences):
+    words=[]
+    for sentence in sentences:
+        words_of_sentence=[word for word in re.findall(r'\w+', sentence.lower()) if word not in arrayStopWords]
+        if len(words_of_sentence) >1: #After removing stop words, check that the sentence is not empty
+            words.append(words_of_sentence)
+    return words
+
+def joining(sentences_words):
+    file_content=[]
+    for sentence in sentences_words:
+        file_content.append(' '.join(word for word in sentence)) 
+    return file_content
 
 
-def sentences_ToVectorSpace(content):
-    counts_of_terms_Ngramas,vec, sentences_words=Ngrams(content) #as contagens e os tfs para as frases
-    counts_of_terms_Ngramas_and_nounPhrases=add_noun_phrases(counts_of_terms_Ngramas, vec, sentences_words)                                       
-    score_BM5_without_ISF=get_score_BM5_without_ISF(counts_of_terms_Ngramas_and_nounPhrases)
-    isfs=get_isfs(counts_of_terms_Ngramas_and_nounPhrases)
-    return score_BM5_without_ISF*isfs, isfs, vec.vocabulary_,counts_of_terms_Ngramas_and_nounPhrases
-
-def doc_ToVectorSpace(content, isfs,docs_vocabulary,counts_of_terms_sent ):    
-    counts_of_terms=np.sum(counts_of_terms_sent, axis=0)
-    counts_of_terms=np.expand_dims(counts_of_terms, axis=0)   
-    print("SHPA DOC,", np.shape(counts_of_terms) )
-    print("DOC", counts_of_terms)
-
-    score_BM5_without_ISF=get_score_BM5_without_ISF(counts_of_terms)
+def simplify_tag(t):
+    if "+" in t:
+        return t[t.index("+")+1:]
+    else:
+        return t
       
-    return score_BM5_without_ISF*isfs
-
-def sentences_and_docs_ToVectorSpace(path):
-    docs_sentences={}
-    i=0
-    docs_sentences_vectors={}
-    docs_vectors={}
-    
-    for root, dirs, files in os.walk(path):
-        for f in files:
-            file_content,sentences= exercise_1.getFile_and_separete_into_sentences(os.path.join(root, f))
-           
-            docs_sentences_vectors[i], isfs, vocabulary, counts_of_terms_sent=sentences_ToVectorSpace(sentences)   #converter frases para vectores, usando ex 1
-            docs_vectors[i]=doc_ToVectorSpace(file_content, isfs, vocabulary,counts_of_terms_sent)                #converter doc para vector, usando ex 1 (argument2: inverse sentence frequency)
+def translate_tag(t):
+    t = simplify_tag(t)
+    if t == 'n' or t == 'prop':
+        return 'NN'
+    elif t == 'adj':
+        return 'JJ'
+    elif t == 'prp' or t == 'conj-s' or t == 'conj-c':
+        return 'IN'
+    else :
+        return t
         
-            docs_sentences[i] = sentences     #vão sendo guardadas as frases para depois calcular para ex2 
-            i+=1
-    return docs_sentences_vectors,docs_vectors,  docs_sentences
+def tag_string(s) :
+    sentence = ''
+    for (a, b) in s:
+        j = '_'.join([a, translate_tag(b)])
+        sentence = ' '.join([sentence, j])
+    return sentence
+
+
+def get_score_BM5_without_ISF(counts_of_terms):
+    k=1.2
+    b=0.75
+    nominator=counts_of_terms*(k+1)
+    length_of_sentences_D=counts_of_terms.sum(1)
+    number_sentences=counts_of_terms.shape[0]
+    avgdl= sum(length_of_sentences_D)/number_sentences
+    denominator=counts_of_terms+(k*(1-b+b*((length_of_sentences_D)/(avgdl))))[:, None] 
+    score_BM5_without_ISF=nominator/denominator
+    return score_BM5_without_ISF
+
+def get_isfs(counts_of_terms_sent):
+    total_number_sentences_N=counts_of_terms_sent.shape[0]
+    times_word_sentences_nt=(counts_of_terms_sent!=0).sum(0)
+    isfs=np.log10((total_number_sentences_N-times_word_sentences_nt+0.5)/(times_word_sentences_nt+0.5))  # inverve sentence frequency= log10(len dos docs/ contagem dos docs q tem esse termo)                   
+    return isfs
 
 
 def calculate_cosine_for_the_ex(vector_of_docsSentences,  vectors_of_docs, number_of_docs):    

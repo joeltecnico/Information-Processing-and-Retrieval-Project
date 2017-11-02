@@ -61,11 +61,13 @@ def show_summary_ordered(summary_of_docs, number_of_docs):
         indexs_of_selected_sentences=[]
         for selected_sentence in summary_of_docs[i]:
             indexs_of_selected_sentences.append(doc_sentences.index(selected_sentence[1]))
-        #summary=sorted(indexs_of_selected_sentences) # to  show to the user
+        
         summary_MMR=[doc_sentences[line] for line in indexs_of_selected_sentences]
         summary_Top5=doc_sentences[0:5]
-        
         evaluate_summaries(summary_MMR, summary_Top5, i)
+        
+        summary_to_user= [doc_sentences[line] for line in  sorted(indexs_of_selected_sentences)]
+        print("\nDoc ",i, ": \n\nEx4- Summary to user:", summary_to_user)
 
         
 def evaluate_summaries( summary_to_user_MMR, summary_to_user_Top5, id_doc):

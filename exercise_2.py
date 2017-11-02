@@ -84,8 +84,9 @@ def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_
     
 def show_summary_for_the_2_exs(ex1_cosSim,ex2_cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
-    ex1_summary, ex1_scores_sentences=exercise_1.show_summary(ex1_cosSim, doc_sentences, 5)
-    ex2_summary, ex1_scores_sentences= exercise_1.show_summary(ex2_cosSim, doc_sentences, 5)
+    ex1_summary, ex1_summary_to_user=exercise_1.show_summary(ex1_cosSim, doc_sentences, 5)
+    ex2_summary, ex2_summary_to_user= exercise_1.show_summary(ex2_cosSim, doc_sentences, 5)
+    print("\nDoc ",id_doc, ": \n\nEx1- Summary to user:", ex1_summary_to_user, ": \n\nEx2- Summary to user:", ex2_summary_to_user)
     evaluate_summaries(ex1_summary,ex2_summary,id_doc)
 
 

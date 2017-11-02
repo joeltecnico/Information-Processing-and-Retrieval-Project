@@ -45,14 +45,13 @@ def cosine_similarity(sentences_vectors,doc_vector):
     return cosSim
 
 def show_summary(scored_sentences, sentences, number_of_top_sentences):
-    scores_sentences_sorted = sorted(scored_sentences.items(), key=operator.itemgetter(1),reverse=True)[0:number_of_top_sentences]  # ordenar os scores
-    summary=[sentences[line] for line,sim in scores_sentences_sorted] #frases + relevantes
-    return summary, scores_sentences_sorted # frases, pontuacoes
+    scores_sorted_bySimilarity = sorted(scored_sentences.items(), key=operator.itemgetter(1),reverse=True)[0:number_of_top_sentences]  # ordenar os scores por relevancia
+    scores_sorted_byAppearance=sorted(scores_sorted_bySimilarity, key=operator.itemgetter(0))  #order por + appearance summary= (id_sentence, score)  (Ponto 4 done)
+    summary=[sentences[line] for line,sim in scores_sorted_bySimilarity] #frases por ordem de relevancia
+    summary_to_user= [sentences[line] for line,sim in scores_sorted_byAppearance] #frases pela ordem que aparecem
+    return summary, summary_to_user  # frases, pontuacoes
 
-def show_summary_to_user(sorted_scores_sentences, sentences):
-    summary=sorted(sorted_scores_sentences, key=operator.itemgetter(0))  #extrair as x frases mais relevantes summary= (id_sentence, score)  (Ponto 4 done)
-    return [sentences[line] for line,sim in summary] #imprimir as frases; imprimir summary= (id_sentence, score)
-    
+
 
 if __name__ == "__main__":
     file_content, sentences=getFile_and_separete_into_sentences("script1.txt")            
@@ -62,8 +61,7 @@ if __name__ == "__main__":
     print("The vectors of the sentences:\n", sentences_vectors,"\n\n The vector of the document:\n", doc_vector)    
     
     scored_sentences=cosine_similarity(sentences_vectors,doc_vector[0])  #Ponto 3 done
-    summary, scores_sentences_sorted=show_summary(scored_sentences, sentences,3)
-    summary_to_user=show_summary_to_user(scores_sentences_sorted, sentences)
+    summary, summary_to_user=show_summary(scored_sentences, sentences,3)
 
     print("\n Summary: ", summary, "\n\n Result to the user",summary_to_user )  #Ponto 5 done, end!
 

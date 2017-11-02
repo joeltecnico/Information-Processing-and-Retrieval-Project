@@ -166,7 +166,8 @@ def calculate_cosine_for_the_ex(vector_of_docsSentences,  vectors_of_docs, numbe
 
 def show_summary(cosSim, id_doc):
     doc_sentences=docs_sentences[id_doc]
-    summary, scores_sentences=exercise_1.show_summary(cosSim, doc_sentences, 5)
+    summary, summary_to_user=exercise_1.show_summary(cosSim, doc_sentences, 5)
+    print("\nDoc ",id_doc, ": \n\nEx3- Summary to user:", summary_to_user)
     evaluate_summaries(summary,id_doc)
 
 

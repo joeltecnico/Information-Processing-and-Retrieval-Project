@@ -16,10 +16,7 @@ from nltk.tag import hmm
 #from nltk.tag import perceptron
 
 def simplify_tag(t):
-    if "+" in t:
-        return t[t.index("+")+1:]
-    else:
-        return t
+    return t[t.index("+")+1:] if '+' in t else t
         
 AP_sum = 0
 precision_sum = 0

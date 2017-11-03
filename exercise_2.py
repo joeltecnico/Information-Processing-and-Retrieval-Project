@@ -36,21 +36,20 @@ def ex1_sentences_and_docs_ToVectorSpace(path):
         for f in files:
             file_content,sentences= exercise_1.getFile_and_separete_into_sentences(os.path.join(root, f))
            
-            ex1_docs_sentences_vectors[i], isfs,counts_of_terms_sent=exercise_1.sentences_ToVectorSpace(sentences)   #Vector space das frases usando o exercicio1 
-            ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs,counts_of_terms_sent)  #Vector space dos documentos usando o exercicio1
+            ex1_docs_sentences_vectors[i], isfs,counts_of_terms_sent=exercise_1.sentences_ToVectorSpace(sentences)   #ex1: frases em vector 
+            ex1_docs_vectors[i]=exercise_1.doc_ToVectorSpace(file_content, isfs,counts_of_terms_sent)  #ex1: doc em vector
             
-            docs_sentences[i] = sentences     # as frases vao sendo guardadas para depois calcular o vector space para ex2
-            docs_content.append(file_content) # os documentos vao sendo guardados para depois calcular o vector space para ex2
+            docs_sentences[i] = sentences     # as frases vao sendo guardadas para depois representar os vectores das frases do ex2
+            docs_content.append(file_content) # os documentos vao sendo guardados para depois representar os vectores dos docs do ex2
             
             i+=1
                        
     return  ex1_docs_sentences_vectors, ex1_docs_vectors, docs_sentences,docs_content
 
 def doc_ToVectorSpace(content, number_of_docs):
-
     vec = CountVectorizer()
     counts_of_terms_doc, tfs_doc=counts_and_tfs(content, vec)  # Contagem e tfs para os documentos
-    idfs=np.log10(number_of_docs/(counts_of_terms_doc != 0).sum(0))  # idfs= log10(len docs/ frequencia dos docs com o termo)
+    idfs=np.log10(number_of_docs/(counts_of_terms_doc != 0).sum(0))  # idfs= log10(len docs/ nº de docs com o termo)
     return tfs_doc*idfs, idfs, vec.vocabulary_
 
 def counts_and_tfs(file_content, vec):
@@ -60,19 +59,17 @@ def counts_and_tfs(file_content, vec):
 
 
 def ex2_sentences_and_docs_ToVectorSpace(docs_content,docs_sentences,number_of_docs ):
-    ex2_docs_vectors,idfs,  vocabulary=doc_ToVectorSpace(docs_content, number_of_docs)  #vector space do documento usando o ex2
+    ex2_docs_vectors,idfs,  vocabulary=doc_ToVectorSpace(docs_content, number_of_docs)  #vector do documento do ex2
     ex2_docs_sentences_vectors={}   
     for i in range(number_of_docs):
-        ex2_docs_sentences_vectors[i]=sentences_ToVectorSpace(docs_sentences[i], vocabulary, idfs)  #vector space das frases usando o ex2 
+        ex2_docs_sentences_vectors[i]=sentences_ToVectorSpace(docs_sentences[i], vocabulary, idfs)  #vector das frases do ex2 
     return ex2_docs_sentences_vectors, ex2_docs_vectors
-
 
 def sentences_ToVectorSpace(content, docs_vocabulary,idfs ):
     vec = CountVectorizer(vocabulary=docs_vocabulary)  #Vocabulario do documento
     counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) # Contagem dos termos e tfs das frases
     return tfs_sent*idfs
    
-
 def calculate_cosine_for_the_2_exs(ex1_vector_of_docsSentences,  ex1_vectors_of_docs, ex2_vector_of_docsSentences, ex2_vectors_of_docs, number_of_docs):    
     ex1_cosSim_of_docs={}
     ex2_cosSim_of_docs={}

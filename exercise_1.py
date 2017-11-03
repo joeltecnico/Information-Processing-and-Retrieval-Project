@@ -2,7 +2,6 @@
 # Matilde Gonรงalves	82091
 # Rita Ramos		86274
 
-
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
@@ -28,14 +27,13 @@ def sentences_ToVectorSpace(content):
 
 
 def counts_and_tfs(file_content, vec):
-    counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array (lines=sentences or documents, cols=terms) 
-    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #terms' frequency 
+    counts_of_terms=vec.fit_transform(file_content).toarray() 
+    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
     return counts_of_terms,tfs
 
 
-
 def doc_ToVectorSpace(content, isfs, counts_of_terms_sent):
-    counts_of_terms=np.sum(counts_of_terms_sent, axis=0) 
+    counts_of_terms=np.sum(counts_of_terms_sent, axis=0) #summing the terms counts of each sentence
     counts_of_terms=np.expand_dims(counts_of_terms, axis=0)  #numpy array (lines=documents, cols=terms) 
     tfs_doc=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  
     return tfs_doc*isfs
@@ -54,9 +52,8 @@ def show_summary(scored_sentences, sentences, number_of_top_sentences):
     scores_sorted_bySimilarity = sorted(scored_sentences.items(), key=operator.itemgetter(1),reverse=True)[0:number_of_top_sentences]  # sort the scores by relevance
     scores_sorted_byAppearance=sorted(scores_sorted_bySimilarity, key=operator.itemgetter(0))  #sort by appearance summary= (id_sentence, score)  
     summary=[sentences[line] for line,sim in scores_sorted_bySimilarity] 
-    summary_to_user= [sentences[line] for line,sim in scores_sorted_byAppearance] # Sentences in their original order
+    summary_to_user= [sentences[line] for line,sim in scores_sorted_byAppearance] # Sentences in their appearance order
     return summary, summary_to_user  
-
 
 
 if __name__ == "__main__":

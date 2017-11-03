@@ -129,7 +129,7 @@ def tag_string(s) :
 
 
 def get_score_BM5_without_ISF(counts_of_terms):
-    k=1.2
+    k=2
     b=0.75
     nominator=counts_of_terms*(k+1)
     length_of_sentences_D=counts_of_terms.sum(1)

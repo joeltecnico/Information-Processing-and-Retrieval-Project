@@ -19,14 +19,6 @@ precision_sum_Top5=0
 recall_sum_Top5= 0
 
 
-def cosine_similarity_asNumpy(sentences_vectors,doc_vector):
-    cosSim=[]
-    i=0
-    for sentence_vector in sentences_vectors:
-        cosSim.append( np.dot(sentence_vector,doc_vector)/(np.sqrt(  np.sum(sentence_vector*sentence_vector) )* np.sqrt(np.sum(doc_vector*doc_vector)) ))
-        i+=1
-    return np.array(cosSim)
-
 def calculate_mmr_oficial(vector_of_docsSentences,vectors_of_docs, number_of_docs, docs_sentences):
     summary_of_docs=defaultdict(list)
     y=1/5
@@ -53,7 +45,16 @@ def calculate_mmr_oficial(vector_of_docsSentences,vectors_of_docs, number_of_doc
             docs_sentences[i].remove(string_of_sentence_selected)
             
     return summary_of_docs
-    
+
+
+def cosine_similarity_asNumpy(sentences_vectors,doc_vector):
+    cosSim=[]
+    i=0
+    for sentence_vector in sentences_vectors:
+        cosSim.append( np.dot(sentence_vector,doc_vector)/(np.sqrt(  np.sum(sentence_vector*sentence_vector) )* np.sqrt(np.sum(doc_vector*doc_vector)) ))
+        i+=1
+    return np.array(cosSim) 
+
 
 def show_summary_ordered(summary_of_docs, number_of_docs):
     for i in range(number_of_docs):

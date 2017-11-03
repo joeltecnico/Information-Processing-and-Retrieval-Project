@@ -26,20 +26,20 @@ def get_ideal_summaries_files(path):
         return ideal_summaries_filesPath
 
 def counts_and_tfs(file_content, vec):
-    counts_of_terms=vec.fit_transform(file_content).toarray()  #numpy array com as respectivas contages dos termos (linha=doc,col=termo, value=contagem)
-    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max termo
+    counts_of_terms=vec.fit_transform(file_content).toarray()  #terms (lines=doc,col=termo, value=frequency)
+    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]  #tf= freq/max term
     return counts_of_terms,tfs
 
 def sentences_ToVectorSpace(content, docs_vocabulary,idfs ):
-    vec = CountVectorizer(vocabulary=docs_vocabulary)  #é dado o vocabulario dos documentos
-    counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #as contagens e os tfs para as frases
+    vec = CountVectorizer(vocabulary=docs_vocabulary)  #give us the documents' vocabulary
+    counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) # the frequency of the terms and the tfs for the sentences
     return tfs_sent*idfs
 
 def doc_ToVectorSpace(content, number_of_docs):
 
     vec = CountVectorizer()
-    counts_of_terms_doc, tfs_doc=counts_and_tfs(content, vec)  # as contagens e tfs para o documento
-    idfs=np.log10(number_of_docs/(counts_of_terms_doc != 0).sum(0))  # idfs= log10(len dos docs/ contagem dos docs q tem esse termo)
+    counts_of_terms_doc, tfs_doc=counts_and_tfs(content, vec)  # the frequency of the terms and the tfs for the documents
+    idfs=np.log10(number_of_docs/(counts_of_terms_doc != 0).sum(0))  # idfs= log10(len docs/ frequency of the docs that have the term)
     return tfs_doc*idfs, idfs, vec.vocabulary_
 
 def ex1_sentences_and_docs_ToVectorSpace(path):

@@ -118,17 +118,6 @@ def joining(sentences_words):
     for sentence in sentences_words:
         file_content.append(' '.join(word for word in sentence)) 
     return file_content
-      
-def translate_tag(t):
-    t = simplify_tag(t)
-    if t == 'n' or t == 'prop':
-        return 'NN'
-    elif t == 'adj':
-        return 'JJ'
-    elif t == 'prp' or t == 'conj-s' or t == 'conj-c':
-        return 'IN'
-    else :
-        return t
         
 def tag_string(s) :
     sentence = ''

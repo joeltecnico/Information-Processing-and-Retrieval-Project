@@ -14,6 +14,8 @@ import re
 from nltk.corpus import floresta
 from nltk.tag import hmm
 
+def simplify_tag(t):# http://www.nltk.org/howto/portuguese_en.html
+    return t[t.index("+")+1:] if '+' in t else t
 
 AP_sum = 0
 precision_sum = 0
@@ -58,7 +60,7 @@ def doc_ToVectorSpace(content, isfs,counts_of_terms_sent ):
 def Ngrams(doc_sentences):
     words_of_sentences = remove_stop_words(doc_sentences)
     sentences_without_stop_words= joining(words_of_sentences) 
-    vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b')  #para o vocabulario ser com uni e brigramas
+    vec = CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b') #vocabulario ser com uni e brigramas
     counts_of_terms=vec.fit_transform(sentences_without_stop_words).toarray()
     return counts_of_terms, words_of_sentences
     
@@ -67,11 +69,12 @@ def add_noun_phrases(counts_of_terms_Ngramas, sentences_words ):
     tagged_sentences = tagger.tag_sents(sentences_words)
     for i in range(len(tagged_sentences)) :
         tagged_sentence = tag_string(tagged_sentences[i])
-        m = re.findall(r'(((\w+_adj )*(\w+_(n|prop) )+(\w+_(prp|conj-s|conj-c) ))?(\w+_adj )*(\w+_(n|prop) )+)+', tagged_sentence, re.UNICODE)
+        m = re.findall(r'(((\w+_adj )*(\w+_(n|prop) )+(\w+_(prp|conj-s|conj-c) ))?(\w+_adj )*(\w+_(n|prop) )+)+'
+            , tagged_sentence, re.UNICODE)
         for group_found in m:
             noun_phrase = group_found[0].strip()
             
-            if len(noun_phrase.strip().split(' ')) > 2: #para não termos termos iguais (uni e bigrams já sao considerados)
+            if len(noun_phrase.strip().split(' ')) > 2: 
                 if noun_phrase not in counting:
                     counting[noun_phrase] = [0] * len(sentences_words)
                     counting[noun_phrase][i] = 1  
@@ -85,8 +88,9 @@ def add_noun_phrases(counts_of_terms_Ngramas, sentences_words ):
 def remove_stop_words(sentences): #para cada frase, vamos retirar as stop words
     words=[]
     for sentence in sentences:
-        words_of_sentence=[word for word in re.findall(r'\w+', sentence.lower()) if word not in arrayStopWords]
-        if len(words_of_sentence) >1: #Depois de remover as stop words, verificar se a frase não ficou vazia
+        words_of_sentence=[word for word in re.findall(r'\w+', sentence.lower()) if word
+            not in arrayStopWords]
+        if len(words_of_sentence) >1: #Apos remover stopWrds, verificar se a frase não ficou vazia
             words.append(words_of_sentence)
     return words
 
@@ -104,8 +108,7 @@ def tag_string(s) :
     sentence = sentence[1:] + ' '
     return sentence
 
-def simplify_tag(t):# http://www.nltk.org/howto/portuguese_en.html
-    return t[t.index("+")+1:] if '+' in t else t
+
 
 def get_score_BM5_without_ISF(counts_of_terms):
     k=2
@@ -137,13 +140,18 @@ def show_summary(cosSim, id_doc):
     evaluate_summaries(summary,id_doc)
 
 def evaluate_summaries( summary, id_doc):
-    ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
+    ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences(
+            ideal_summaries_filesPath[id_doc])  
     global AP_sum, precision_sum,recall_sum
-    AP_sum, precision_sum,recall_sum=  exercise_2.calculate_precision_recall_ap(summary, ideal_summary, ideal_summary_sentences,AP_sum, precision_sum,recall_sum)
+    AP_sum, precision_sum,recall_sum=  exercise_2.calculate_precision_recall_ap(summary,
+            ideal_summary, ideal_summary_sentences,AP_sum, precision_sum,recall_sum)
 
 if __name__ == "__main__":
-    ideal_summaries_filesPath=exercise_2.get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
-    vector_of_docsSentences,vectors_of_docs, docs_sentences =sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
+    ideal_summaries_filesPath=exercise_2.get_ideal_summaries_files(
+            'TeMario/Sumarios/Extratos ideais automaticos')
+    vector_of_docsSentences,vectors_of_docs, docs_sentences =sentences_and_docs_ToVectorSpace(
+            'TeMario/Textos-fonte/Textos-fonte com titulo')
     number_of_docs=len(docs_sentences)
     calculate_cosine_for_the_ex(vector_of_docsSentences, vectors_of_docs,number_of_docs)
-    exercise_2.print_results("exercise 3", (precision_sum / number_of_docs),(recall_sum / number_of_docs),(AP_sum/number_of_docs))
+    exercise_2.print_results("exercise 3", (precision_sum / number_of_docs),
+            (recall_sum / number_of_docs),(AP_sum/number_of_docs))

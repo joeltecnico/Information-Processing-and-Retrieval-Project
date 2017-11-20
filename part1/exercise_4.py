@@ -72,7 +72,7 @@ def show_summary_ordered(summary_of_docs, number_of_docs):
 
         
 def evaluate_summaries( summary_to_user_MMR, summary_to_user_Top5, id_doc):
-    ideal_summaries_filesPath=exercise_2.get_ideal_summaries_files('TeMario/Sumários/Extratos ideais automáticos')
+    ideal_summaries_filesPath=exercise_2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
     ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences(ideal_summaries_filesPath[id_doc])  
     global AP_sum_MMR, precision_sum_MMR,recall_sum_MMR,AP_sum_Top5, precision_sum_Top5,recall_sum_Top5
     AP_sum_MMR, precision_sum_MMR,recall_sum_MMR=  exercise_2.calculate_precision_recall_ap(summary_to_user_MMR, ideal_summary, ideal_summary_sentences,AP_sum_MMR, precision_sum_MMR,recall_sum_MMR)
@@ -81,7 +81,7 @@ def evaluate_summaries( summary_to_user_MMR, summary_to_user_Top5, id_doc):
 
 
 if __name__ == "__main__":
-    vector_of_docsSentences, vectors_of_docs, docs_sentences, docs_content = exercise_2.ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com título')
+    vector_of_docsSentences, vectors_of_docs, docs_sentences, docs_content = exercise_2.ex1_sentences_and_docs_ToVectorSpace('TeMario/Textos-fonte/Textos-fonte com titulo')
     number_of_docs=len(docs_content)
     summary_of_docs=calculate_mmr_oficial(vector_of_docsSentences,vectors_of_docs, number_of_docs, copy.deepcopy(docs_sentences))
     show_summary_ordered(summary_of_docs,number_of_docs )

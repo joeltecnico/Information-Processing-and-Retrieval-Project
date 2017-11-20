@@ -42,10 +42,16 @@ def get_graph(sentences_vectors, threshold):
         index_of_edges=np.asarray(np.where(cos_sim>threshold))+start_index
         tri_matrix[node,index_of_edges]=1
     return tri_matrix+tri_matrix.T
+
+
+def calculate_pang_rank(graph):
+    #put here the code por pang ranking
         
 if __name__ == "__main__":
     file_content, sentences=getFile_and_separete_into_sentences("script1.txt") 
     sentences_vectors=sentences_ToVectorSpace(sentences)  
     graph=get_graph(sentences_vectors, 0.2)     
-    print(graph)      
+    print(graph)   
+    
+    
                                 

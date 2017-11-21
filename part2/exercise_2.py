@@ -5,6 +5,9 @@
 # Matilde Gonรงalves    82091
 # Rita Ramos        86274
 
+import time
+start_time = time.time()
+
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
@@ -46,12 +49,15 @@ def get_graph(sentences_vectors, threshold):
 
 def calculate_pang_rank(graph):
     #put here the code por pang ranking
+    return
         
 if __name__ == "__main__":
     file_content, sentences=getFile_and_separete_into_sentences("script1.txt") 
     sentences_vectors=sentences_ToVectorSpace(sentences)  
     graph=get_graph(sentences_vectors, 0.2)     
-    print(graph)   
+    print(graph)
+    print("--- %s seconds ---" % (time.time() - start_time))
+
     
     
                                 

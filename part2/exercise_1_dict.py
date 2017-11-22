@@ -25,25 +25,27 @@ def getFile_and_separete_into_sentences(f):
                 sentences.append(sentence)
     return file_content,sentences 
 
-
-def sentences_ToVectorSpace(file_content):
-    vec = CountVectorizer()
-    counts_of_terms_sents=vec.fit_transform(file_content).toarray() 
-    return counts_of_terms_sents
-
-    
-'''def sentences_ToVectorSpace(content):
-    vec = CountVectorizer()
-    counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #(lines=sent, cols=terms)
-    isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))#inverve sentence frequency
-    return tfs_sent*isfs, isfs, counts_of_terms_sent
-
-
 def counts_and_tfs(file_content, vec):
     counts_of_terms=vec.fit_transform(file_content).toarray() 
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
     return counts_of_terms,tfs
+
+    
+def sentences_ToVectorSpace(content):
+    vec = CountVectorizer()
+    counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #(lines=sent, cols=terms)
+    isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))#inverve sentence frequency
+    return tfs_sent*isfs
+    #return tfs_sent*isfs, isfs, counts_of_terms_sent
+
+
 '''
+def sentences_ToVectorSpace(file_content):
+    vec = CountVectorizer()
+    counts_of_terms_sents=vec.fit_transform(file_content).toarray() 
+    return counts_of_terms_sents
+'''
+
 
 def cosine_similarity(main_sentence,sentences_vectors ):
     cosSim=[]
@@ -71,7 +73,7 @@ def calculate_page_rank(graph, d, n_iter):
     jump_random = d / n_docs
     prob_not_dumping = 1 - d
     PR = dict.fromkeys(range(n_docs), 1/n_docs)
-    for i in range(0, n_iter) :
+    for i in range(n_iter) :
         for node in graph :
             sum = 0
             for link in graph[node] :
@@ -90,11 +92,12 @@ def show_summary(scored_sentences, sentences, number_of_top_sentences):
     return summary, summary_to_user  
         
 if __name__ == "__main__":
-    file_content, sentences=getFile_and_separete_into_sentences("TeMario/Textos-fonte/Textos-fonte com titulo/ce94ab10-a.txt") 
+    file_content, sentences=getFile_and_separete_into_sentences("TeMario/Textos-fonte/Textos-fonte com titulo/po96ju13-a.txt") 
     sentences_vectors=sentences_ToVectorSpace(sentences)  
     graph=get_graph(sentences_vectors, 0.2)
     PR = calculate_page_rank(graph, 0.15, 50)
     summary, summary_to_user=show_summary(PR,sentences,5)
+    print(sum(list(PR.values())))
     print(summary_to_user)
     print("--- %s seconds ---" % (time.time() - start_time))
     

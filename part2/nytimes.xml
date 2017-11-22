@@ -1,0 +1,824 @@
+<?xml version="1.0"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:nyt="http://www.nytimes.com/namespaces/rss/2.0" version="2.0">
+  <channel>
+    <title>NYT &gt; World</title>
+    <link>https://www.nytimes.com/pages/world/index.html?partner=rss&amp;emc=rss</link>
+    <atom:link rel="self" type="application/rss+xml" href="http://www.nytimes.com/services/xml/rss/nyt/World.xml"/>
+    <description/>
+    <language>en-us</language>
+    <copyright>Copyright 2017  The New York Times Company</copyright>
+    <lastBuildDate>Wed, 22 Nov 2017 13:19:51 GMT </lastBuildDate>
+    <image>
+      <title>NYT &gt; World</title>
+      <url>https://static01.nyt.com/images/misc/NYT_logo_rss_250x40.png</url>
+      <link>https://www.nytimes.com/pages/world/index.html?partner=rss&amp;emc=rss</link>
+    </image>
+    <item>
+      <title>Ratko Mladic Is Convicted in 1990s Slaughter of Bosnian Muslims</title>
+      <link>https://www.nytimes.com/2017/11/22/world/europe/ratko-mladic-conviction-yugoslavia-bosnia.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/22/world/europe/ratko-mladic-conviction-yugoslavia-bosnia.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/22/world/europe/ratko-mladic-conviction-yugoslavia-bosnia.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/23/world/23Mladic5/23Mladic5-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Ratko Mladic, the former Bosnian Serb general, entering the courtroom in The Hague on Wednesday to hear the verdict from the United Nations war crimes tribunal.</media:description>
+      <media:credit>Pool photo by Peter Dejong</media:credit>
+      <description>A U.N. war crimes tribunal gave the Bosnian Serb former general a life sentence for his role in one of the worst atrocities in 20th-century Europe.</description>
+      <dc:creator>MARLISE SIMONS</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 13:12:06 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">War Crimes, Genocide and Crimes Against Humanity</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">International Criminal Tribunal for the former Yugoslavia</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Bosnia and Herzegovina</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Sarajevo (Bosnia and Herzegovina)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Karadzic, Radovan</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Mladic, Ratko</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Milosevic, Slobodan</category>
+    </item>
+    <item>
+      <title>Robert Mugabe Resigns as Zimbabwe&#x2019;s President, Ending 37-Year Rule</title>
+      <link>https://www.nytimes.com/2017/11/21/world/africa/zimbabwe-mugabe-mnangagwa.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/africa/zimbabwe-mugabe-mnangagwa.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/africa/zimbabwe-mugabe-mnangagwa.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22zimbabwe7/22zimbabwe7-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Zimbabweans celebrated Mr. Mugabe&#x2019;s resignation outside the Parliament in Harare.</media:description>
+      <media:credit>Ben Curtis/Associated Press</media:credit>
+      <description>It seemed to be an abrupt capitulation by Mr. Mugabe, who had refused only two days earlier to step down.</description>
+      <dc:creator>NORIMITSU ONISHI and JEFFREY MOYO</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 23:40:43 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Appointments and Executive Changes</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Legislatures and Parliaments</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Impeachment</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Human Rights and Human Rights Violations</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Zimbabwe African National Union-Patriotic Front (ZANU-PF)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Zimbabwe</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Mnangagwa, Emmerson</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Mugabe, Robert</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">vis-multimedia</category>
+    </item>
+    <item>
+      <title>Merkel&#x2019;s Troubles May Spell Trouble for All of Europe</title>
+      <link>https://www.nytimes.com/2017/11/21/world/europe/merkel-germany-european-union.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/europe/merkel-germany-european-union.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/europe/merkel-germany-european-union.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22europe1/22europe1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Chancellor Angela Merkel of Germany speaking with Social Democratic members during a session of the Bundestag in Berlin on Tuesday.</media:description>
+      <media:credit>Odd Andersen/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>The German leader&#x2019;s failure to form a coalition government is a blow to hopes for a strong Franco-German engine to drive European Union reform.</description>
+      <dc:creator>STEVEN ERLANGER</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 20:01:12 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Elections</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">European Union</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Merkel, Angela</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Germany</category>
+    </item>
+    <item>
+      <title>After a Mysterious Odyssey, Lebanon&#x2019;s Prime Minister Is Home</title>
+      <link>https://www.nytimes.com/2017/11/21/world/middleeast/lebanon-hariri-saudi.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/middleeast/lebanon-hariri-saudi.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/middleeast/lebanon-hariri-saudi.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22lebanon4/22lebanon4-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Prime Minister Saad Hariri of Lebanon prayed at the grave of his father on Tuesday night after returning to Beirut. He did not answer questions about his mysterious two-week absence from Lebanon.</media:description>
+      <media:credit>Jamal Saidi/Reuters</media:credit>
+      <description>Many questions remain, including whether he will make his resignation official or rescind it, and whether Saudi Arabia had pressed him to resign.</description>
+      <dc:creator>ANNE BARNARD</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 22:50:03 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Hezbollah</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Aoun, Michel (1935- )</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Hariri, Saad</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Beirut (Lebanon)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Cairo (Egypt)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Riyadh (Saudi Arabia)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Saudi Arabia</category>
+    </item>
+    <item>
+      <title>Navy Aircraft With 11 Aboard Crashes Into Waters Off Japan</title>
+      <link>https://www.nytimes.com/2017/11/22/world/asia/us-navy-japan.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/22/world/asia/us-navy-japan.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/22/world/asia/us-navy-japan.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/23/world/23fleet-1sub/23fleet-1sub-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The aircraft carrier Ronald Reagan during recent exercises in the Philippine Sea. A U.S. Navy aircraft was on its way to the carrier when it crashed off Okinawa on Wednesday, the Seventh Fleet said.</media:description>
+      <media:credit>U.S. Navy</media:credit>
+      <description>Eight people were rescued and a search was underway for the other three, the Navy&#x2019;s Seventh Fleet said. It was the fleet&#x2019;s fifth accident this year.</description>
+      <dc:creator>MOTOKO RICH</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 11:20:22 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">United States Defense and Military Forces</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">United States Navy</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Okinawa and Other Ryukyu Islands (Japan)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Philippine Sea</category>
+    </item>
+    <item>
+      <title>Nigeria Mosque Targeted in Deadly Suicide Bombing</title>
+      <link>https://www.nytimes.com/2017/11/21/world/africa/nigeria-bombing-mosque.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/africa/nigeria-bombing-mosque.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/africa/nigeria-bombing-mosque.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22nigeria/22nigeria-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>A still taken from television showing the interior of a mosque in Mubi, Nigeria, after a deadly attack by a suicide bomber on Tuesday.</media:description>
+      <media:credit>Associated Press</media:credit>
+      <description>The authorities blamed Boko Haram for the attack, which targeted worshipers at morning prayers. One official said at least 50 people had been killed.</description>
+      <dc:creator>EMMANUEL AKINWOTU and DIONNE SEARCEY</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 20:30:12 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Mosques</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Terrorism</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Deaths (Fatalities)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Boko Haram</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Nigeria</category>
+    </item>
+    <item>
+      <title>Restoring North Korea to Terrorism Blacklist Dims Hopes for Talks</title>
+      <link>https://www.nytimes.com/2017/11/21/world/asia/north-korea-terrorism-trump.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/asia/north-korea-terrorism-trump.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/asia/north-korea-terrorism-trump.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22nkorea-1/22nkorea-1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The central rail station in Pyongyang, North Korea, this month. President Trump has designated North Korea as a state sponsor of terrorism, reversing a move by the second Bush administration.</media:description>
+      <media:credit>Ed Jones/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>Analysts say the North may use the American move as an excuse for more weapons tests.</description>
+      <dc:creator>CHOE SANG-HUN</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 22:28:08 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Terrorism</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">United States International Relations</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Kim Jong-un</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Moon Jae-in</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Trump, Donald J</category>
+    </item>
+    <item>
+      <title>Assad and Putin Meet, as Russia Pushes to End Syrian War</title>
+      <link>https://www.nytimes.com/2017/11/21/world/middleeast/assad-putin-russia-syria.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/middleeast/assad-putin-russia-syria.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/middleeast/assad-putin-russia-syria.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22syria/22syria-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>President Bashar al-Assad of Syria, left, and President Vladimir V. Putin of Russia met in Sochi, Russia, on Monday.</media:description>
+      <media:credit>Pool photo by Mikhail Klimentyev</media:credit>
+      <description>Russian officials have said they want the Syrian leader&#x2019;s support for political reform, but doubts remain about how much Moscow was willing or able to push.</description>
+      <dc:creator>ANNE BARNARD</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 00:45:10 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Assad, Bashar al-</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Putin, Vladimir V</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Syria</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Russia</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Islamic State in Iraq and Syria (ISIS)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Sochi (Russia)</category>
+    </item>
+    <item>
+      <title>Damascus Journal: They Stayed Put, but Their City Disappeared</title>
+      <link>https://www.nytimes.com/2017/11/21/world/middleeast/syria-damascus-war.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/middleeast/syria-damascus-war.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/middleeast/syria-damascus-war.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22damascus-1/22damascus-1-moth-v3.jpg" medium="image" height="151" width="151"/>
+      <media:description>A poster in Damascus, Syria, depicting President Bashar al-Assad.</media:description>
+      <media:credit>Omar Sanadiki/Reuters</media:credit>
+      <description>In Syria&#x2019;s capital, those who remain wonder why they&#x2019;re still there when so many friends have packed up, died or vanished.</description>
+      <dc:creator>SOMINI SENGUPTA</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 13:00:29 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Assad, Bashar al-</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Damascus (Syria)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Syria</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Immigration and Emigration</category>
+    </item>
+    <item>
+      <title>Losing London: Where Brexit Hurts: The Nurses and Doctors Leaving London</title>
+      <link>https://www.nytimes.com/2017/11/21/world/europe/nhs-brexit-eu-migrants.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/europe/nhs-brexit-eu-migrants.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/europe/nhs-brexit-eu-migrants.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/07/world/europe/xxhospital-slide-RQ35/xxhospital-slide-RQ35-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The liver unit at King&#x2019;s College Hospital in southeast London is world famous and has a very European staff. &#x201C;The English are in the minority,&#x201D; according to Dr. Georg Auzinger, the clinical head of critical care.</media:description>
+      <media:credit>Andrew Testa for The New York Times</media:credit>
+      <description>Britain&#x2019;s treasured health care system was used as rallying cry by anti-E.U. campaigners. Many of its European staff now feel betrayed. Thousands have quit.</description>
+      <dc:creator>KATRIN BENNHOLD</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 10:07:56 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Great Britain Withdrawal from EU (Brexit)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Nursing and Nurses</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Immigration and Emigration</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">National Health Service</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">London (England)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Great Britain</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">vis-photo</category>
+    </item>
+    <item>
+      <title>Dramatic Video of North Korea Defector&#x2019;s Getaway Under Fire</title>
+      <link>https://www.nytimes.com/video/world/asia/100000005565913/dramatic-video-of-north-korea-defectors-getaway-under-fire.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/video/world/asia/100000005565913/dramatic-video-of-north-korea-defectors-getaway-under-fire.html</guid>
+      <description>Footage of the actual escape by a North Korean soldier into South Korea, as seen from South Korean side.</description>
+      <dc:creator/>
+      <pubDate>Wed, 22 Nov 2017 04:18:14 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/nyt_geo">North Korea</category>
+      <category domain="http://www.nytimes.com/namespaces/nyt_geo">South Korea</category>
+      <category domain="http://www.nytimes.com/namespaces/nyt_geo">Korean Demilitarized Zone</category>
+    </item>
+    <item>
+      <title>North Korean Troops Violated Truce While Chasing Defector, U.N. Command Says</title>
+      <link>https://www.nytimes.com/2017/11/21/world/asia/north-korea-dmz-defector.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/asia/north-korea-dmz-defector.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/asia/north-korea-dmz-defector.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22korea-defector-1/22korea-defector-1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Clockwise from top left: a North Korean defector running from a jeep on Nov. 13; a North Korean soldier shooting at the defector in the Joint Security Area of the demilitarized zone; a North Korea soldier running back to the north side of the Joint Security Area; the defector on the ground after being shot.</media:description>
+      <media:credit>United Nations Command</media:credit>
+      <description>The United Nations Command accused North Korean troops of violating the armistice by firing weapons and crossing the border to chase a defector.</description>
+      <dc:creator>CHOE SANG-HUN</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 05:00:50 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Korean War</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Defectors (Political)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">United Nations Command</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Korean Demilitarized Zone</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">North Korea</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">South Korea</category>
+    </item>
+    <item>
+      <title>As Malaria Resists Treatment, Experts Warn of Global Crisis</title>
+      <link>https://www.nytimes.com/2017/11/21/world/asia/malaria-drug-resistant-vietnam.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/asia/malaria-drug-resistant-vietnam.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/asia/malaria-drug-resistant-vietnam.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/10/21/world/25vietnam-malaria-1/25vietnam-malaria-1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Tra Thi Nhan owns a pharmacy in Bu Gia Map, Vietnam, in a forested area near the Cambodian border. She attributed the district&#x2019;s persistent malaria problem to &#x201C;our topography.&#x201D;</media:description>
+      <media:credit>Quinn Ryan Mattingly for The New York Times</media:credit>
+      <description>A strain of malaria resistant to two drugs, including artemisinin, which was once seen as a miracle cure, is spreading, and experts fear that it could reach Africa.</description>
+      <dc:creator>MIKE IVES and DONALD G. McNEIL Jr.</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 03:13:00 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Malaria</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Drugs (Pharmaceuticals)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Vietnam</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Africa</category>
+    </item>
+    <item>
+      <title>A Dictator&#x2019;s Playbook: How Mugabe Clung to Power</title>
+      <link>https://www.nytimes.com/video/world/africa/100000005562269/a-dictators-playbook-how-mugabe-clung-to-power.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/video/world/africa/100000005562269/a-dictators-playbook-how-mugabe-clung-to-power.html</guid>
+      <description>After nearly four decades in power, Zimbabwe's ruler, Robert Mugabe, resigned in the wake of a military takeover. How did the notorious strongman manage to keep his opponents at bay for so long?</description>
+      <dc:creator/>
+      <pubDate>Wed, 22 Nov 2017 01:32:48 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/nyt_per">Mugabe, Robert</category>
+      <category domain="http://www.nytimes.com/namespaces/nyt_geo">Zimbabwe</category>
+      <category domain="http://www.nytimes.com/namespaces/nyt_geo">Harare (Zimbabwe)</category>
+      <category domain="http://www.nytimes.com/namespaces/des">Politics and Government</category>
+    </item>
+    <item>
+      <title>Prosecutor and Judge Issue Rare Response to Criticism From Turkey</title>
+      <link>https://www.nytimes.com/2017/11/21/nyregion/zarrab-erdogan-bharara-kim-turkey.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/nyregion/zarrab-erdogan-bharara-kim-turkey.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/nyregion/zarrab-erdogan-bharara-kim-turkey.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/nyregion/22zarrab/22zarrab-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Reza Zarrab, the Turkish gold trader whose criminal case has attracted high-powered lawyers and worldwide interest, in 2013.</media:description>
+      <media:credit>Depo Photos, via Associated Press</media:credit>
+      <description>The criminal case of Reza Zarrab, a Turkish gold trader, has been called a plot against the Turkish Republic by its president, Recep Tayyip Erdogan.</description>
+      <dc:creator>BENJAMIN WEISER</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 00:33:31 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">United States International Relations</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Embargoes and Sanctions</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Erdogan, Recep Tayyip</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Zarrab, Reza (1983- )</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Bharara, Preet</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Turkey</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">United States</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Kim, Joon H.</category>
+    </item>
+    <item>
+      <title>U.S. Agency Foresees Severe Famine in Yemen Under Saudi Blockade</title>
+      <link>https://www.nytimes.com/2017/11/21/world/middleeast/yemen-famine-saudi.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/middleeast/yemen-famine-saudi.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/middleeast/yemen-famine-saudi.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22yemen/22yemen2-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Yemenis waiting to collect drinking water in Sana, Yemen. A Saudi-led blockade has threatened to choke off Yemen&#x2019;s freshwater supply.</media:description>
+      <media:credit>Yahya Arhab/European Pressphoto Agency</media:credit>
+      <description>The Famine Early Warning Systems Network added its voice to the alarms of imminent and widespread famine in Yemen because of the Saudi-led blockade.</description>
+      <dc:creator>RICK GLADSTONE</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 23:55:20 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Famine</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">United Nations</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Yemen</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Saudi Arabia</category>
+    </item>
+    <item>
+      <title>Net Neutrality, John Conyers, Zimbabwe: Your Tuesday Evening Briefing</title>
+      <link>https://www.nytimes.com/2017/11/21/briefing/net-neutrality-john-conyers-zimbabwe.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/briefing/net-neutrality-john-conyers-zimbabwe.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/briefing/net-neutrality-john-conyers-zimbabwe.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/briefing/22Eveningbriefing-slide-3A22/22Eveningbriefing-slide-3A22-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description/>
+      <media:credit>Eric Thayer/Getty Images</media:credit>
+      <description>Here&#x2019;s what you need to know at the end of the day.</description>
+      <dc:creator>KAREN ZRAICK and DAVID SCULL</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 23:14:14 GMT</pubDate>
+    </item>
+    <item>
+      <title>China&#x2019;s Flashy Ex-Internet Censor Faces Corruption Investigation</title>
+      <link>https://www.nytimes.com/2017/11/21/world/asia/china-internet-censorship-lu-wei-corruption.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/asia/china-internet-censorship-lu-wei-corruption.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/asia/china-internet-censorship-lu-wei-corruption.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22china-internet/22chiina-internet-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>China&#x2019;s former top internet regulator, Lu Wei, is being investigated by the Communist Party&#x2019;s anti-corruption arm.</media:description>
+      <media:credit>Larry Leung/European Pressphoto Agency</media:credit>
+      <description>The onetime gatekeeper of China&#x2019;s internet, who purged China&#x2019;s social media of its most beloved personalities, has been detained and is under investigation.</description>
+      <dc:creator>CHRIS BUCKLEY and PAUL MOZUR</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 23:35:12 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Censorship</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Corruption (Institutional)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Social Media</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Central Commission for Discipline Inspection (Communist Party of China)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Cyberspace Administration of China</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Lu Wei (1960- )</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">China</category>
+    </item>
+    <item>
+      <title>Greece, Looking to Move Past Bailouts, Unveils Ambitious Budget</title>
+      <link>https://www.nytimes.com/2017/11/21/business/greece-economy-budget.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/business/greece-economy-budget.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/business/greece-economy-budget.html?partner=rss&amp;emc=rss"/>
+      <description>The country is trying to wean itself off the international assistance that it has relied on in recent years, and is projecting strong economic growth for next year.</description>
+      <dc:creator>NIKI KITSANTONIS</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 21:56:05 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">European Sovereign Debt Crisis (2010- )</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Budgets and Budgeting</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Credit and Debt</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Greece</category>
+    </item>
+    <item>
+      <title>U.S. Bribery Case Sheds Light on Mysterious Chinese Company</title>
+      <link>https://www.nytimes.com/2017/11/21/business/china-energy-cefc.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/business/china-energy-cefc.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/business/china-energy-cefc.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/business/22CHINAOILsub/22CHINAOIL2-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>President Milos Zeman of the Czech Republic, right, in Shanghai in September 2015 for the signing of agreements between companies from his country and the Chinese conglomerate CEFC.</media:description>
+      <media:credit>Lucie Mikolaskova/Czech News Agency, via Associated Press</media:credit>
+      <description>A Justice Department complaint alleges that a vast private Chinese conglomerate used commercial and diplomatic channels to bribe African officials and win contracts.</description>
+      <dc:creator>ALEXANDRA STEVENSON</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 03:07:11 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Oil (Petroleum) and Gasoline</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Bribery and Kickbacks</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Mergers, Acquisitions and Divestitures</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">CEFC China Energy</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Chad</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Uganda</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">China</category>
+    </item>
+    <item>
+      <title>Romania Gay Marriage Case Could Have Outsize Impact in Europe</title>
+      <link>https://www.nytimes.com/2017/11/21/world/europe/romania-ecj-gay-marriage.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/europe/romania-ecj-gay-marriage.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/europe/romania-ecj-gay-marriage.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22romania/22romania-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Adrian Coman outside the Constitutional Court of Romania in Bucharest in 2016. He is pressing for the right to legal residency for his American husband.</media:description>
+      <media:credit>Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>The case addresses whether the American husband of a Romanian man should be afforded residency rights in Romania. But its impact could be felt further afield.</description>
+      <dc:creator>KIT GILLET</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 20:53:22 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Same-Sex Marriage, Civil Unions and Domestic Partnerships</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Homosexuality and Bisexuality</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Marriages</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">European Court of Justice</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Romania</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Europe</category>
+    </item>
+    <item>
+      <title>Victims of Canada&#x2019;s &#x2018;Gay Purge&#x2019; to Get Apology from Trudeau</title>
+      <link>https://www.nytimes.com/2017/11/21/world/canada/gays-trudeau-apology.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/canada/gays-trudeau-apology.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/canada/gays-trudeau-apology.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22canada-apology-1/22canada-apology-1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Orde Morton was a Canadian diplomat in 1969 when he was told that he would not be promoted because he was gay.</media:description>
+      <media:credit>Aaron Vincent Elkaim for The New York Times</media:credit>
+      <description>Prime Minister Justin Trudeau will apologize next week for a program that removed perhaps thousands of gays and lesbians from the public service, the military and the Mounties.</description>
+      <dc:creator>IAN AUSTEN</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 20:37:20 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Homosexuality and Bisexuality</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Discrimination</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Canada</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Apologies</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Trudeau, Justin</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Royal Canadian Mounted Police</category>
+    </item>
+    <item>
+      <title>Six of Our Favorite Stories on Germany&#x2019;s Politics</title>
+      <link>https://www.nytimes.com/2017/11/21/world/europe/germany-politics.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/europe/germany-politics.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/europe/germany-politics.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/09/25/world/22germany-roundup-Merkel/25Merkel1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>A campaign poster in Berlin for Angela Merkel, whose future as chancellor of Germany seemed all but certain after elections in September.</media:description>
+      <media:credit>Hannibal Hanschke/Reuters</media:credit>
+      <description>Some of our recent coverage of Germany and its leader, Angela Merkel, who is now facing an enormous challenge in forming a new government.</description>
+      <dc:creator>THE NEW YORK TIMES</dc:creator>
+      <pubDate>Wed, 22 Nov 2017 12:21:26 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Germany</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Merkel, Angela</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">vis-multimedia</category>
+    </item>
+    <item>
+      <title>10 of Our Best Reads on Zimbabwe</title>
+      <link>https://www.nytimes.com/2017/11/21/world/africa/zimbabwe-mugabe-history.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/africa/zimbabwe-mugabe-history.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/africa/zimbabwe-mugabe-history.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22zimbabwe-roundup-4/22zimbabwe-roundup-4-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>President Robert Mugabe of Zimbabwe. At 93, he is the world&#x2019;s oldest head of state.</media:description>
+      <media:credit>Pete Muller for The New York Times</media:credit>
+      <description>The southern African nation is at a pivotal moment after the reported resignation of Robert Mugabe as president.</description>
+      <dc:creator>THE NEW YORK TIMES</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 19:08:41 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">vis-dispatch</category>
+    </item>
+    <item>
+      <title>Russia, in Reversal, Confirms Radiation Spike</title>
+      <link>https://www.nytimes.com/2017/11/21/world/europe/russia-nuclear-cloud.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/europe/russia-nuclear-cloud.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/europe/russia-nuclear-cloud.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22radiation/22radiation-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>A map provided by the French Institute for Radiation Protection and Nuclear Safety showed levels of ruthenium 106 across Europe.</media:description>
+      <media:credit>INRS, via Associated Press</media:credit>
+      <description>The state weather service in Moscow acknowledged &#x201C;extremely high pollution&#x201D; in a region close to a sprawling Soviet-era nuclear plant.</description>
+      <dc:creator>MATTHEW LUXMOORE and ALAN COWELL</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 19:51:56 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Radiation</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Russia</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Accidents and Safety</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Western Europe</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Rosatom</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Chelyabinsk (Russia)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Air Pollution</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Nuclear Energy</category>
+    </item>
+    <item>
+      <title>Germany Arrests 6 Syrian Migrants Suspected of ISIS Links</title>
+      <link>https://www.nytimes.com/2017/11/21/world/europe/germany-isis-refugees.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/europe/germany-isis-refugees.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/europe/germany-isis-refugees.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22Germany-Isis/22Germany-Isis-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Anis Amri, a Tunisian who had pledged allegiance to the Islamic State, hijacked a truck and <a href="https://www.nytimes.com/2016/12/19/world/europe/europe-terror-attacks-2016.html"/><a href="https://www.nytimes.com/2016/12/19/world/europe/europe-terror-attacks-2016.html"/><a href="https://www.nytimes.com/2016/12/19/world/europe/europe-terror-attacks-2016.html"/>plowed through a <a href="https://www.nytimes.com/2016/12/19/world/europe/europe-terror-attacks-2016.html"/>Christmas market in Berlin last year, killing at least a dozen people.</media:description>
+      <media:credit>Odd Andersen/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>The detentions fanned fears that extremists posing as asylum seekers were targeting Europe.</description>
+      <dc:creator>DAN BILEFSKY and KATARINA JOHANNSEN</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 17:46:18 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Refugees and Displaced Persons</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Middle East and Africa Migrant Crisis</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Terrorism</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Islamic State in Iraq and Syria (ISIS)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Germany</category>
+    </item>
+    <item>
+      <title>En France, la &#xAB; r&#xE9;volte &#xBB; contre le harc&#xE8;lement sexuel se heurte aux r&#xE9;sistances culturelles</title>
+      <link>https://www.nytimes.com/2017/11/21/world/europe/france-harcelement-sexuel.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/europe/france-harcelement-sexuel.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/europe/france-harcelement-sexuel.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/15/world/22french-harassment1/xxharassment1-moth-v3.jpg" medium="image" height="151" width="151"/>
+      <media:description>&#x200B;Un rassemblement contre les violences sexistes et sexuelles &#xE0; Paris le mois dernier.&#x200B;</media:description>
+      <media:credit>Bertrand Guay/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>De nombreuses personnes en France appellent &#xE0; faire du harc&#xE8;lement sexuel une urgence nationale, mais des obstacles l&#xE9;gaux et culturels d&#xE9;couragent les femmes qui souhaitent porter plainte pour harc&#xE8;lement sexuel au travail.</description>
+      <dc:creator>ALISSA J. RUBIN</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 12:31:12 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">France</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Sexual Harassment</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Sex Crimes</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Women and Girls</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Women's Rights</category>
+    </item>
+    <item>
+      <title>China Finds Lawyer Who Exposed Torture Allegations Guilty of Inciting Subversion</title>
+      <link>https://www.nytimes.com/2017/11/21/world/asia/china-lawyer-jiang-tianyong-sentence-subversion.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/21/world/asia/china-lawyer-jiang-tianyong-sentence-subversion.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/21/world/asia/china-lawyer-jiang-tianyong-sentence-subversion.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/22/world/22china-activist-1/22china-activist-1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Supporters of the disbarred lawyer Jiang Tianyong demonstrating late last year in Hong Kong.</media:description>
+      <media:credit>Tyrone Siu/Reuters</media:credit>
+      <description>Jiang Tianyong got a two-year term after helping bring to light another lawyer&#x2019;s claims of being brutalized in custody.</description>
+      <dc:creator>CHRIS BUCKLEY</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 05:08:21 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Jiang Tianyong (1971- )</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Decisions and Verdicts</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">China</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Political Prisoners</category>
+    </item>
+    <item>
+      <title>Protesting Coal Mining From a Treehouse</title>
+      <link>https://www.nytimes.com/video/world/europe/100000005558932/protesting-coal-mining-from-a-treehouse-germany.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/video/world/europe/100000005558932/protesting-coal-mining-from-a-treehouse-germany.html</guid>
+      <description>For years, activists have been protesting the expansion of coal mining in the Hambach Forest in Germany by living in treehouses. A court ruling may soon change that.</description>
+      <dc:creator/>
+      <pubDate>Tue, 21 Nov 2017 05:01:02 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/des">Mines and Mining</category>
+      <category domain="http://www.nytimes.com/namespaces/des">Treehouses</category>
+      <category domain="http://www.nytimes.com/namespaces/des">Coal</category>
+      <category domain="http://www.nytimes.com/namespaces/des">Global Warming</category>
+      <category domain="http://www.nytimes.com/namespaces/nyt_geo">Germany</category>
+    </item>
+    <item>
+      <title>Prosecutor&#x2019;s Move in Afghan War Inquiry May Mean Clash With U.S.</title>
+      <link>https://www.nytimes.com/2017/11/20/world/asia/international-criminal-court-afghanistan-united-states.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/asia/international-criminal-court-afghanistan-united-states.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/asia/international-criminal-court-afghanistan-united-states.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21icc/21icc-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The International Criminal Court&#x2019;s chief prosecutor, Fatou Bensouda, in 2015.</media:description>
+      <media:credit>Isaac Kasamani/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>An International Criminal Court prosecutor requested permission to start an inquiry that could implicate members of the U.S. military and the C.I.A.</description>
+      <dc:creator>RICK GLADSTONE and MARLISE SIMONS</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 15:56:28 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">International Criminal Court</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Afghanistan</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">United States</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Bensouda, Fatou</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">War Crimes, Genocide and Crimes Against Humanity</category>
+    </item>
+    <item>
+      <title>Saudi Arabia Squeezes Detainees as It Tries to Seize Assets</title>
+      <link>https://www.nytimes.com/2017/11/20/world/middleeast/saudi-arabia-corruption.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/middleeast/saudi-arabia-corruption.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/middleeast/saudi-arabia-corruption.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21saudi1/21saudi1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The Ritz-Carlton Hotel in Riyadh, Saudi Arabia, where many Saudis accused of corruption have been detained.</media:description>
+      <media:credit>Tasneem Alsultan for The New York Times</media:credit>
+      <description>Saudi Arabia&#x2019;s efforts to get princes and businessmen detained on corruption charges to hand over their assets have raised legal concerns abroad.</description>
+      <dc:creator>BEN HUBBARD and DAVID D. KIRKPATRICK</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 03:49:45 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Saudi Arabia</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Corruption (Institutional)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Mohammed bin Salman (1985- )</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+    </item>
+    <item>
+      <title>After Mugabe, What&#x2019;s Next for Zimbabweans?</title>
+      <link>https://www.nytimes.com/video/world/africa/100000005557387/after-mugabe-zimbabwe-future.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/video/world/africa/100000005557387/after-mugabe-zimbabwe-future.html</guid>
+      <description>Zimbabwe may have a new leader for the first time in 37 years. Now, those who grew up under Robert Mugabe share a mix of hope and skepticism about the country&#x2019;s future.</description>
+      <dc:creator/>
+      <pubDate>Tue, 21 Nov 2017 00:43:57 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/nyt_per">Mugabe, Robert</category>
+      <category domain="http://www.nytimes.com/namespaces/nyt_geo">Zimbabwe</category>
+      <category domain="http://www.nytimes.com/namespaces/nyt_geo">Harare (Zimbabwe)</category>
+      <category domain="http://www.nytimes.com/namespaces/des">Coups D'Etat and Attempted Coups D'Etat</category>
+    </item>
+    <item>
+      <title>AT&amp;T, North Korea, Angela Merkel: Your Monday Evening Briefing</title>
+      <link>https://www.nytimes.com/2017/11/20/briefing/att-north-korea-angela-merkel.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/briefing/att-north-korea-angela-merkel.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/briefing/att-north-korea-angela-merkel.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/20/briefing/21Eveningbriefing-slide-XD58/21Eveningbriefing-slide-XD58-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description/>
+      <media:credit>Larry W. Smith/European Pressphoto Agency</media:credit>
+      <description>Here&#x2019;s what you need to know at the end of the day.</description>
+      <dc:creator>KAREN ZRAICK and DAVID SCULL</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 02:10:48 GMT</pubDate>
+    </item>
+    <item>
+      <title>U.S. Airstrikes in Afghanistan Take Aim at Taliban Opium Labs</title>
+      <link>https://www.nytimes.com/2017/11/20/world/asia/airstrikes-taliban-opium.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/asia/airstrikes-taliban-opium.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/asia/airstrikes-taliban-opium.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/us/politics/21dc-military/21dc-military-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Poppy buds on the outskirts of Kandahar Province in Afghanistan. The country produces around 85 percent of the world&#x2019;s opium.</media:description>
+      <media:credit>Muhammad Sadiq/European Pressphoto Agency</media:credit>
+      <description>The airstrikes are part of what is expected to be a sustained campaign targeting a lucrative source of funding for the Taliban.</description>
+      <dc:creator>HELENE COOPER</dc:creator>
+      <pubDate>Mon, 20 Nov 2017 23:05:35 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Afghanistan</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Opium</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Afghanistan War (2001- )</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">United States Defense and Military Forces</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Drug Abuse and Traffic</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Heroin</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Nicholson, John W Jr (1957- )</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Trump, Donald J</category>
+    </item>
+    <item>
+      <title>Queen Elizabeth II and Prince Philip Celebrate 70 Years of Marriage</title>
+      <link>https://www.nytimes.com/2017/11/20/world/europe/uk-queen-elizabeth-prince-philip.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/europe/uk-queen-elizabeth-prince-philip.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/europe/uk-queen-elizabeth-prince-philip.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21ukroyals1/21ukroyals1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The official portrait of Queen Elizabeth and Prince Philip for their platinum wedding anniversary.</media:description>
+      <media:credit>Matt Holyoak/Camerapress, via Reuters</media:credit>
+      <description>Britain&#x2019;s longest-serving monarch and her husband noted the occasion with the release of new photographic portraits.</description>
+      <dc:creator>PALKO KARASZ</dc:creator>
+      <pubDate>Mon, 20 Nov 2017 19:20:08 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">vis-photo</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Elizabeth II, Queen of Great Britain</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Philip, Duke of Edinburgh</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Marriages</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Great Britain</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Royal Families</category>
+    </item>
+    <item>
+      <title>&#x2018;Nut Rage&#x2019; Whistle-Blower Says Korean Air Retaliated Against Him</title>
+      <link>https://www.nytimes.com/2017/11/20/world/asia/south-korea-korean-air-whistle-blower-nuts-daughter.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/asia/south-korea-korean-air-whistle-blower-nuts-daughter.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/asia/south-korea-korean-air-whistle-blower-nuts-daughter.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21korea-nutrage-1/21korea-nutrage-1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>A Korean Air jet taking off at Incheon International Airport in Incheon, South Korea, in February. The airline is being sued by a whistle-blower.</media:description>
+      <media:credit>SeongJoon Cho/Bloomberg</media:credit>
+      <description>The flight attendant who exposed a Korean Air executive&#x2019;s actions says he was illegally demoted and ostracized.</description>
+      <dc:creator>CHOE SANG-HUN</dc:creator>
+      <pubDate>Mon, 20 Nov 2017 19:11:42 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Korean Air Lines</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Whistle-Blowers</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Cho Hyun-ah</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Park Chang-jin</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Suits and Litigation (Civil)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Workplace Environment</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">South Korea</category>
+    </item>
+    <item>
+      <title>Workers Lured to Australia Find Low Pay and Tough Conditions</title>
+      <link>https://www.nytimes.com/2017/11/20/world/australia/temporary-work-visas-wages.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/australia/temporary-work-visas-wages.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/australia/temporary-work-visas-wages.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21oz-wages-1/21oz-wages-1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Gabi Cho in her home in Lidcombe, an area of Sydney, Australia. Ms. Cho has accused the hair salon she once worked at of underpaying her and exploiting her lack of English skills.</media:description>
+      <media:credit>Matthew Abbott for The New York Times</media:credit>
+      <description>Many of the country&#x2019;s more than 900,000 temporary foreign workers make less than minimum wage but feel they can&#x2019;t complain, a new survey showed.</description>
+      <dc:creator>JACQUELINE WILLIAMS</dc:creator>
+      <pubDate>Mon, 20 Nov 2017 19:01:14 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Australia</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Foreign Workers</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Workplace Hazards and Violations</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Labor and Jobs</category>
+    </item>
+    <item>
+      <title>Key European Agencies Move to Continent, Signs of Brexit&#x2019;s Toll</title>
+      <link>https://www.nytimes.com/2017/11/20/business/uk-eu-ema-brexit.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/business/uk-eu-ema-brexit.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/business/uk-eu-ema-brexit.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/business/21BREXITAGENCIES2/21BREXITAGENCIES2-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The headquarters of the European Medicines Agency in London. The agency will move to Amsterdam as a result of Britain&#x2019;s impending exit from the European Union.</media:description>
+      <media:credit>Jos&#xE9; Sarmento Matos for The New York Times</media:credit>
+      <description>The relocation of the European Medicines Agency and the European Banking Authority indicate how Britain&#x2019;s impending exit from the European Union could diminish its economic clout.</description>
+      <dc:creator>JACK EWING and STEPHEN CASTLE</dc:creator>
+      <pubDate>Mon, 20 Nov 2017 20:36:18 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Drugs (Pharmaceuticals)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Regulation and Deregulation of Industry</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Great Britain Withdrawal from EU (Brexit)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">European Banking Authority</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">European Medicines Agency</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">European Union</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Great Britain</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Europe</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Amsterdam (Netherlands)</category>
+    </item>
+    <item>
+      <title>U.N. Chief &#x2018;Horrified&#x2019; by Report of Libya Slave Auction</title>
+      <link>https://www.nytimes.com/2017/11/20/world/middleeast/libya-slave-auction-un.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/middleeast/libya-slave-auction-un.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/middleeast/libya-slave-auction-un.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21Libya/21Libya-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Refugees in the courtyard of a United Nations refugee agency building in Niamey, Niger, on Friday, after they were evacuated from Libya.</media:description>
+      <media:credit>Sia Kambou/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>After CNN reported that migrants had been sold at auction, Secretary General Ant&#xF3;nio Guterres said the acts depicted &#x201C;may amount to crimes against humanity.&#x201D;</description>
+      <dc:creator>RICK GLADSTONE</dc:creator>
+      <pubDate>Mon, 20 Nov 2017 17:42:10 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Guterres, Antonio</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Middle East and Africa Migrant Crisis</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">War Crimes, Genocide and Crimes Against Humanity</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Libya</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">United Nations</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Refugees and Displaced Persons</category>
+    </item>
+    <item>
+      <title>Wake Up and Smell the Traffic? London Tries Coffee to Power Buses</title>
+      <link>https://www.nytimes.com/2017/11/20/world/europe/london-coffee-buses.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/europe/london-coffee-buses.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/europe/london-coffee-buses.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21Coffee/21Coffee-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The first batch of coffee-based oil added to the fuel for London&#x2019;s buses would be enough to run one of the vehicles for about a year.</media:description>
+      <media:credit>Tolga Akmen/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>In an effort to curb toxic diesel fumes, oil from used grounds has been added to the fuel for the British capital&#x2019;s iconic red double-deckers.</description>
+      <dc:creator>ALAN COWELL</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 04:57:13 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Buses</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Fuel Emissions (Transportation)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Coffee</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Bio-bean Ltd</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Bioenergy and Biofuels</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">London (England)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Transport for London</category>
+    </item>
+    <item>
+      <title>In Crisis, Angela Merkel Prefers Elections to Minority Rule</title>
+      <link>https://www.nytimes.com/2017/11/20/world/europe/germany-merkel-coalition.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/europe/germany-merkel-coalition.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/europe/germany-merkel-coalition.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21Germany/21Germany-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Chancellor Angela Merkel in Berlin on Monday. She said she remained hopeful about forming a majority government.</media:description>
+      <media:credit>Odd Andersen/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>Chancellor Angela Merkel says she would prefer a new round of elections to leading a minority government, if the quest for a majority coalition fails.</description>
+      <dc:creator>MELISSA EDDY and KATRIN BENNHOLD</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 00:00:00 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Germany</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Merkel, Angela</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Elections</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Legislatures and Parliaments</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Social Democratic Party (Germany)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Alternative for Germany</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Christian Democratic Union (Germany)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Christian Social Union (Germany)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Free Democratic Party (Germany)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Green Party (Germany)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Steinmeier, Frank-Walter</category>
+    </item>
+    <item>
+      <title>Trump Returns North Korea to List of State Sponsors of Terrorism</title>
+      <link>https://www.nytimes.com/2017/11/20/us/politics/north-korea-trump-terror.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/us/politics/north-korea-trump-terror.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/us/politics/north-korea-trump-terror.html?partner=rss&amp;emc=rss"/>
+      <description>North Korea had been removed from the list under the George W. Bush administration in an attempt to salvage negotiations for a nuclear deal.</description>
+      <dc:creator>MICHAEL D. SHEAR and DAVID E. SANGER</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 02:09:18 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">North Korea</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Trump, Donald J</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">State Department</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Terrorism</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">United States International Relations</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Kim Jong-un</category>
+    </item>
+    <item>
+      <title>Northern Ireland Is Sinking Into a &#x2018;Profound Crisis&#x2019;</title>
+      <link>https://www.nytimes.com/2017/11/20/world/europe/northern-ireland-stormont-adams.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/europe/northern-ireland-stormont-adams.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/europe/northern-ireland-stormont-adams.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21stormont1/21stormont1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The Northern Irish Parliament buildings, commonly known as Stormont. Its government collapsed in January.</media:description>
+      <media:credit>Paul Faith/Agence France-Presse &#x2014; Getty Images</media:credit>
+      <description>A nearly yearlong standoff has paralyzed its institutions and is threatening a 1998 treaty that largely ended three decades of fighting.</description>
+      <dc:creator>PATRICK KINGSLEY</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 11:37:14 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Northern Ireland</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Ireland</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Sinn Fein</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Democratic Unionist Party (Northern Ireland)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Legislatures and Parliaments</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Great Britain Withdrawal from EU (Brexit)</category>
+    </item>
+    <item>
+      <title>Just as in 1980, Zimbabwe&#x2019;s Celebration May Be Short-Lived</title>
+      <link>https://www.nytimes.com/2017/11/20/world/africa/zimbabwe-mugabe-independence.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/africa/zimbabwe-mugabe-independence.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/africa/zimbabwe-mugabe-independence.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21zimbabwe-personal1/21zimbabwe-personal1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Robert Mugabe in Salisbury, Zimbabwe, in April 1980, the month the former British colony became an independent nation.</media:description>
+      <media:credit>Jean-Claude Francolon/Gamma-Rapho, via Getty Images</media:credit>
+      <description>A veteran reporter who was in the country when Robert Mugabe first took power sees disturbing parallels with the current moment of hope and joy.</description>
+      <dc:creator>ALAN COWELL</dc:creator>
+      <pubDate>Mon, 20 Nov 2017 21:47:56 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Zimbabwe</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Mugabe, Robert</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Rhodesia</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Mnangagwa, Emmerson</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Zimbabwe African National Union-Patriotic Front (ZANU-PF)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Coups D'Etat and Attempted Coups D'Etat</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Appointments and Executive Changes</category>
+    </item>
+    <item>
+      <title>Kim Jong-un Disciplines North Korea&#x2019;s Top Military Organization</title>
+      <link>https://www.nytimes.com/2017/11/20/world/asia/north-korea-kim-jong-un.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/asia/north-korea-kim-jong-un.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/asia/north-korea-kim-jong-un.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21Nkorea1/21Nkorea1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>A military parade in Pyongyang, North Korea, in April. The country&#x2019;s leader, Kim Jong-un, appears to be trying to curb the influence of the military.</media:description>
+      <media:credit>Wong Maye-E/Associated Press</media:credit>
+      <description>The move is the latest sign that the North Korean leader is trying to tighten his grip on party elites and the armed forces amid a nuclear standoff with the United States.</description>
+      <dc:creator>CHOE SANG-HUN</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 03:41:20 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">North Korea</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">General Political Bureau (North Korea)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Politics and Government</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Kim Jong-un</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Defense and Military Forces</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Hwang Pyong-so</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Choe Ryong-hae</category>
+    </item>
+    <item>
+      <title>Paris Journal: A Brothel, Repurposed and Restored, Reveals Another Paris</title>
+      <link>https://www.nytimes.com/2017/11/20/world/europe/paris-brothel-restoration.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/europe/paris-brothel-restoration.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/europe/paris-brothel-restoration.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21brothel1/xxbrothel1-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The owner, Caroline Senot, right, and a restorer, Mathilde de Blas, checked the progress of the renovation of the former brothel Aux Belles Poules in Paris.</media:description>
+      <media:credit>Dmitry Kostyukov for The New York Times</media:credit>
+      <description>Hidden for decades behind crude wooden boards, an ornate ceramic frieze at the former Aux Belles Poules tells a story of the city&#x2019;s once-thriving sex business.</description>
+      <dc:creator>ADAM NOSSITER</dc:creator>
+      <pubDate>Mon, 20 Nov 2017 15:32:21 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Prostitution</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Aux Belles Poules (Paris, France)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Historic Buildings and Sites</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Architecture</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Nineteen Hundred Twenties</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Paris (France)</category>
+    </item>
+    <item>
+      <title>Silent Sub: Time Is the Enemy as Argentina Hunts a Lost Vessel</title>
+      <link>https://www.nytimes.com/2017/11/20/world/americas/argentina-submarine.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2017/11/20/world/americas/argentina-submarine.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2017/11/20/world/americas/argentina-submarine.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2017/11/21/world/21Argentina/21Argentina-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The Comandante Espora leaving the naval base in Mar del Plata, Argentina, on Saturday as part of the search for a missing submarine.</media:description>
+      <media:credit>Vicente Robles/Associated Press</media:credit>
+      <description>Six days after the ARA San Juan lost contact, with hopes raised and dashed, families of its 44 crew members are growing increasingly anxious.</description>
+      <dc:creator>DANIEL POLITI and ERNESTO LONDO&#xD1;O</dc:creator>
+      <pubDate>Tue, 21 Nov 2017 03:04:49 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Submarines and Submersibles</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Argentina</category>
+    </item>
+  </channel>
+</rss>

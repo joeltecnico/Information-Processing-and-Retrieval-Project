@@ -25,6 +25,7 @@ def getFile_and_separete_into_sentences(f):
                 sentences.append(sentence)
     return file_content,sentences 
 
+'''
 def counts_and_tfs(file_content, vec):
     counts_of_terms=vec.fit_transform(file_content).toarray() 
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
@@ -37,14 +38,14 @@ def sentences_ToVectorSpace(content):
     isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))#inverve sentence frequency
     return tfs_sent*isfs
     #return tfs_sent*isfs, isfs, counts_of_terms_sent
-
-
 '''
+
+
 def sentences_ToVectorSpace(file_content):
     vec = CountVectorizer()
     counts_of_terms_sents=vec.fit_transform(file_content).toarray() 
     return counts_of_terms_sents
-'''
+
 
 
 def cosine_similarity(main_sentence,sentences_vectors ):
@@ -74,11 +75,19 @@ def calculate_page_rank(graph, d, n_iter):
     prob_not_dumping = 1 - d
     PR = dict.fromkeys(range(n_docs), 1/n_docs)
     for i in range(n_iter) :
+        PR_new= {}
         for node in graph :
-            sum = 0
+            sum_links = 0
             for link in graph[node] :
-                sum += PR[link]/len(graph[link])
-            PR[node] = jump_random + prob_not_dumping * sum
+                sum_links += PR[link]/len(graph[link])
+            PR_new[node] = jump_random + prob_not_dumping * sum_links
+
+            #PR_new[node] = jump_random + prob_not_dumping * sum
+        print("PR_new", PR_new)
+        PR=PR_new
+        print("PR",PR[0])
+              
+
             
         #put here the code por page ranking
     return PR
@@ -95,9 +104,10 @@ if __name__ == "__main__":
     file_content, sentences=getFile_and_separete_into_sentences("TeMario/Textos-fonte/Textos-fonte com titulo/po96ju13-a.txt") 
     sentences_vectors=sentences_ToVectorSpace(sentences)  
     graph=get_graph(sentences_vectors, 0.2)
-    PR = calculate_page_rank(graph, 0.15, 50)
+    PR = calculate_page_rank(graph, 0.15, 1)
+    print("VALUE", sum(list(PR.values())))
     summary, summary_to_user=show_summary(PR,sentences,5)
-    print(sum(list(PR.values())))
+    
     print(summary_to_user)
     print("--- %s seconds ---" % (time.time() - start_time))
     

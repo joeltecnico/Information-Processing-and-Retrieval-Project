@@ -63,9 +63,10 @@ def get_graph(sentences_vectors, threshold):
         start_index=node+1
         cos_sim=cosine_similarity(sentences_vectors[node], sentences_vectors[start_index:])
         index_of_edges=np.asarray(np.where(cos_sim>threshold))+start_index
-        graph[node] += list(index_of_edges[0])
-        for i in index_of_edges[0] :
-            graph[i].append(node)
+        if len(index_of_edges[0])>0:
+            graph[node] += list(index_of_edges[0])
+            for i in index_of_edges[0] :
+                graph[i].append(node)
     return graph
 
 
@@ -73,23 +74,19 @@ def calculate_page_rank(graph, d, n_iter):
     n_docs = len(graph)
     jump_random = d / n_docs
     prob_not_dumping = 1 - d
-    PR = dict.fromkeys(range(n_docs), 1/n_docs)
+    print("GRAPH", graph)
+    PR = dict.fromkeys(graph.keys(), 1/n_docs)
+    print("PR", PR)
     for i in range(n_iter) :
         PR_new= {}
         for node in graph :
             sum_links = 0
             for link in graph[node] :
                 sum_links += PR[link]/len(graph[link])
-            PR_new[node] = jump_random + prob_not_dumping * sum_links
-
-            #PR_new[node] = jump_random + prob_not_dumping * sum
+            PR_new[node] = jump_random + (prob_not_dumping * sum_links)
         print("PR_new", PR_new)
         PR=PR_new
         print("PR",PR[0])
-              
-
-            
-        #put here the code por page ranking
     return PR
     
 def show_summary(scored_sentences, sentences, number_of_top_sentences):

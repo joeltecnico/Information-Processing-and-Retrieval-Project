@@ -1,0 +1,63 @@
+A questão dos encargos trabalhistas
+
+RUBEN D. ALMONACID, MÁRCIO I. NAKANE ; SAMUEL A. PESSÔA
+
+Um importante debate tem acontecido neste espaço e que diz respeito à importância (ou não) dos encargos trabalhistas na composição dos custos das empresas e, portanto, seu impacto sobre a geração de empregos e competitividade das empresas brasileiras.
+
+O professor José Pastore, em entrevista na Folha de 23/04/94, comentando os resultados de uma pesquisa recente ("Flexibilização dos Mercados de Trabalho e Contratação Coletiva", Editora LTr, 1994), manifestava a opinião de que os elevados encargos trabalhistas constituem um forte fator de inibição na geração de empregos no Brasil.
+
+O professor Edward J. Amadeo, em dois artigos (Folha de 04/01/94 e 04/06/94) manifestou posição diversa; enquanto este calculava encargos de 24,5% sobre a folha de salários, o professor Pastore chegava ao total de 102,1% para os mesmos.
+
+Tal diferença deve-se ao fato de que os dois autores têm conceitos distintos de encargos. Para o professor Amadeo os encargos são "a diferença entre o que o trabalhador recebe e o que a empresa paga", enquanto para o professor Pastore "os encargos sociais compõem o custo final do fator trabalho para a empresa".
+
+A diferença é que o professor Amadeo não considera como encargos os gastos do empregador que retornam ao trabalhador como por exemplo, "o 13º, o abono de férias, o FGTS, o uso do dinheiro do Sesi, o vale transporte, o salário maternidade e doença etc.".
+
+Para resumir, diremos que os gastos do empregador dividem-se em dois grupos: aqueles que não retornam ao trabalhador (por exemplo, INSS), que chamaremos de "encargos"; e aqueles que retornam a ele (por exemplo, repouso semanal e décimo terceiro salário), que chamaremos de "salário indireto". Em contraposição, chamaremos de "salário indireto" ao pagamento por hora trabalhada ou por tarefa.
+
+Portanto, o professor Amadeo considera como encargo trabalhista somente o que chamamos de "encargos" (na sua avaliação, INSS, salário educação e contribuição relativa a acidentes do trabalho); enquanto o professor Pastore considera como encargo trabalhista a soma dos "encargos" com o "salário indireto".
+
+Não pretendemos nesta nota entrar no mérito da discussão empírica, qual seja, se tais encargos são ou não elevados, mas sim, chamar a atenção para alguns pontos conceituais que julgamos importantes para uma melhor compreensão da questão.
+
+Do ponto de vista econômico a discussão relevante é saber o impacto destes encargos sobre a eficiência produtiva. Isto equivale a discutir qual é o conceito de salário relevante nas decisões dos agentes econômicos (empresários e trabalhadores).
+
+Quando o professor Amadeo exclui dos encargos o "salário indireto" ele entende que o conceito relevante de salário para as decisões do trabalhador é a soma deste com o "salário direto". Esta soma dividida pelas horas trabalhadas (ou pelas tarefas) constitui seu salário médio.
+
+Para que o leitor entenda o ponto que desejamos ressaltar considere o seguinte exemplo. Suponha que existam na economia dois tipos de empresas.
+
+As empresas tipo um não pagam salário indireto, pagam R$ 1,00 por hora trabalhada e trabalha-se dez horas por dia. Portanto, seu trabalhador recebe R$ 10,00 por dia com um salário médio de R$ 1,00. As empresas tipo dois pagam R$ 5,00 de salário indireto por dia, R$ 0,50 por hora trabalhada e também trabalha-se dez horas por dia. O salário por dia e o salário médio, portanto, são idênticos para os trabalhadores de ambas as empresas.
+
+Nesta situação, diria o professor Amadeo, os trabalhadores de ambas, por receberem o mesmo salário médio, comportar-se-iam da mesma forma e as empresas, portanto, produziriam com a mesma eficiência.
+
+A teoria econômica ensina, contudo, que os agentes reagem a incentivos marginais, que no exemplo corresponde ao salário por hora trabalhada. É de se esperar que o comportamento dos trabalhadores em ambas as empresas seja, assim, radicalmente distinto: certamente o incentivo à presença no trabalho é maior nas empresas do tipo um onde a falta de um dia acarreta uma perda de R$ 10,00 do que nas empresas do tipo dois que acarreta uma perda de R$ 5,00.
+
+Um outro exemplo ajudará o leitor a entender a distinção entre incentivo médio e marginal. Imagine duas churrascarias: a primeira funciona no sistema "a la carte" (o consumidor paga por porção de carne pedida) e a segunda funciona no sistema rodízio (o consumidor paga uma quantia fixa e consome à vontade). É claro que o mesmo comensal terá comportamentos distintos nas duas churrascarias. Consumirá menos carne na churrascaria "a la carte" ainda que o gasto seja o mesmo.
+
+No que diz respeito, portanto, à eficiência produtiva o conceito relevante de salário é o marginal. Certamente, parte do salário indireto, por exemplo, o abono de férias, salário-maternidade, vale-transporte, por aumentar o salário médio, mas não o marginal, não tem impacto sobre o esforço de trabalho. É claro que outros itens, como o repouso semanal remunerado, se assemelham a uma remuneração na margem e, assim, devem ser excluídos dos encargos.
+
+Note que para o professor Pastore os encargos são entendidos segundo seus impactos sobre o custo do empregador. Mas se a discussão refere-se aos efeitos sobre o mercado de trabalho está correto o professor Amadeo ao afirmar que o importante é a diferença entre o custo percebido pelo empregador e o salário recebido pelo trabalhador. No entanto, ao considerar o salário médio e não o marginal, subestima esta diferença.
+
+Outro importante ponto é o tratamento assimétrico dispensado pelo professor Amadeo ao FGTS "vis-à-vis" o INSS.
+
+O primeiro é contabilizado como salário indireto quando sabe-se que sua correção é feita por índices que subestimam a taxa de inflação e seu acesso é restrito. Assim, este fundo não retorna integralmente ao trabalhador.
+
+Quanto ao INSS, parte de sua contribuição retorna a ele sob a forma de serviços de saúde e pagamento de pensões. Não se justifica, portanto, a sua total exclusão do "salário indireto".
+
+Este ponto é mais relevante quando se trata de comparações entre países: quanto maior for a eficiência do setor público na gestão desses fundos (aposentadoria e correlatos) e na administração da assistência à saúde maior é o "salário indireto" e menores serão os "encargos" para um mesmo montante de contribuição.
+
+Entre os itens que compõem os encargos merece menção os custos de rescisão contratual.
+
+Estes custos, novamente, podem ser divididos entre aqueles que retornam ao trabalhador (por exemplo, aviso prévio e indenização de 40% calculada sobre o saldo do FGTS) e aqueles que não retornam. Nesta última são de particular importância os custos para a empresa da Justiça trabalhista.
+
+É uma posição de senso comum (que merece um estudo mais rigoroso) que a Justiça trabalhista tem um viés pró-trabalhador. Mesmo em demandas sem fundamento sua posição tem sido favorável a ele.
+
+Esta peculiaridade faz com que o benefício para o trabalhador de uma pendência seja alto enquanto o custo é baixo uma vez que os advogados trabalhistas cobram um percentual sobre o resultado da ação. A estrutura de incentivos é clara: quer o trabalhador tenha ou não razão sente-se estimulado a entrar com a ação.
+
+Assim, apesar de difícil mensuração, tais considerações nos levam a crer que o valor apresentado pelo professor Pastore para as "despesas de rescisão contratual" (2,57%) encontra-se subestimado.
+
+Assim, acreditamos que uma avaliação empírica que considere os pontos aqui discutidos (distinção entre salário médio e marginal, eficiência do setor público e os elevados custos da rescisão contratual) ajudarão a uma melhor compreensão do real impacto sobre a eficiência produtiva dos encargos trabalhistas.
+
+RUBEN D. ALMONACID, 50, é doutor em Economia pela Universidade de Chicago (EUA). Foi professor da Faculdade de Economia e Administração da USP (Universidade de São Paulo) de 1971 a 1991.
+
+MÁRCIO I. NAKANE, 28, é mestre em Economia e professor da Faculdade de Economia e Administração da USP.
+
+SAMUEL A. PESSÔA, 31, doutor em economia pela Faculdade de Economia e Administração da USP e professor do Instituto de Economia da Unicamp (Universidade Estadual de Campinas).

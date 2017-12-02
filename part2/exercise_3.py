@@ -11,6 +11,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import re
 import operator
+import exercise_1_matrix
 
 
 
@@ -34,20 +35,6 @@ def calculate_features(sentences, n_features):
     features[:,1]=PR.ravel()
     return features
     
-    
-def get_graph(sentences_vectors, threshold):
-    n_sentences=len(sentences_vectors)
-    tri_matrix=np.triu(np.zeros((n_sentences,n_sentences)),-1)
-    for node in range(n_sentences-1):
-        start_index=node+1
-        cos_sim=cosine_similarity(sentences_vectors[node], sentences_vectors[start_index:])
-        #print("Cosine similarity",cos_sim )
-        index_of_edges=np.asarray(np.where(cos_sim>=0))+start_index
-        #tri_matrix[node,index_of_edges]=1
-        tri_matrix[node,index_of_edges]=cos_sim
-    return tri_matrix+tri_matrix.T
-
-
 def calculate_page_rank(graph, damping, n_iter):
     n_docs_before=len(graph)
     sentences_not_linked=np.where(~graph.any(axis=0))
@@ -72,25 +59,31 @@ def calculate_page_rank(graph, damping, n_iter):
     print("R", r)
     zeros=np.zeros((len(sentences_not_linked[0]),1))
     print("zeros", zeros)
+    print("sentences not linkes", sentences_not_linked)
     for i in sentences_not_linked[0]:
         r= np.insert(r, i, 0 , axis=0)
+    print("r", r)
     return r
     
-
+'''
+def get_pr_for_allSentences(PR, sentences_not_linked):
+    PR=(list(PR.values()))
+    
+    for i in sentences_not_linked[0]:
+        PR= np.insert(PR, i, 0 , axis=0)
+    return PR
+'''
 
 if __name__ == "__main__":
     file_content, sentences=getFile_and_separete_into_sentences("script1.txt")
     print(file_content)
+    #sentences_vectors, isfs, counts_of_terms_sent=exercise_1_matrix.sentences_ToVectorSpace(sentences)  
+    sentences_vectors=exercise_1_matrix.sentences_ToVectorSpace(sentences)  
+    graph=exercise_1_matrix.get_graph(sentences_vectors, 0.2)     
+    print("\n Graph\n", graph)
     
-    print("Features", features)
-    print("\n Graph", graph)
-    PR = calculate_page_rank(graph, 0.15, 50)
-    print("PR \n ", PR)
+    PR= calculate_page_rank(graph, 0.15, 50)
+
     features=calculate_features(sentences,2)
     print("FEATURES",features )
     
-    
-    
-    
-    #sentences_vectors=sentences_ToVectorSpace(sentences)  
-    #graph=get_graph(sentences_vectors, 0.2)     

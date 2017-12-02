@@ -54,7 +54,7 @@ def get_graph(sentences_vectors, threshold):
         #print("Cosine similarity",cos_sim )
         #index_of_edges=np.asarray(np.where(cos_sim>0.0))+start_index
                                  
-        index_of_edges=np.asarray(np.where(cos_sim>0.2))
+        #index_of_edges=np.asarray(np.where(cos_sim>0.2))
 
         #print("index of edges1",index_of_edges[0])
         #print("index of edges2",index_of_edges)
@@ -62,8 +62,8 @@ def get_graph(sentences_vectors, threshold):
         #tri_matrix[node,index_of_edges]=1
         #print("OLALAL", cos_sim)
         #print("ik ", cos_sim[index_of_edges])
-        tri_matrix[node,index_of_edges+start_index]=cos_sim[index_of_edges]
-        #tri_matrix[node,start_index:]=cos_sim
+        #tri_matrix[node,index_of_edges+start_index]=cos_sim[index_of_edges]
+        tri_matrix[node,start_index:]=cos_sim
     print( "GRAP MEMSO \n ", tri_matrix+tri_matrix.T)
     return tri_matrix+tri_matrix.T
 
@@ -91,7 +91,7 @@ def calculate_page_rank(graph, damping, n_iter):
         r_new=matrix.dot(r)
         r=r_new
     
-    return dict(zip(indexes, r))
+    return dict(zip(indexes, r)), sentences_not_linked
 
 
 
@@ -128,7 +128,7 @@ def calculate_page_rank2(graph, damping, n_iter):
         r_new=matrix.dot(r)
         r=r_new
     
-    return dict(zip(indexes, r))
+    return dict(zip(indexes, r)), sentences_not_linked
 
 
 def show_summary(scored_sentences, sentences, number_of_top_sentences):
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     print("\n Graph\n", graph)
     
     
-    PR = calculate_page_rank2(graph, 0.15, 50)
+    PR, sentences_not_linked = calculate_page_rank2(graph, 0.15, 50)
     print("PR \n ", PR)
     summary, summary_to_user=show_summary(PR,sentences,5)
     print("\n SOMA", sum(list(PR.values())))

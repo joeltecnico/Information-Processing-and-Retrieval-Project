@@ -1,0 +1,55 @@
+A âncora monetária do real
+
+MÁRCIO G.P. GARCIA
+
+A partir da reforma monetária de 1º de julho a inflação certamente cairá abruptamente. Para mantê-la em níveis reduzidos, o governo recorrerá a uma âncora monetária. A âncora monetária consistirá em um conjunto de regras que limitará a emissão monetária pelo Banco Central (BC).
+
+Sobre a efetividade dessa âncora em manter baixa a inflação pairam algumas ameaças. A mais notória delas são as pressões por maiores gastos públicos. Há, contudo, uma outra ameaça que advém do mecanismo operacional adotado pelo BC nas últimas duas décadas para conviver com a inflação.
+
+O regime de política monetária atualmente em vigor é caracterizado pelo BC ter como principal objetivo de política monetária manter o juro real do mercado de reservas bancárias ("open market") em um nível que o BC considera adequado.
+
+Este nível adequado não deve ser tão alto de forma a impingir um custo muito elevado ao Tesouro, nem deve ser tão baixo de forma a provocar fuga da moeda nacional. Tal objetivo é atingido através das operações diárias de compra e venda de títulos que o BC realiza no "open market", inclusive a famosa zeragem automática. Uma das funções que a zeragem automática realiza é a de prover liquidez a baixo custo a bancos que necessitem de reservas ao final do dia.
+
+O objetivo de fazer uma dada taxa real de juros torna a oferta de moeda completamente endógena e passiva, o que é uma condição "sine qua non" para a explosão inflacionária que observamos no Brasil. Note-se que não é a fixação da taxa real de juros em geral que torna passiva a oferta monetária. Uma regra de fixação da taxa real de juros que elevasse suficientemente a taxa real sempre que a expectativa inflacionária subisse seria compatível com um controle da oferta de moeda.
+
+Por exemplo, a política monetária do banco central dos EUA equivale a uma regra de fixação de taxas de juros real. Toda vez que a expectativa inflacionária se eleva em 0,5%, o banco central norte-americano eleva a taxa de juros real também em 0,5%, subindo a taxa de juros nominal em 1%.
+
+O que torna a oferta monetária passiva no Brasil é a forma específica de fixação da taxa real de juros que o BC segue, não elevando, ou elevando insuficientemente, os juros reais quando se eleva a expectativa inflacionária. Quando a inflação atinge os níveis elevadíssimos atuais, o controle desta via elevação de juros reais torna-se inviável. Mas, para que a inflação permaneça baixa após o impacto inicial da reforma monetária, é imprescindível que a passividade da oferta monetária seja rompida. Esta deve ser uma das funções da âncora monetária.
+
+Quando a inflação cair após 1º de julho, a demanda por M1 (a soma de depósitos em conta corrente com o papel moeda) certamente crescerá. Esse aumento da demanda por moeda exige um aumento correspondente da oferta de moeda. Tal aumento da oferta de moeda não é inflacionário, pois apenas atende ao aumento da demanda. O problema é que ninguém sabe a quanto subirá a demanda de moeda.
+
+Assim, fica difícil dizer a priori quando deverá ocorrer de expansão da oferta monetária. Se expandir pouco, os juros ficarão desnecessariamente altos, diminuindo o nível de atividade. Se expandir demais, os juros caem e a inflação recrudesce (o caso do Plano Cruzado).
+
+A ameaça que reside na implementação da meta monetária trimestral deriva do caráter de quase-moeda que têm atualmente os FAFs e demais fundos. A política do BC acima descrita de fixar a taxa real de juros é a responsável pela provisão de liquidez a tais fundos. E é precisamente a provisão de liquidez às cotas de tais fundos que permite à economia brasileira funcionar com um grau de monetização (M1/PIB) mais de dez vezes inferior ao registrado nos EUA.
+
+A queda da inflação que ocorrerá com a reforma monetária aumentará a demanda por M1. De quanto será tal aumento dependerá em grande medida da política monetária do BC. Explico através de meu próprio exemplo.
+
+Atualmente, mantenho meu salário num fundo do banco mais próximo da PUC-Rio. À medida que emito cheques, o banco retira os recursos necessários do fundo, transferindo-os para minha conta corrente. Isso só é possível porque o banco sabe que pode obter liquidez barata do BC, vendendo os títulos públicos quando precisar de reservas bancárias sem grande perda de capital. Se tal procedimento de prover liquidez barata aos bancos não for alterado pelo BC, o banco não precisará me impor nenhuma restrição adicional, nem eu precisarei mudar meu cômodo comportamento atual.
+
+Assim, após a queda da inflação com a reforma monetária, eu apenas andarei com um pouco mais de dinheiro na carteira (nem tanto, pois moro no Rio de Janeiro!). Se as demais pessoas e as firmas tampouco alterarem seus comportamentos atuais, não haverá um grande aumento na demanda por M1.
+
+Isto pode parecer bom, pois manteria a oferta de moeda abaixo da meta estipulada. Na realidade, se a política monetária do BC não se alterar, isso representará a volta líquida e certa da inflação. Vejamos por quê.
+
+A forma atual do BC prover liquidez a ativos que rendem juros conduz inapelavelmente ao rompimento de qualquer meta nominal que se imponha a qualquer agregado monetário no longo prazo.
+
+Na medida em que as taxas de juros de tais ativos contenham a expectativa de inflação (mais o juro real), aumentos na expectativa da inflação serão repassados aos juros pagos pelos títulos. Os juros mais altos, devido à política do BC de conferir liquidez aos títulos, acabarão aumentando a base monetária.
+
+Ou seja, a manutenção do mecanismo operacional atual de política monetária do BC, o qual inclui a zeragem automática, pode ser responsável num primeiro momento (alguns meses) pela observância da meta monetária, mas, no longo prazo, trará inevitavelmente de volta a inflação.
+
+Uma outra forma de entender este fenômeno é se pensar no financiamento do déficit público. Presume-se que a meta monetária vai impedir o BC de financiar o déficit público. Entretanto, ao manter o mecanismo atual de política monetária, o BC mantém um mercado privado adicional para a dívida pública, posto que esta pode ser usada como quase-moeda.
+
+Assim, o Tesouro, bem como os Estados e municípios que emitem dívida mobiliária, ganham um fôlego adicional para financiarem seus déficits via colocação de dívida mobiliária. Ou seja, sem a mudança da regra operacional do BC, a meta monetária tampouco impõe limites ao financiamento do déficit público, que pode se dar via dívida ao invés de via expansão monetária (senhoriagem).
+
+Em suma, o que se quer aqui é chamar a atenção para a necessidade que a regra monetária que venha a ser adotada imponha desde logo custos significativos de iliquidez aos bancos. Ou seja, o que se quer é a eliminação da moeda indexada, da ciranda financeira, ou do substituto doméstico de moeda.
+
+O crescimento da demanda por moeda dependerá do que os bancos acreditarão que o BC fará. Se o meu banco na PUC-Rio achar que não poderá mais ter liquidez barata no BC, ele não poderá mais me dar a combinação de liquidez diária e proteção inflacionária no FAF e nos demais fundos.
+
+Assim, terei que deixar mais dinheiro na conta corrente para não passar cheques sem fundos. A demanda por M1 crescerá mais no início do plano, exigindo uma maior expansão da oferta de reservas bancárias, mas poderá não apresentar o movimento de contínuo crescimento que certamente se registraria se mantida o atual procedimento operacional do BC.
+
+Portanto, acredito que uma meta monetária definida a priori, para ser inscrita em lei com o fim de conferir confiança plano, não necessariamente garanta os resultados pretendidos. As metas deverão ser definidas adaptivamente à medida que a implantação do real progredir e se souber melhor qual é a demanda por moeda.
+
+Para evitar excessos nessa fase inicial, uma proposta interessante é a do professor Mário Simonsen, de congelar temporariamente o M4, através da imposição de um depósito compulsório de 100% na margem.
+
+A confiança no plano será reflexo das ações do BC. Por exemplo, o plano ganhará certamente a confiança do mercado se o BC mostrar que de fato exerce sua função de regulador da atividade bancária, livre de ingerências políticas, certamente muito fortes neste período eleitoral, agindo com rigor com qualquer banco que não cumprir as normas do BC, como é o caso de algumas instituições estaduais e oficiais.
+
+MÁRCIO G.P. GARCIA, 34, doutor em Economia pela Universidade de Stanford (EUA), é professor do Departamento de Economia da PUC-RJ (Pontifícia Universidade Católica do Rio de Janeiro) e editor da "Revista de Econometria".

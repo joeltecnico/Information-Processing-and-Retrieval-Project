@@ -52,13 +52,20 @@ def get_graph(sentences_vectors, threshold):
         start_index=node+1
         cos_sim=cosine_similarity(sentences_vectors[node], sentences_vectors[start_index:])
         #print("Cosine similarity",cos_sim )
-        index_of_edges=np.asarray(np.where(cos_sim>=0))+start_index
+        #index_of_edges=np.asarray(np.where(cos_sim>0.0))+start_index
+                                 
+        index_of_edges=np.asarray(np.where(cos_sim>0.2))
+
+        #print("index of edges1",index_of_edges[0])
+        #print("index of edges2",index_of_edges)
+
         #tri_matrix[node,index_of_edges]=1
-        tri_matrix[node,index_of_edges]=cos_sim
+        #print("OLALAL", cos_sim)
+        #print("ik ", cos_sim[index_of_edges])
+        tri_matrix[node,index_of_edges+start_index]=cos_sim[index_of_edges]
+        #tri_matrix[node,start_index:]=cos_sim
+    print( "GRAP MEMSO \n ", tri_matrix+tri_matrix.T)
     return tri_matrix+tri_matrix.T
-
-
-
 
 
 def calculate_page_rank(graph, damping, n_iter):
@@ -78,12 +85,51 @@ def calculate_page_rank(graph, damping, n_iter):
     r=np.ones((n_docs, 1))/n_docs
     #err=1
     
+    
     print("Matrix", M)
     for i in range(n_iter) :
         r_new=matrix.dot(r)
         r=r_new
-
+    
     return dict(zip(indexes, r))
+
+
+
+def get_prior(n_docs):
+    weights_pos=np.arange(n_docs, 0, -1)
+    print("\nnot dum 1 \n\n", (weights_pos) )
+    print("\nnot dum 1 \n\n", np.sum(weights_pos) )
+
+    return weights_pos/np.sum(weights_pos)
+    
+    
+def calculate_page_rank2(graph, damping, n_iter):
+    sentences_not_linked=np.where(~graph.any(axis=0))
+    print("senteces not linked", sentences_not_linked[0])
+    indexes= np.arange(len(graph))
+    indexes=np.delete(indexes,sentences_not_linked)
+    print("indexes", indexes)
+    graph=np.delete(graph, sentences_not_linked,0)
+    graph=np.delete(graph, sentences_not_linked,1)
+    print("Graph agora sim", graph)
+    
+    transition_probs=graph/np.sum(graph,axis=0) 
+    n_docs=len(transition_probs)
+    priors=get_prior(n_docs)  #vector
+    #Compute Matrix -> 1-d[Transition_Probabilities] + d* [priors] 
+    matrix=  (((1-damping)*transition_probs).T + (damping)*(priors)).T #(since prior is a scaler, sum it up to each collum of Transition probs)
+    
+    r=np.ones((n_docs, 1))/n_docs
+    print("\nnot dumping\n\n", (priors) )
+    
+    #err=1
+    print("\n Matrix", matrix)
+    for i in range(n_iter) :
+        r_new=matrix.dot(r)
+        r=r_new
+    
+    return dict(zip(indexes, r))
+
 
 def show_summary(scored_sentences, sentences, number_of_top_sentences):
     scores_sorted_bySimilarity = sorted(scored_sentences.items(),
@@ -97,14 +143,21 @@ if __name__ == "__main__":
     file_content, sentences=getFile_and_separete_into_sentences("script1.txt") 
     sentences_vectors=sentences_ToVectorSpace(sentences)  
     graph=get_graph(sentences_vectors, 0.2)     
-    print("\n Graph", graph)
-    PR = calculate_page_rank(graph, 0.15, 50)
+    print("\n Graph\n", graph)
+    
+    
+    PR = calculate_page_rank2(graph, 0.15, 50)
     print("PR \n ", PR)
     summary, summary_to_user=show_summary(PR,sentences,5)
     print("\n SOMA", sum(list(PR.values())))
     print("\n Summmary", summary)
     print(summary_to_user)
     print("--- %s seconds ---" % (time.time() - start_time))
+    
+
+
+
+
     
     
                                 

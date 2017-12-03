@@ -68,6 +68,7 @@ def read_docs(path):
             #ex2_graph,ex2_priors,indexes=priorsTFIDFS_weightsTFIDFS(sentences)
             #ex2_graph,ex2_priors,indexes=priorsLenSents_weightsTFIDFS(sentences)
             ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSentsAndTFIDF_weightsNGramsTFIDFS(sentences)
             #ex2_graph,ex2_priors,indexes=priorsPosition_weightsBM25(sentences)
             #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences)
             #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsNGramsBM5(sentences)
@@ -155,6 +156,14 @@ def priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences):
     priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
     return graph,priors,indexes
 
+
+def priorsPositionAndLenSentsAndTFIDF_weightsNGramsTFIDFS(sentences):
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
+    graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
+    doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
+    priors=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors, counts_of_terms_sent, indexes_sents_not_linked )
+    return graph,priors,indexes
+
 def priorsPosition_weightsBM25(sentences):
     sentences_vectors,counts_of_terms= get_score_BM5(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
@@ -185,6 +194,13 @@ def get_prior_lenSents(counts_of_terms_sent,indexes_not_linked ): # dar + import
 def get_prior_PositionAndLenSents(counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
     priors_position_and_sentenceSize=np.arange(len(counts_of_terms_sent), 0, -1)* (counts_of_terms_sent != 0).sum(1) 
     return get_prior(np.expand_dims(priors_position_and_sentenceSize, axis=0), indexes_not_linked)
+
+
+def get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
+    priors_position_and_sentenceSize=np.arange(len(counts_of_terms_sent), 0, -1)* (counts_of_terms_sent != 0).sum(1) *ex1.cosine_similarity(doc_vector[0], sentences_vectors)
+    return get_prior(np.expand_dims(priors_position_and_sentenceSize, axis=0), indexes_not_linked)
+
+
 
 
 def get_prior(non_uniform_weights, indexes_not_linked):

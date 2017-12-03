@@ -55,11 +55,9 @@ def read_docs(path, function_represent_sents, function_graph, function_prior):
             ex2_graph,indexes, indexes_sents_not_linked=function_graph(ex2_sents_represented)
             priors=function_prior(len(ex2_graph))
             ex2_PR=calculate_improved_prank(ex2_graph, 0.15,50,  priors, indexes)
-            ex2_summary, ex2_summary_to_user=show_summary(ex2_PR,sentences,5)
+            ex2_summary, ex2_summary_to_user=exercise_1.show_summary(ex2_PR,sentences,5)
 
 
-            
-            
             print("DOC:", i, "\n")
             
             ideal_summary,ideal_summary_sentences =exercise_1.getFile_and_separete_into_sentences( ideal_summaries_filesPath[i])  
@@ -73,7 +71,6 @@ def read_docs(path, function_represent_sents, function_graph, function_prior):
             #print("PR \n ", ex2_PR)
             print("\n SOMA", sum(list(ex2_PR.values())))
             ex2_AP_sum=  calculate_precision_recall_ap(ex2_summary,ideal_summary, ideal_summary_sentences,ex2_AP_sum)
-
 
             #break
             i+=1
@@ -119,34 +116,16 @@ def get_prior(n_docs):
     
     
 def calculate_improved_prank(graph, damping, n_iter, priors, indexes):
-    '''
-    sentences_not_linked=np.where(~graph.any(axis=0))
-    print("senteces not linked", sentences_not_linked[0])
-    indexes= np.arange(len(graph))
-    indexes=np.delete(indexes,sentences_not_linked)
-    print("indexes", indexes)
-    graph=np.delete(graph, sentences_not_linked,0)
-    graph=np.delete(graph, sentences_not_linked,1)
-    print("Graph agora sim", graph)
-    '''
-    
     transition_probs=graph/np.sum(graph,axis=0) 
     n_docs=len(transition_probs)
-    #priors=get_prior(n_docs)  #vector
     #Compute Matrix -> 1-d[Transition_Probabilities] + d* [priors] 
     matrix=  (((1-damping)*transition_probs).T + (damping)*(priors)).T #(since prior is a scaler, sum it up to each collum of Transition probs)
-    
-    r=np.ones((n_docs, 1))/n_docs
-    print("\nnot dumping\n\n", (priors) )
-    
-    #err=1
+    r=np.ones((n_docs, 1))/n_docs    
     print("\n Matrix", matrix)
     for i in range(n_iter) :
         r_new=matrix.dot(r)
         r=r_new
-    
     return dict(zip(indexes, r))
-
 
 
 def calculate_precision_recall_ap(summary, ideal_summary_allContent,ideal_summary_sentences,
@@ -157,17 +136,14 @@ def calculate_precision_recall_ap(summary, ideal_summary_allContent,ideal_summar
     precision= RuA / len(summary)
     print("Precision", precision)
 
-         
     correct_until_now = 0
     precisions = 0
     for i in range(len(summary)) :
         if summary[i] in ideal_summary_allContent :
             correct_until_now +=1
             precisions+= correct_until_now / (i+1)
-            
-            
+                    
     AP_sum+=(precisions/R)
-    
     return AP_sum 
 
 
@@ -189,66 +165,7 @@ def doc_ToVectorSpace(content, isfs, counts_of_terms_sent):
     counts_of_terms=np.sum(counts_of_terms_sent, axis=0) #summing the terms counts of each sentence
     counts_of_terms=np.expand_dims(counts_of_terms, axis=0)  #(lines=documents, cols=terms) 
     tfs_doc=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
-    
-    
     return tfs_doc*isfs
-
-
-
-
-'''
-def counts_and_tfs(file_content, vec):
-    counts_of_terms=vec.fit_transform(file_content).toarray() 
-    tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
-    return counts_of_terms,tfs
-
-    
-def sentences_ToVectorSpace(content):
-    vec = CountVectorizer()
-    counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #(lines=sent, cols=terms)
-    isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))#inverve sentence frequency
-    return tfs_sent*isfs
-    #return tfs_sent*isfs, isfs, counts_of_terms_sent
-'''
-
-
-'''
-def calculate_page_rank(graph, damping, n_iter):
-    sentences_not_linked=np.where(~graph.any(axis=0))
-    print("senteces not linked", sentences_not_linked[0])
-    indexes= np.arange(len(graph))
-    indexes=np.delete(indexes,sentences_not_linked)
-    print("indexes", indexes)
-    graph=np.delete(graph, sentences_not_linked,0)
-    graph=np.delete(graph, sentences_not_linked,1)
-    print("Graph agora sim", graph)
-    
-    M=graph/np.sum(graph,axis=0)
-    n_docs=len(M)
-    N=np.full((n_docs, n_docs), n_docs)
-    matrix=(1-damping)*M+(damping)*(1/N)
-    r=np.ones((n_docs, 1))/n_docs
-    #err=1
-    
-    
-    print("Matrix", M)
-    for i in range(n_iter) :
-        r_new=matrix.dot(r)
-        r=r_new
-    
-    return dict(zip(indexes, r)), sentences_not_linked
-'''
-
-
-
-
-def show_summary(scored_sentences, sentences, number_of_top_sentences):
-    scores_sorted_bySimilarity = sorted(scored_sentences.items(),
-            key=operator.itemgetter(1),reverse=True)[0:number_of_top_sentences]
-    scores_sorted_byAppearance=sorted(scores_sorted_bySimilarity, key=operator.itemgetter(0)) 
-    summary=[sentences[line] for line,sim in scores_sorted_bySimilarity] 
-    summary_to_user= [sentences[line] for line,sim in scores_sorted_byAppearance]
-    return summary, summary_to_user 
         
 if __name__ == "__main__":
     file_content, sentences=getFile_and_separete_into_sentences("script1.txt") 

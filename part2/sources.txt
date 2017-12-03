@@ -1,4 +1,4 @@
-NYT,http://rss.nytimes.com/services/xml/rss/nyt/World.xml
+New York Times,http://rss.nytimes.com/services/xml/rss/nyt/World.xml
 CNN,http://rss.cnn.com/rss/edition_world.rss
-WP,http://feeds.washingtonpost.com/rss/rss_blogpost
-LAT,http://www.latimes.com/world/rss2.0.xml
+Washington Post,http://feeds.washingtonpost.com/rss/rss_blogpost
+Los Angeles Times,http://www.latimes.com/world/rss2.0.xml

@@ -75,13 +75,17 @@ def read_docs(path):
             ex1_PR = exercise_1.calculate_page_rank(ex1_graph, 0.15, 50)
             ex1_summary, ex1_summary_to_user=exercise_1.show_summary(ex1_PR,sentences,5)
             
+            '''Testar aqui, é so descomentar aquele q se quer'''
+            #ex2_graph,ex2_priors,indexes=PR_priorsPosition_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=PR_priorsTFIDFS_weightsTFIDFS(sentences)
+            ex2_graph,ex2_priors,indexes=PR_priorsLenSents_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=PR_priorsPositionAndLenSents_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=PR_priorsPosition_weightsBM25(sentences)
+            #ex2_graph,ex2_priors,indexes=PR_priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences)
             
-            #ex2_summary, ex2_summary_to_user=PR_priorsPosition_weightsTFIDFS(sentences)
-            #ex2_summary, ex2_summary_to_user=PR_priorsTFIDFS_weightsTFIDFS(sentences)
-            #ex2_summary, ex2_summary_to_user=PR_priorsLenSents_weightsTFIDFS(sentences)
-            ex2_summary, ex2_summary_to_user=PR_priorsPositionAndLenSents_weightsTFIDFS(sentences)
-            #ex2_summary, ex2_summary_to_user=PR_priorsPosition_weightsBM25(sentences)
-
+            PR=calculate_improved_prank(ex2_graph, 0.15,50,  ex2_priors, indexes)
+            print("\n SOMA", sum(list(PR.values())))
+            ex2_summary, ex2_summary_to_user=exercise_1.show_summary(PR,sentences,5)
 
             print("\nDoc ",i, ": \n\nEx1- Summary to user:", ex1_summary_to_user, 
               ": \n\nEx2- Summary to user:", ex2_summary_to_user)
@@ -102,104 +106,67 @@ def read_docs(path):
     
 
 def PR_priorsPosition_weightsTFIDFS(sentences):
-    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences)
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences,CountVectorizer() )
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
-    PR=calculate_improved_prank(graph, 0.15,50,  priors, indexes)
-    print("\n SOMA", sum(list(PR.values())))
-    summary, summary_to_user=exercise_1.show_summary(PR,sentences,5)
-    return summary, summary_to_user
-    
+    return graph,priors,indexes
+
 def PR_priorsTFIDFS_weightsTFIDFS(sentences):
-    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences)
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
-    priors=get_prior_TFIDF(doc_vector, sentences_vectors, indexes_sents_not_linked )    
-    PR=calculate_improved_prank(graph, 0.15,50,  priors, indexes)
-    print("\n SOMA", sum(list(PR.values())))
-    summary, summary_to_user=exercise_1.show_summary(PR,sentences,5)
-    return summary, summary_to_user
-
+    priors=get_prior_TFIDF(doc_vector, sentences_vectors, indexes_sents_not_linked )
+    return graph,priors,indexes
+ 
 def PR_priorsLenSents_weightsTFIDFS(sentences):
-    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences)
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_lenSents(counts_of_terms_sent, indexes_sents_not_linked)
-    PR=calculate_improved_prank(graph, 0.15,50,  priors, indexes)
-    print("\n SOMA", sum(list(PR.values())))
-    summary, summary_to_user=exercise_1.show_summary(PR,sentences,5)
-    return summary, summary_to_user
-
+    return graph,priors,indexes
+  
 def PR_priorsPositionAndLenSents_weightsTFIDFS(sentences):
-    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences)
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
-    PR=calculate_improved_prank(graph, 0.15,50,  priors, indexes)
-    print("\n SOMA", sum(list(PR.values())))
-    summary, summary_to_user=exercise_1.show_summary(PR,sentences,5)
-    return summary, summary_to_user
+    return graph,priors,indexes
 
-
-
-def get_prior_TFIDF(doc_vector, sentences_vectors,indexes_not_linked ):
-    priors_cos=cosine_similarity(doc_vector[0], sentences_vectors)
-    priors_cos=np.expand_dims(priors_cos, axis=0)
-    priors_cos=np.delete(priors_cos, indexes_not_linked,1) #delete rows with just zeros
-    return priors_cos/np.sum(priors_cos)
-
-def get_prior_Position(n_docs,indexes_not_linked):
-    priors_pos=np.arange(n_docs, 0, -1)
-    priors_pos=np.expand_dims(priors_pos, axis=0)
-    priors_pos=np.delete(priors_pos, indexes_not_linked,1) 
-    return priors_pos/np.sum(priors_pos)
-
-def get_prior_lenSents(counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
-    priors_len=(counts_of_terms_sent != 0).sum(1)    
-    priors_len=np.expand_dims(priors_len, axis=0)
-    priors_len=np.delete(priors_len, indexes_not_linked,1) 
-    return priors_len/np.sum(priors_len)
-
-def get_prior_PositionAndLenSents(counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
-    priors_len=np.arange(len(counts_of_terms_sent), 0, -1)* (counts_of_terms_sent != 0).sum(1) 
-    print("priors_len", priors_len)
-    priors_len=np.expand_dims(priors_len, axis=0)
-    priors_len=np.delete(priors_len, indexes_not_linked,1) 
-    return priors_len /np.sum(priors_len)
-    #return priors_len/np.sum(priors_len)
-
-
-
-
+def PR_priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences):
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
+    graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
+    priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
+    return graph,priors,indexes
 
 def PR_priorsPosition_weightsBM25(sentences):
     sentences_vectors,counts_of_terms= get_score_BM5(sentences)
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
-    PR=calculate_improved_prank(graph, 0.15,50,  priors, indexes)
-    print("\n SOMA", sum(list(PR.values())))
-    summary, summary_to_user=exercise_1.show_summary(PR,sentences,5)
-    return summary, summary_to_user
-
-def get_score_BM5(content):
-    k=1.2
-    b=0.75
-    
-    vec = CountVectorizer()
-    counts_of_terms=vec.fit_transform(content).toarray()
-    
-    nominator=counts_of_terms*(k+1)
-    length_of_sentences_D=counts_of_terms.sum(1)
-    number_sentences=len(counts_of_terms)
-    avgdl= sum(length_of_sentences_D)/number_sentences
-    denominator=counts_of_terms+(k*(1-b+b*((length_of_sentences_D)/(avgdl))))[:, None] 
-    score_BM5_without_ISF=nominator/denominator
-    
-    N=len(counts_of_terms) #numero de frases
-    nt=(counts_of_terms!=0).sum(0)  #nº vezes q o termo aparece nas frases
-    isfs=np.log10((N-nt+0.5)/(nt+0.5))  # inverve sentence frequency   
-         
-    return score_BM5_without_ISF*isfs, counts_of_terms
+    return graph,priors,indexes
 
 
+
+
+def get_prior_TFIDF(doc_vector, sentences_vectors,indexes_not_linked ):
+    priors_cos=cosine_similarity(doc_vector[0], sentences_vectors)
+    return get_prior(np.expand_dims(priors_cos, axis=0), indexes_not_linked)
+
+def get_prior_Position(n_docs,indexes_not_linked):
+    priors_pos=np.arange(n_docs, 0, -1)
+    return get_prior(np.expand_dims(priors_pos, axis=0), indexes_not_linked)
+
+
+def get_prior_lenSents(counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
+    priors_len=(counts_of_terms_sent != 0).sum(1)    
+    return get_prior(np.expand_dims(priors_len, axis=0), indexes_not_linked)
+
+def get_prior_PositionAndLenSents(counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
+    priors_position_and_sentenceSize=np.arange(len(counts_of_terms_sent), 0, -1)* (counts_of_terms_sent != 0).sum(1) 
+    return get_prior(np.expand_dims(priors_position_and_sentenceSize, axis=0), indexes_not_linked)
+
+
+def get_prior(non_uniform_weights, indexes_not_linked):
+    non_uniform_weights=np.delete(non_uniform_weights, indexes_not_linked,1) #delete rows that dont belong to graph
+    return non_uniform_weights/np.sum(non_uniform_weights)
+    
 
 def get_graph(sentences_vectors):
     n_sentences=len(sentences_vectors)
@@ -260,11 +227,9 @@ def calculate_precision_recall_ap(summary, ideal_summary_allContent,ideal_summar
     return AP_sum, precision_sum
 
 
-def sentences_ToVectorSpace(content):
-    vec = CountVectorizer()
+def sentences_ToVectorSpace(content, vec): #TF-IDF
     counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #(lines=sent, cols=terms)
     isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))#inverve sentence frequency
-    #return tfs_sent*isfs, isfs, counts_of_terms_sent
     return tfs_sent*isfs, isfs, counts_of_terms_sent
 
 
@@ -273,11 +238,33 @@ def counts_and_tfs(file_content, vec):
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
     return counts_of_terms,tfs
 
-def doc_ToVectorSpace(isfs, counts_of_terms_sent):
+def doc_ToVectorSpace(isfs, counts_of_terms_sent):#TF-IDF
     counts_of_terms=np.sum(counts_of_terms_sent, axis=0) #summing the terms counts of each sentence
     counts_of_terms=np.expand_dims(counts_of_terms, axis=0)  #(lines=documents, cols=terms) 
     tfs_doc=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
     return tfs_doc*isfs
+
+
+def get_score_BM5(content):
+    k=1.2
+    b=0.75
+    
+    vec = CountVectorizer()
+    counts_of_terms=vec.fit_transform(content).toarray()
+    
+    nominator=counts_of_terms*(k+1)
+    length_of_sentences_D=counts_of_terms.sum(1)
+    number_sentences=len(counts_of_terms)
+    avgdl= sum(length_of_sentences_D)/number_sentences
+    denominator=counts_of_terms+(k*(1-b+b*((length_of_sentences_D)/(avgdl))))[:, None] 
+    score_BM5_without_ISF=nominator/denominator
+    
+    N=len(counts_of_terms) #numero de frases
+    nt=(counts_of_terms!=0).sum(0)  #nº vezes q o termo aparece nas frases
+    isfs=np.log10((N-nt+0.5)/(nt+0.5))  # inverve sentence frequency   
+         
+    return score_BM5_without_ISF*isfs, counts_of_terms
+
 
 def cosine_similarity(main_sentence,sentences_vectors ):
     cosSim=[]
@@ -285,9 +272,6 @@ def cosine_similarity(main_sentence,sentences_vectors ):
         cosSim.append( np.dot(sentence_vector,main_sentence)/(np.sqrt(
             np.sum(sentence_vector*sentence_vector) )* np.sqrt(np.sum(main_sentence*main_sentence) )))
     return np.array(cosSim) 
-
-
-
 
 
 def readTest():

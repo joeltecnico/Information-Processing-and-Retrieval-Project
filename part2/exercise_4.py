@@ -48,7 +48,7 @@ def getParsesPages(f):
         url=urllib.request.urlopen(source_url[1])
         
         sourceIndex = len(sources)
-        sources.append(source_url[0])
+        sources.append(source_url)
         
         root = ET.parse(url)
         for ele in root.findall(".//item"):
@@ -58,10 +58,12 @@ def getParsesPages(f):
             title = parseHTML(ele.findtext('title'))
             description = parseHTML(ele.findtext('description'))
             link = ele.findtext('link')
+            date = ele.findtext('pubDate')
             
             item['title'] = title
             item['description'] = description
             item['link'] = link
+            item['date'] = date
             item['source'] = sourceIndex
             
             splitTitle = splitSentences(title)
@@ -88,24 +90,50 @@ def parseHTML(html) :
     
     return text
 
-def show_summary(scored_sentences, sentences, number_of_top_sentences):
+def generateHTML(scored_sentences, sentences, number_of_top_sentences):
     scores_sorted_bySimilarity = sorted(scored_sentences.items(),
             key=operator.itemgetter(1),reverse=True)[0:number_of_top_sentences]
-    scores_sorted_byAppearance=sorted(scores_sorted_bySimilarity, key=operator.itemgetter(0)) 
-    summary=[sentences[line] for line,sim in scores_sorted_bySimilarity] 
-    summary_to_user= [sentences[line] for line,sim in scores_sorted_byAppearance]
-    return summary, summary_to_user
+    top_sentences= [sentences[line] for line,sim in scores_sorted_bySimilarity]
+    top_connections = [connections[line] for line,sim in scores_sorted_bySimilarity]
+    
+    with open('template.html','r') as f:
+        html = f.read()
+    
+    content = "<table>\n    <tr>\n        <td><h2>Sentence</h2></td>\n        <td><h2>Source</td></h2>\n        <td><h2>Content</h2></td>\n    </tr>\n"
+    for i in range(0, number_of_top_sentences) :
+        top_sentence = top_sentences[i]
+        source = sources[items[top_connections[i]]["source"]][0]
+        source_link = sources[items[top_connections[i]]["source"]][1]
+        
+        source_html = '<a href="' + source_link + '">' + source + '</a>'
+        
+        title = items[top_connections[i]]["title"]
+        description = items[top_connections[i]]["description"]
+        link = items[top_connections[i]]["link"]
+        date = items[top_connections[i]]["date"]
+        
+        content_html = '<b><a href="' + link + '">' + title + '</a></b><br>\n'
+        content_html = content_html + date + '<br><br>\n'
+        content_html = content_html + description + '<br>\n'
+        
+        content = content + '    <tr>\n        <td>' + top_sentence + '</td>\n        <td>' + source_html + '</td>\n        <td>' + content_html + '</td>\n    </tr>\n'
+        
+    content = content + "</table>"
+    html = html.replace("%CONTENT%", content.strip())
+            
+    html_file = open("news.html", "w")
+    html_file.write(html)
+    html_file.close()
 
 if __name__ == "__main__":
     sources,items,connections,news=getParsesPages('sources.txt')
     sentences_without_words,sentences_vectors = sentences_ToVectorSpace(news)
     
     news = np.delete(news, sentences_without_words)
-    news = np.delete(news, sentences_without_words)
+    connections = np.delete(connections, sentences_without_words)
+    
     graph=exercise_1.get_graph(sentences_vectors, 0.2)
     PR = exercise_1.calculate_page_rank(graph, 0.15, 50)
-    summary, summary_to_user=show_summary(PR,news,5)
-    for sentence in summary_to_user :
-        print(sentence)
-        
+    generateHTML(PR,news,5)
+    
     

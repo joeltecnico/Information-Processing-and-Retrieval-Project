@@ -43,7 +43,8 @@ def read_docs(path):
             
        
             #ex2_summary, ex2_summary_to_user=PR_priorsPosition_weightsTFIDFS(sentences)
-            ex2_summary, ex2_summary_to_user=PR_priorsTFIDFS_weightsTFIDFS(sentences)
+            #ex2_summary, ex2_summary_to_user=PR_priorsTFIDFS_weightsTFIDFS(sentences)
+            ex2_summary, ex2_summary_to_user=PR_priorsLenSents_weightsTFIDFS(sentences)
             
             print("\nDoc ",i, ": \n\nEx1- Summary to user:", ex1_summary_to_user, 
               ": \n\nEx2- Summary to user:", ex2_summary_to_user)
@@ -73,7 +74,16 @@ def PR_priorsTFIDFS_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences)
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
-    priors=get_prior_TFIDF(doc_vector, sentences_vectors, indexes_sents_not_linked )
+    priors=get_prior_TFIDF(doc_vector, sentences_vectors, indexes_sents_not_linked )    
+    PR=calculate_improved_prank(graph, 0.15,50,  priors, indexes)
+    print("\n SOMA", sum(list(PR.values())))
+    summary, summary_to_user=exercise_1.show_summary(PR,sentences,5)
+    return summary, summary_to_user
+
+def PR_priorsLenSents_weightsTFIDFS(sentences):
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences)
+    graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
+    priors=get_prior_lenSents(counts_of_terms_sent, indexes_sents_not_linked)
     PR=calculate_improved_prank(graph, 0.15,50,  priors, indexes)
     print("\n SOMA", sum(list(PR.values())))
     summary, summary_to_user=exercise_1.show_summary(PR,sentences,5)
@@ -81,15 +91,9 @@ def PR_priorsTFIDFS_weightsTFIDFS(sentences):
     
 
 def get_prior_TFIDF(doc_vector, sentences_vectors,indexes_not_linked ):
-    print("doc vector",doc_vector )
-    print("doc vector",sentences_vectors )
-
     priors_cos=cosine_similarity(doc_vector[0], sentences_vectors)
     priors_cos=np.expand_dims(priors_cos, axis=0)
-    #print("prior before", priors_cos)
     priors_cos=np.delete(priors_cos, indexes_not_linked,1) #delete rows with just zeros
-    #print("prior after", priors_cos)
-
     return priors_cos/np.sum(priors_cos)
 
 def get_prior(n_docs):
@@ -103,6 +107,12 @@ def cosine_similarity(main_sentence,sentences_vectors ):
         cosSim.append( np.dot(sentence_vector,main_sentence)/(np.sqrt(
             np.sum(sentence_vector*sentence_vector) )* np.sqrt(np.sum(main_sentence*main_sentence) )))
     return np.array(cosSim) 
+
+def get_prior_lenSents(counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
+    priors_len=(counts_of_terms_sent != 0).sum(1)    
+    priors_len=np.expand_dims(priors_len, axis=0)
+    priors_len=np.delete(priors_len, indexes_not_linked,1) 
+    return priors_len/np.sum(priors_len)
 
 
 def get_graph(sentences_vectors):
@@ -188,7 +198,7 @@ def doc_ToVectorSpace(isfs, counts_of_terms_sent):
     return tfs_doc*isfs
 
 
-'''
+
 def readTest():
     file_content,sentences=exercise_1.getFile_and_separete_into_sentences("script1.txt")
     
@@ -205,29 +215,14 @@ def readTest():
 
     return 0
 
-'''
+
         
         
 if __name__ == "__main__":
     
     ideal_summaries_filesPath=get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
-    n_docs=read_docs('TeMario/Textos-fonte/Textos-fonte com titulo')    
-        
+    n_docs=read_docs('TeMario/Textos-fonte/Textos-fonte com titulo')       
     print("\n exercise 1- MAP", (ex1_AP_sum / n_docs))
     print("\n exercise 2- MAP", (ex2_AP_sum / n_docs))
-
-    #readTest()
-
-    '''
-    sentences_vectors=sentences_ToVectorSpace(sentences)  
-    graph=get_graph(sentences_vectors, 0.2)     
-    print("\n Graph\n", graph)
     
-    PR, sentences_not_linked = calculate_page_rank2(graph, 0.15, 50)
-    print("PR \n ", PR)
-    summary, summary_to_user=show_summary(PR,sentences,5)
-    print("\n SOMA", sum(list(PR.values())))
-    print("\n Summmary", summary)
-    print(summary_to_user)
-    print("--- %s seconds ---" % (time.time() - start_time))
-    '''
+    #readTest()

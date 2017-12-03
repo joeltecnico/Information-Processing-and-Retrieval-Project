@@ -75,7 +75,6 @@ def calculate_page_rank(graph, d, n_iter):
     if n_docs>0:
         jump_random = d / n_docs
         prob_not_dumping = 1 - d
-        print("GRAPH", graph)
         PR = dict.fromkeys(graph.keys(), 1/n_docs)
         #print("PR", PR)
         for i in range(n_iter) :

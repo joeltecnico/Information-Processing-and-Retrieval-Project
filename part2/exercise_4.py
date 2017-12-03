@@ -113,7 +113,8 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
         date = items[top_connections[i]]["date"]
         
         content_html = '<b><a href="' + link + '">' + title + '</a></b><br>\n'
-        content_html = content_html + date + '<br><br>\n'
+        if date is not None :
+            content_html = content_html + date + '<br><br>\n'
         content_html = content_html + description + '<br>\n'
         
         content = content + '    <tr>\n        <td>' + top_sentence + '</td>\n        <td>' + source_html + '</td>\n        <td>' + content_html + '</td>\n    </tr>\n'

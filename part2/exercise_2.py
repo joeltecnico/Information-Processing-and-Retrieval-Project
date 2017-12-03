@@ -14,10 +14,9 @@ import numpy as np
 import re
 import operator
 import os
-import exercise_1
+import exercise_1 as ex1
 
 ex1_AP_sum = 0
-
 ex2_AP_sum = 0
 ex1_precision_sum=0
 ex2_precision_sum=0
@@ -25,17 +24,6 @@ ex2_precision_sum=0
 
 stop_words=nltk.corpus.stopwords.words('portuguese')
 
-'''
-def remove_stop_words(sentences): #para cada frase, vamos retirar as stop words
-    words=[]
-    for sentence in sentences:
-        words_of_sentence=[word for word in re.findall(r'\w+', sentence.lower()) if word
-            not in arrayStopWords]
-        if len(words_of_sentence) >1: #Apos remover stopWrds, verificar se a frase não ficou vazia
-            words.append(words_of_sentence)
-    return words
-
-'''
 
 def getFile_and_separete_into_sentences(f): 
     file_content = open(f, 'rb').read().decode('iso-8859-1')
@@ -70,22 +58,22 @@ def read_docs(path):
         for f in files:
             file_content, sentences=getFile_and_separete_into_sentences(os.path.join(root, f))
     
-            ex1_sents_represented=exercise_1.sentences_ToVectorSpace(sentences)  
-            ex1_graph=exercise_1.get_graph(ex1_sents_represented, 0.2)     
-            ex1_PR = exercise_1.calculate_page_rank(ex1_graph, 0.15, 50)
-            ex1_summary, ex1_summary_to_user=exercise_1.show_summary(ex1_PR,sentences,5)
+            ex1_sents_represented=ex1.sentences_ToVectorSpace(sentences)  
+            ex1_graph=ex1.get_graph(ex1_sents_represented, 0.2)     
+            ex1_PR = ex1.calculate_page_rank(ex1_graph, 0.15, 50)
+            ex1_summary, ex1_summary_to_user=ex1.show_summary(ex1_PR,sentences,5)
             
             '''Testar aqui, é so descomentar aquele q se quer'''
-            #ex2_graph,ex2_priors,indexes=PR_priorsPosition_weightsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=PR_priorsTFIDFS_weightsTFIDFS(sentences)
-            ex2_graph,ex2_priors,indexes=PR_priorsLenSents_weightsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=PR_priorsPositionAndLenSents_weightsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=PR_priorsPosition_weightsBM25(sentences)
-            #ex2_graph,ex2_priors,indexes=PR_priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=priorsPosition_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=priorsTFIDFS_weightsTFIDFS(sentences)
+            ex2_graph,ex2_priors,indexes=priorsLenSents_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=priorsPosition_weightsBM25(sentences)
+            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences)
             
             PR=calculate_improved_prank(ex2_graph, 0.15,50,  ex2_priors, indexes)
             print("\n SOMA", sum(list(PR.values())))
-            ex2_summary, ex2_summary_to_user=exercise_1.show_summary(PR,sentences,5)
+            ex2_summary, ex2_summary_to_user=ex1.show_summary(PR,sentences,5)
 
             print("\nDoc ",i, ": \n\nEx1- Summary to user:", ex1_summary_to_user, 
               ": \n\nEx2- Summary to user:", ex2_summary_to_user)
@@ -105,38 +93,38 @@ def read_docs(path):
     return len(files)  #retornas n-docs
     
 
-def PR_priorsPosition_weightsTFIDFS(sentences):
+def priorsPosition_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences,CountVectorizer() )
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
     return graph,priors,indexes
 
-def PR_priorsTFIDFS_weightsTFIDFS(sentences):
+def priorsTFIDFS_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
     priors=get_prior_TFIDF(doc_vector, sentences_vectors, indexes_sents_not_linked )
     return graph,priors,indexes
  
-def PR_priorsLenSents_weightsTFIDFS(sentences):
+def priorsLenSents_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_lenSents(counts_of_terms_sent, indexes_sents_not_linked)
     return graph,priors,indexes
   
-def PR_priorsPositionAndLenSents_weightsTFIDFS(sentences):
+def priorsPositionAndLenSents_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
     return graph,priors,indexes
 
-def PR_priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences):
+def priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
     return graph,priors,indexes
 
-def PR_priorsPosition_weightsBM25(sentences):
+def priorsPosition_weightsBM25(sentences):
     sentences_vectors,counts_of_terms= get_score_BM5(sentences)
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
@@ -146,7 +134,7 @@ def PR_priorsPosition_weightsBM25(sentences):
 
 
 def get_prior_TFIDF(doc_vector, sentences_vectors,indexes_not_linked ):
-    priors_cos=cosine_similarity(doc_vector[0], sentences_vectors)
+    priors_cos=ex1.cosine_similarity(doc_vector[0], sentences_vectors)
     return get_prior(np.expand_dims(priors_cos, axis=0), indexes_not_linked)
 
 def get_prior_Position(n_docs,indexes_not_linked):
@@ -173,7 +161,7 @@ def get_graph(sentences_vectors):
     tri_matrix=np.triu(np.zeros((n_sentences,n_sentences)),-1)
     for node in range(n_sentences-1):
         start_index=node+1
-        cos_sim=cosine_similarity(sentences_vectors[node], sentences_vectors[start_index:])
+        cos_sim=ex1.cosine_similarity(sentences_vectors[node], sentences_vectors[start_index:])
         tri_matrix[node,start_index:]=cos_sim
     #print( "GRAP MEMSO \n ", tri_matrix+tri_matrix.T)
     
@@ -266,21 +254,16 @@ def get_score_BM5(content):
     return score_BM5_without_ISF*isfs, counts_of_terms
 
 
-def cosine_similarity(main_sentence,sentences_vectors ):
-    cosSim=[]
-    for sentence_vector in sentences_vectors:
-        cosSim.append( np.dot(sentence_vector,main_sentence)/(np.sqrt(
-            np.sum(sentence_vector*sentence_vector) )* np.sqrt(np.sum(main_sentence*main_sentence) )))
-    return np.array(cosSim) 
 
 
+'''
 def readTest():
     file_content,sentences=getFile_and_separete_into_sentences("script1.txt")
     
-    ex1_sents_represented=exercise_1.sentences_ToVectorSpace(sentences)  
-    ex1_graph=exercise_1.get_graph(ex1_sents_represented, 0.2)     
-    ex1_PR = exercise_1.calculate_page_rank(ex1_graph, 0.15, 50)
-    ex1_summary, ex1_summary_to_user=exercise_1.show_summary(ex1_PR,sentences,5)
+    ex1_sents_represented=ex1.sentences_ToVectorSpace(sentences)  
+    ex1_graph=ex1.get_graph(ex1_sents_represented, 0.2)     
+    ex1_PR = ex1.calculate_page_rank(ex1_graph, 0.15, 50)
+    ex1_summary, ex1_summary_to_user=ex1.show_summary(ex1_PR,sentences,5)
     
    
     ex2_summary, ex2_summary_to_user=PR_priorsTFIDFS_weightsTFIDFS(sentences)
@@ -290,7 +273,7 @@ def readTest():
 
     return 0
 
-
+'''
         
         
 if __name__ == "__main__":

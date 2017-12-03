@@ -66,10 +66,11 @@ def read_docs(path):
             '''Testar aqui, é so descomentar aquele q se quer'''
             #ex2_graph,ex2_priors,indexes=priorsPosition_weightsTFIDFS(sentences)
             #ex2_graph,ex2_priors,indexes=priorsTFIDFS_weightsTFIDFS(sentences)
-            ex2_graph,ex2_priors,indexes=priorsLenSents_weightsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=priorsLenSents_weightsTFIDFS(sentences)
+            ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsTFIDFS(sentences)
             #ex2_graph,ex2_priors,indexes=priorsPosition_weightsBM25(sentences)
             #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsNGramsBM5(sentences)
             
             PR=calculate_improved_prank(ex2_graph, 0.15,50,  ex2_priors, indexes)
             print("\n SOMA", sum(list(PR.values())))
@@ -91,7 +92,37 @@ def read_docs(path):
             i+=1
     
     return len(files)  #retornas n-docs
-    
+
+
+def get_graph(sentences_vectors):
+    n_sentences=len(sentences_vectors)
+    tri_matrix=np.triu(np.zeros((n_sentences,n_sentences)),-1)
+    for node in range(n_sentences-1):
+        start_index=node+1
+        cos_sim=ex1.cosine_similarity(sentences_vectors[node], sentences_vectors[start_index:])
+        tri_matrix[node,start_index:]=cos_sim    
+    graph=tri_matrix+tri_matrix.T
+    indexes_sents_not_linked=np.where(~graph.any(axis=0)) #collum with just zeros
+    indexes_sents=np.delete(np.arange(len(graph)),indexes_sents_not_linked)
+    graph=np.delete(graph, indexes_sents_not_linked,0) #delete rows with just zeros
+    graph=np.delete(graph, indexes_sents_not_linked,1) #delete collumns with just zeros
+    return graph,indexes_sents, indexes_sents_not_linked
+
+
+def calculate_improved_prank(graph, damping, n_iter, priors, indexes):
+    transition_probs=graph/np.sum(graph,axis=0) 
+    n_docs=len(transition_probs)
+    #Compute Matrix -> 1-d[Transition_Probabilities] + d* [priors] 
+    matrix=  (((1-damping)*transition_probs).T + (damping)*(priors)).T #(since prior is a scaler, sum it up to each collum of Transition probs)
+    r=np.ones((n_docs, 1))/n_docs    
+    print("\n Matrix", matrix)
+    for i in range(n_iter) :
+        r_new=matrix.dot(r)
+        r=r_new
+    return dict(zip(indexes, r))
+
+
+#Possible combinations of priors and weights
 
 def priorsPosition_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences,CountVectorizer() )
@@ -125,11 +156,16 @@ def priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences):
     return graph,priors,indexes
 
 def priorsPosition_weightsBM25(sentences):
-    sentences_vectors,counts_of_terms= get_score_BM5(sentences)
+    sentences_vectors,counts_of_terms= get_score_BM5(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     priors=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
     return graph,priors,indexes
 
+def priorsPositionAndLenSents_weightsNGramsBM5(sentences):
+    sentences_vectors,counts_of_terms_sent= get_score_BM5(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
+    graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
+    priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
+    return graph,priors,indexes
 
 
 
@@ -156,42 +192,6 @@ def get_prior(non_uniform_weights, indexes_not_linked):
     return non_uniform_weights/np.sum(non_uniform_weights)
     
 
-def get_graph(sentences_vectors):
-    n_sentences=len(sentences_vectors)
-    tri_matrix=np.triu(np.zeros((n_sentences,n_sentences)),-1)
-    for node in range(n_sentences-1):
-        start_index=node+1
-        cos_sim=ex1.cosine_similarity(sentences_vectors[node], sentences_vectors[start_index:])
-        tri_matrix[node,start_index:]=cos_sim
-    #print( "GRAP MEMSO \n ", tri_matrix+tri_matrix.T)
-    
-    graph=tri_matrix+tri_matrix.T
-    #print("Graph\n ", graph)
-    #print("graph before", len(graph))
-    indexes_sents_not_linked=np.where(~graph.any(axis=0)) #collum with just zeros
-    #print("senteces not linked", indexes_sents_not_linked[0])
-    indexes_sents=np.delete(np.arange(len(graph)),indexes_sents_not_linked)
-    #print("indexes", indexes_sents)
-    graph=np.delete(graph, indexes_sents_not_linked,0) #delete rows with just zeros
-    graph=np.delete(graph, indexes_sents_not_linked,1) #delete collumns with just zeros
-    #print("graph after", len(graph))
-    #print("Graph\n", graph)
-
-    return graph,indexes_sents, indexes_sents_not_linked
-
-
-    
-def calculate_improved_prank(graph, damping, n_iter, priors, indexes):
-    transition_probs=graph/np.sum(graph,axis=0) 
-    n_docs=len(transition_probs)
-    #Compute Matrix -> 1-d[Transition_Probabilities] + d* [priors] 
-    matrix=  (((1-damping)*transition_probs).T + (damping)*(priors)).T #(since prior is a scaler, sum it up to each collum of Transition probs)
-    r=np.ones((n_docs, 1))/n_docs    
-    print("\n Matrix", matrix)
-    for i in range(n_iter) :
-        r_new=matrix.dot(r)
-        r=r_new
-    return dict(zip(indexes, r))
 
 
 def calculate_precision_recall_ap(summary, ideal_summary_allContent,ideal_summary_sentences,
@@ -233,11 +233,10 @@ def doc_ToVectorSpace(isfs, counts_of_terms_sent):#TF-IDF
     return tfs_doc*isfs
 
 
-def get_score_BM5(content):
+def get_score_BM5(content, vec):
     k=1.2
     b=0.75
     
-    vec = CountVectorizer()
     counts_of_terms=vec.fit_transform(content).toarray()
     
     nominator=counts_of_terms*(k+1)

@@ -128,83 +128,94 @@ def calculate_improved_prank(graph, damping, n_iter, priors, indexes):
 def priorsPosition_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences,CountVectorizer() )
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
-    priors=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
-    return graph,priors,indexes
+    prior=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
+    matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
+    #return graph,priors,indexes
 
 def priorsTFIDFS_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
-    priors=get_prior_TFIDF(doc_vector, sentences_vectors, indexes_sents_not_linked )
-    return graph,priors,indexes
+    prior=get_prior_TFIDF(doc_vector, sentences_vectors, indexes_sents_not_linked ) #Pior
+    matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
  
 def priorsLenSents_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
-    priors=get_prior_lenSents(counts_of_terms_sent, indexes_sents_not_linked)
-    return graph,priors,indexes
+    prior=get_prior_lenSents(counts_of_terms_sent, indexes_sents_not_linked)
+    matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
   
 def priorsPositionAndLenSents_weightsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
-    priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
-    return graph,priors,indexes
+    prior=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
+    matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
 
 def priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
-    priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
-    return graph,priors,indexes
+    prior=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
+    matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
 
 
 def priorsPositionAndLenSentsAndTFIDF_weightsNGramsTFIDFS(sentences):
     sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
-    priors=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors, counts_of_terms_sent, indexes_sents_not_linked )
-    return graph,priors,indexes
+    prior=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors, counts_of_terms_sent, indexes_sents_not_linked )
+    matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
 
 def priorsPosition_weightsBM25(sentences):
     sentences_vectors,counts_of_terms= get_score_BM5(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
-    priors=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
-    return graph,priors,indexes
+    prior=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
+    matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
 
 def priorsPositionAndLenSents_weightsNGramsBM5(sentences):
     sentences_vectors,counts_of_terms_sent= get_score_BM5(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
-    priors=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
-    return graph,priors,indexes
-
+    prior=get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
+    matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
 
 
 def get_prior_TFIDF(doc_vector, sentences_vectors,indexes_not_linked ):
     priors_cos=ex1.cosine_similarity(doc_vector[0], sentences_vectors)
-    return get_prior(np.expand_dims(priors_cos, axis=0), indexes_not_linked)
+    return np.expand_dims(priors_cos, axis=0)
+    #return get_prior(np.expand_dims(priors_cos, axis=0), indexes_not_linked)
 
 def get_prior_Position(n_docs,indexes_not_linked):
     priors_pos=np.arange(n_docs, 0, -1)
-    return get_prior(np.expand_dims(priors_pos, axis=0), indexes_not_linked)
+    return np.expand_dims(priors_pos, axis=0)
+    #return get_prior(np.expand_dims(priors_pos, axis=0), indexes_not_linked)
 
 
 def get_prior_lenSents(counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
     priors_len=(counts_of_terms_sent != 0).sum(1)    
-    return get_prior(np.expand_dims(priors_len, axis=0), indexes_not_linked)
+    return np.expand_dims(priors_len, axis=0)
+    #return get_prior(np.expand_dims(priors_len, axis=0), indexes_not_linked)
 
 def get_prior_PositionAndLenSents(counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
     priors_position_and_sentenceSize=np.arange(len(counts_of_terms_sent), 0, -1)* (counts_of_terms_sent != 0).sum(1) 
-    return get_prior(np.expand_dims(priors_position_and_sentenceSize, axis=0), indexes_not_linked)
+    return np.expand_dims(priors_position_and_sentenceSize, axis=0)
+    #return get_prior(np.expand_dims(priors_position_and_sentenceSize, axis=0), indexes_not_linked)
 
 
 def get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms_sent,indexes_not_linked ): # dar + importancia as frases q tem + termos
-    priors_position_and_sentenceSize=np.arange(len(counts_of_terms_sent), 0, -1)* (counts_of_terms_sent != 0).sum(1) *ex1.cosine_similarity(doc_vector[0], sentences_vectors)
-    return get_prior(np.expand_dims(priors_position_and_sentenceSize, axis=0), indexes_not_linked)
+    priors_position_and_sentenceSize_TFIDF=np.arange(len(counts_of_terms_sent), 0, -1)* (counts_of_terms_sent != 0).sum(1) *ex1.cosine_similarity(doc_vector[0], sentences_vectors)
+    return np.expand_dims(priors_position_and_sentenceSize_TFIDF, axis=0)
+    #return get_priors(np.expand_dims(priors_position_and_sentenceSize, axis=0), indexes_not_linked)
 
 
-
-
-def get_prior(non_uniform_weights, indexes_not_linked):
-    non_uniform_weights=np.delete(non_uniform_weights, indexes_not_linked,1) #delete rows that dont belong to graph
+def get_priors(non_uniform_weights, indexes_not_linked):
+    non_uniform_weights=np.delete(non_uniform_weights, indexes_not_linked,1) #delete rows that dont belong to graph (sents are not linked to any sentence)
     return non_uniform_weights/np.sum(non_uniform_weights)
     
 

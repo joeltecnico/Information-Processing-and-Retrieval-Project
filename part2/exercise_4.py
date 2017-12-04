@@ -4,7 +4,6 @@ import urllib.request
 import xml.etree.ElementTree as ET
 import re
 import nltk
-import exercise_1
 import exercise_2
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np

@@ -4,7 +4,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 import re
 import nltk
-import exercise_1
+import exercise_2
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import operator
@@ -33,7 +33,7 @@ def sentences_ToVectorSpace(content):
     vec = CountVectorizer()
     sentences_without_words,counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #(lines=sent, cols=terms)
     isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))#inverve sentence frequency
-    return sentences_without_words,tfs_sent*isfs
+    return sentences_without_words,tfs_sent*isfs,counts_of_terms_sent
 
 def getParsesPages(f): 
     news = []
@@ -43,8 +43,9 @@ def getParsesPages(f):
     file_content = open(f, 'rb').read().decode('iso-8859-1').splitlines()
     
     for line in file_content:
-        
+    
         source_url=line.split(',')
+        print("Reading source " + source_url[0])
         url=urllib.request.urlopen(source_url[1])
         
         sourceIndex = len(sources)
@@ -91,6 +92,8 @@ def parseHTML(html) :
     return text
 
 def generateHTML(scored_sentences, sentences, number_of_top_sentences):
+    
+    print("Generating HTML")
     scores_sorted_bySimilarity = sorted(scored_sentences.items(),
             key=operator.itemgetter(1),reverse=True)[0:number_of_top_sentences]
     top_sentences= [sentences[line] for line,sim in scores_sorted_bySimilarity]
@@ -115,26 +118,36 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
         content_html = '<b><a href="' + link + '">' + title + '</a></b><br>\n'
         if date is not None :
             content_html = content_html + date + '<br><br>\n'
-        content_html = content_html + description + '<br>\n'
+        content_html = content_html + description + '<br><br>\n'
         
         content = content + '    <tr>\n        <td>' + top_sentence + '</td>\n        <td>' + source_html + '</td>\n        <td>' + content_html + '</td>\n    </tr>\n'
         
     content = content + "</table>"
     html = html.replace("%CONTENT%", content.strip())
-            
+    
+    print("Saving HTML")
     html_file = open("news.html", "w")
     html_file.write(html)
     html_file.close()
+    print("All done!")
+    
+def priorsPositionAndLenSents_weightsTFIDFS(sentences_vectors,counts_of_terms_sent):
+    graph,indexes, indexes_sents_not_linked=exercise_2.get_graph(sentences_vectors)
+    prior=exercise_2.get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
+    matrix_priors=exercise_2.get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
+    return graph,matrix_priors,indexes
 
 if __name__ == "__main__":
     sources,items,connections,news=getParsesPages('sources.txt')
-    sentences_without_words,sentences_vectors = sentences_ToVectorSpace(news)
+    sentences_without_words,sentences_vectors,counts_of_terms_sent = sentences_ToVectorSpace(news)
     
     news = np.delete(news, sentences_without_words)
     connections = np.delete(connections, sentences_without_words)
     
-    graph=exercise_1.get_graph(sentences_vectors, 0.2)
-    PR = exercise_1.calculate_page_rank(graph, 0.15, 50)
+    ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsTFIDFS(sentences_vectors,counts_of_terms_sent)
+    PR=exercise_2.calculate_improved_prank(ex2_graph, 0.15, 50,  ex2_priors, indexes)
+    #graph=exercise_1.get_graph(sentences_vectors, 0.2)
+    #PR = exercise_1.calculate_page_rank(graph, 0.15, 50)
     generateHTML(PR,news,5)
     
     

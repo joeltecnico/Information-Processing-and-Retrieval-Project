@@ -216,20 +216,17 @@ def calculate_improved_prank(graph, damping, n_iter, priors, indexes_not_linked)
 if __name__ == "__main__":
     
     training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario 2006/SumariosExtrativos/.")
-    
-    #print("training_summaries_filesPath, ", training_summaries_filesPath[0] )
-    print("ola")
-    
-    
+
     ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
 
     tranning_dataset=get_trainning_dataset("TeMario 2006/Originais/.",5)
-    '''
+    
     w,b=PRank_Algorithm(tranning_dataset, 10 )
+
     print("w", w)
     
     n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', w,b)  
     
     print("\n exercise - MAP", (AP_sum / n_docs))
     print("\n exercise - Precision", (precision_sum / n_docs))
-    '''
+

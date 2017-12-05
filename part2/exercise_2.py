@@ -65,11 +65,8 @@ def read_docs(path):
             #sentences_vectors, isfs, counts_of_terms_sent= ex1.sentences_ToVectorSpace(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
             #sentences_vectors,counts_of_terms_sent, sents_without_words= get_score_BM5(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
             
-            sentences=np.delete(sentences, sents_without_words)
-
             ex1_graph=ex1.get_graph(sents_vectors, 0.2)     
             ex1_PR = ex1.calculate_page_rank(ex1_graph, 0.15, 50)
-            ex1_summary, ex1_summary_to_user=ex1.show_summary(ex1_PR,sentences,5)
             
             ex2_graph,indexes, indexes_not_linked=get_graph(sents_vectors)
             
@@ -81,12 +78,14 @@ def read_docs(path):
             #prior=get_prior_TFIDF(doc_vector, sents_vectors,indexes_not_linked ) 
             #prior=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sents_vectors,counts_of_terms,indexes_not_linked )
             
-
-            #matrix_priors=get_priors(prior, indexes_not_linked) #Prior/Sum_Priors
             
-            PR=calculate_improved_prank(ex2_graph, 0.15,50,  prior, indexes)
-            print("\n SOMA", sum(list(PR.values())))
-            ex2_summary, ex2_summary_to_user=ex1.show_summary(PR,sentences,5)
+            ex2_PR=calculate_improved_prank(ex2_graph, 0.15,50,  prior, indexes)
+           
+            
+            print("\n SOMA", sum(list(ex2_PR.values())))
+            sentences=np.delete(sentences, sents_without_words)
+            ex1_summary, ex1_summary_to_user=ex1.show_summary(ex1_PR,sentences,5)
+            ex2_summary, ex2_summary_to_user=ex1.show_summary(ex2_PR,sentences,5)
 
             print("\nDoc ",i, ": \n\nEx1- Summary to user:", ex1_summary_to_user, 
               ": \n\nEx2- Summary to user:", ex2_summary_to_user)

@@ -16,6 +16,7 @@ import exercise_1 as ex1
 import os
 from random import choice
 import math
+from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
 
 
 AP_sum = 0
@@ -49,6 +50,8 @@ def get_trainning_dataset(path, n_features):
                             
                         
                 matrix_tranning=np.concatenate((matrix_tranning, features_doc), axis=0)
+                
+            i += 1
              
     return matrix_tranning 
 
@@ -76,8 +79,8 @@ def score_real_dataset(path, w, b):
 
 
 def calculate_features(sentences):
-    n_docs=len(sentences)
-    features=np.zeros((n_docs, 5))
+    n_sentences=len(sentences)
+    features=np.zeros((n_sentences, 5))
     
     #put features
     
@@ -100,8 +103,8 @@ def calculate_features(sentences):
     
     #Features position
     
-    features[:,3]=ex2.get_prior_Position(n_docs,[])
-          
+    features[:,3]=ex2.get_prior_Position(n_sentences,[])
+              
     return features
 
 
@@ -205,6 +208,44 @@ def calculate_improved_prank(graph, damping, n_iter, priors, indexes_not_linked)
         r= np.insert(r, i, 0 , axis=0)
     return r
     
+def scoreWithAdaBoost(dataset, path) :
+    net = RandomForestClassifier()
+    
+    dataWithoutNaNs = dataset[~np.isnan(dataset).any(axis=1)]
+    ncols = dataWithoutNaNs.shape[1] # Number of features and classes
+    data = dataWithoutNaNs[0:, 0:(ncols - 1)] # Get only the features
+    train = dataWithoutNaNs[:,ncols-1].T # Get only the classes
+    
+        
+    net.fit(data,train)
+    
+    i=0
+    for root, dirs, files in os.walk(path):
+        for f in files:
+            file_content, sentences=ex1.getFile_and_separete_into_sentences(os.path.join(root, f))
+            dataset_to_classify=calculate_features(sentences)[0:, 0:(ncols - 1)]
+            
+            predictions=net.predict_proba(dataset_to_classify)
+            range = np.expand_dims(np.arange(len(dataset_to_classify)), axis=1)
+            
+            
+            concat=np.concatenate((predictions, range), axis=1)
+            
+            sorted_concat = concat[concat[:,1].argsort()[::-1]][0:5]
+                
+            summary=[sentences[int(item[-1])] for item in sorted_concat]
+            
+            ideal_summary,ideal_summary_sentences =ex1.getFile_and_separete_into_sentences( ideal_summaries_filesPath[i])  
+            global AP_sum, precision_sum            
+            AP_sum,precision_sum =  ex2.calculate_precision_recall_ap(summary,ideal_summary, ideal_summary_sentences,AP_sum, precision_sum)
+            
+            #break
+            i+=1
+            
+    return len(files)
+    
+    
+
 
 if __name__ == "__main__":
     
@@ -212,10 +253,11 @@ if __name__ == "__main__":
     ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
 
     tranning_dataset=get_trainning_dataset("TeMario 2006/Originais/.",5)
-    w,b=PRank_Algorithm(tranning_dataset, 50000 )
-    print("w", w)
+    n_docs = scoreWithAdaBoost(tranning_dataset, 'TeMario/Textos-fonte/Textos-fonte com titulo')
+    #w,b=PRank_Algorithm(tranning_dataset, 50000 )
+    #print("w", w)
     
-    n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', w,b)  
+    #n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', w,b)  
     
     print("\n exercise - MAP", (AP_sum / n_docs))
     print("\n exercise - Precision", (precision_sum / n_docs))

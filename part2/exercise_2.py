@@ -65,15 +65,16 @@ def read_docs(path):
             ex1_PR = ex1.calculate_page_rank(ex1_graph, 0.15, 50)
             ex1_summary, ex1_summary_to_user=ex1.show_summary(ex1_PR,sentences,5)
             
+        
             '''Testar aqui, é so descomentar aquele q se quer'''
-            #ex2_graph,ex2_priors,indexes=priorsPosition_weightsTFIDFS(sentences)
-            ex2_graph,ex2_priors,indexes,indexes_not_linked=priorsTFIDFS_weightsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=priorsLenSents_weightsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSentsAndTFIDF_weightsNGramsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=priorsPosition_weightsBM25(sentences)
-            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences)
-            #ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsNGramsBM5(sentences)
+            #ex2_graph,ex2_priors,indexes,indexes_not_linked=priorsPosition_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes,indexes_not_linked=priorsTFIDFS_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes,indexes_not_linked=priorsLenSents_weightsTFIDFS(sentences)
+            ex2_graph,ex2_priors,indexes, indexes_not_linked=priorsPositionAndLenSents_weightsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes,indexes_not_linked=priorsPositionAndLenSentsAndTFIDF_weightsNGramsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes, indexes_not_linked=priorsPosition_weightsBM25(sentences)
+            #ex2_graph,ex2_priors,indexes, indexes_not_linked=priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences)
+            #ex2_graph,ex2_priors,indexes,indexes_not_linked=priorsPositionAndLenSents_weightsNGramsBM5(sentences)
             
             PR=calculate_improved_prank(ex2_graph, 0.15,50,  ex2_priors, indexes)
             print("\n SOMA", sum(list(PR.values())))
@@ -128,7 +129,7 @@ def calculate_improved_prank(graph, damping, n_iter, priors, indexes):
 #Possible combinations of priors and weights
 
 def priorsPosition_weightsTFIDFS(sentences):
-    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences,CountVectorizer()) 
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences,CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     prior=get_prior_Position(len(sentences_vectors),indexes_sents_not_linked)
     matrix_priors=get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
@@ -136,7 +137,7 @@ def priorsPosition_weightsTFIDFS(sentences):
     #return graph,priors,indexes
 
 def priorsTFIDFS_weightsTFIDFS(sentences):
-    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer(token_pattern=u"(?u)\\b\\w+\\b"))
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
     prior=get_prior_TFIDF(doc_vector, sentences_vectors, indexes_sents_not_linked ) #Pior
@@ -166,7 +167,7 @@ def priorsPositionAndLenSents_weightsNGramsTFIDFS(sentences):
 
 
 def priorsPositionAndLenSentsAndTFIDF_weightsNGramsTFIDFS(sentences):
-    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
+    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
     graph,indexes, indexes_sents_not_linked=get_graph(sentences_vectors)
     doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
     prior=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors, counts_of_terms_sent, indexes_sents_not_linked )

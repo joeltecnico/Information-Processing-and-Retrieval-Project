@@ -49,9 +49,8 @@ def get_trainning_dataset(path, n_features):
                             
                         
                 matrix_tranning=np.concatenate((matrix_tranning, features_doc), axis=0)
-    
-                
-    return matrix_tranning #retornas n-docs
+             
+    return matrix_tranning 
 
 
 
@@ -64,11 +63,9 @@ def score_real_dataset(path, w, b):
             file_content, sentences=ex1.getFile_and_separete_into_sentences(os.path.join(root, f))
             dataset=calculate_features(sentences)
             summary,summary_to_user=rank_with_Prank(dataset,  w, b, sentences)
-            
+
             
             ideal_summary,ideal_summary_sentences =ex1.getFile_and_separete_into_sentences( ideal_summaries_filesPath[i])  
-            
-            
             global AP_sum, precision_sum            
             AP_sum,precision_sum =  ex2.calculate_precision_recall_ap(summary,ideal_summary, ideal_summary_sentences,AP_sum, precision_sum)
             
@@ -173,7 +170,7 @@ def rank_with_Prank(real_dataset, w, b, sentences ):
             
         if predict_rank not in values_predicted:
             values_predicted[predict_rank]={}
-        values_predicted[predict_rank][sent_index]=value
+        values_predicted[predict_rank][sent_index]=value 
                         
     #print("results", values_predicted )
     if 1 in values_predicted:

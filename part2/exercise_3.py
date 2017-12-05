@@ -18,18 +18,9 @@ from random import choice
 import math
 
 
-
-
-def getFile_and_separete_into_sentences(f): 
-    file_content = open(f, 'rb').read().decode('iso-8859-1')
-    file_content_splitted = file_content.splitlines()
-    sentences=[]
-    for line in file_content_splitted:
-        for sentence in nltk.sent_tokenize(line):
-            if len(re.findall(r'\w+',sentence))>0: #check:not only pontuaction
-                sentences.append(sentence)
-    return file_content,sentences 
-
+AP_sum = 0
+precision_sum=0
+n_docs=0
 
 
 def get_trainning_dataset(path, n_features):
@@ -66,49 +57,54 @@ def get_trainning_dataset(path, n_features):
 
 
 def score_real_dataset(path, w, b):
-
+    i=0
     for root, dirs, files in os.walk(path):
         for f in files:
             #print("files", f)
-            file_content, sentences=getFile_and_separete_into_sentences(os.path.join(root, f))
+            file_content, sentences=ex1.getFile_and_separete_into_sentences(os.path.join(root, f))
             dataset=calculate_features(sentences)
-            rank_with_Prank(dataset,  w, b)
+            summary,summary_to_user=rank_with_Prank(dataset,  w, b, sentences)
             
-            #ideal_summary,ideal_summary_sentences =getFile_and_separete_into_sentences( ideal_summaries_filesPath[i])  
-            #rank_with_Prank()
-            #summary
-            break
             
-    return 0 
+            ideal_summary,ideal_summary_sentences =ex1.getFile_and_separete_into_sentences( ideal_summaries_filesPath[i])  
+            
+            
+            global AP_sum, precision_sum            
+            AP_sum,precision_sum =  ex2.calculate_precision_recall_ap(summary,ideal_summary, ideal_summary_sentences,AP_sum, precision_sum)
+            
+            #break
+            i+=1
+            
+    return len(files)
 
 
 def calculate_features(sentences):
     n_docs=len(sentences)
-    features=np.zeros((n_docs, 4))
+    features=np.zeros((n_docs, 5))
     
     #put features
-    #feature position
-    #sentences_positions=ex2.get_prior_Position(n_docs,[])
     
-    #features[:,0]=sentences_positions
-          
-    #feature centrality        
-    #features[:,1]=PR.ravel()
-    
-    #feature tf-idf with doc
-    sentences_vectors, isfs, counts_of_terms_sent= ex2.sentences_ToVectorSpace(sentences, CountVectorizer(""))
-    doc_vector=ex2.doc_ToVectorSpace(isfs, counts_of_terms_sent)
-    features[:,0]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
-    #print("isfs", isfs)
-    #feature len sentences
-    features[:,1]=ex2.get_prior_lenSents(counts_of_terms_sent, [])
+    #Feature graph centrality
     
     ex2_graph,ex2_priors,indexes, indexes_not_linked=ex2.priorsTFIDFS_weightsTFIDFS(sentences)
 
     PR= calculate_improved_prank(ex2_graph, 0.15,50,  ex2_priors, indexes_not_linked)
     
-    features[:,2]=PR.ravel()
-
+    features[:,0]=PR.ravel()
+    
+    #Features TF-IDF
+    sentences_vectors, isfs, counts_of_terms_sent= ex2.sentences_ToVectorSpace(sentences, CountVectorizer())
+    doc_vector=ex2.doc_ToVectorSpace(isfs, counts_of_terms_sent)
+    features[:,1]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
+    
+    #Features len and Sentences
+    
+    features[:,2]=ex2.get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_not_linked)
+    
+    #Features position
+    
+    features[:,3]=ex2.get_prior_Position(n_docs,[])
+          
     return features
 
 
@@ -116,10 +112,14 @@ def PRank_Algorithm(dataset_trainning, n_loops ):
     r = [1,0]
     n_features=dataset_trainning.shape[1]-1  
     w = np.zeros(n_features)
+    #print("n_features", n_features)
     b = [0, math.inf]
     count_corrects=0
     for t in range(0, n_loops) :
+        
         x = choice(dataset_trainning)
+        #print("x", x)
+        #print("x", x[:n_features])
         predict_rank=0
         for i in range(0, len(r)):
             value = np.dot(w, x[:n_features])
@@ -153,14 +153,13 @@ def PRank_Algorithm(dataset_trainning, n_loops ):
 
 
 
-def rank_with_Prank(real_dataset, w, b ):
+def rank_with_Prank(real_dataset, w, b, sentences ):
     r = [1,0]  #Important vs Non-important
     n_features=real_dataset.shape[1]-1
     values_predicted={}
     
-
-    for x in real_dataset :
-        value = np.dot(w, x[:n_features])
+    for sent_index in range(len(real_dataset)) :
+        value = np.dot(w, real_dataset[sent_index][:n_features])
         predict_rank=0
         for i in range(0, len(r)):
             #print("b",b )
@@ -173,24 +172,25 @@ def rank_with_Prank(real_dataset, w, b ):
                 break
             
         if predict_rank not in values_predicted:
-            values_predicted[predict_rank]=[value]
-        else:
-            values_predicted[predict_rank].append(value)
-   
+            values_predicted[predict_rank]={}
+        values_predicted[predict_rank][sent_index]=value
+                        
     #print("results", values_predicted )
-    
-    
+    if 1 in values_predicted:
+            summary, summary_to_user=show_summary(values_predicted[1], sentences, 5) #E senao houver 5?
+            #if len(values_predicted[1])>=5:
+                #summary, summary_to_user=show_summary(values_predicted[0], sentences, 5)
+    else:
+        summary, summary_to_user=show_summary(values_predicted[0], sentences, 5)
+    return summary, summary_to_user
 
-    
-    resuls=(sorted(values_predicted[1]))
-    
-    
-    #resuls+=(sorted(values_predicted[0]))
-    #print("results", values_predicted )
-
-    return resuls[0:5]
-
-
+def show_summary(scored_sentences, sentences, number_of_top_sentences):
+    scores_sorted_bySimilarity = sorted(scored_sentences.items(),
+            key=operator.itemgetter(1),reverse=False)[0:number_of_top_sentences]
+    scores_sorted_byAppearance=sorted(scores_sorted_bySimilarity, key=operator.itemgetter(0)) 
+    summary=[sentences[line] for line,sim in scores_sorted_bySimilarity] 
+    summary_to_user= [sentences[line] for line,sim in scores_sorted_byAppearance]
+    return summary, summary_to_user  
 
     
 def calculate_improved_prank(graph, damping, n_iter, priors, indexes_not_linked):
@@ -208,47 +208,18 @@ def calculate_improved_prank(graph, damping, n_iter, priors, indexes_not_linked)
         r= np.insert(r, i, 0 , axis=0)
     return r
     
-'''
-def get_pr_for_allSentences(PR, sentences_not_linked):
-    PR=(list(PR.values()))
-    
-    for i in sentences_not_linked[0]:
-        PR= np.insert(PR, i, 0 , axis=0)
-    return PR
-'''
-
-
-
-
-'''
-def priorsTFIDFS(sentences):
-    sentences_vectors, isfs, counts_of_terms_sent= sentences_ToVectorSpace(sentences, CountVectorizer())
-    doc_vector=doc_ToVectorSpace(isfs, counts_of_terms_sent)
-    priors_cos=ex1.cosine_similarity(doc_vector[0], sentences_vectors)
-    priors_cos=(np.expand_dims(priors_cos, axis=0)
-    return non_uniform_weights/np.sum(non_uniform_weights)
-'''
-
 
 if __name__ == "__main__":
-    #file_content, sentences=getFile_and_separete_into_sentences("script1.txt")
-    #print(file_content)
     
-    #sentences_vectors, isfs, counts_of_terms_sent=exercise_1_matrix.sentences_ToVectorSpace(sentences)  
-    #sentences_vectors=exercise_1_matrix.sentences_ToVectorSpace(sentences)  
-    #graph=exercise_1_matrix.get_graph(sentences_vectors, 0.2)     
-    #print("\n Graph\n", graph)
     training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario2006/SumariosExtrativos/.")
-    
-    tranning_dataset=get_trainning_dataset("TeMario2006/Originais/.",4)
-    w,b=PRank_Algorithm(tranning_dataset, 40000 )
+    ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
+
+    tranning_dataset=get_trainning_dataset("TeMario2006/Originais/.",5)
+    w,b=PRank_Algorithm(tranning_dataset, 50000 )
     print("w", w)
-    score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', w,b)  
     
+    n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', w,b)  
+    
+    print("\n exercise - MAP", (AP_sum / n_docs))
+    print("\n exercise - Precision", (precision_sum / n_docs))
 
-
-    #calculate_features()
-    '''
-    features=calculate_features(sentences)
-    print("FEATURES",features )
-    '''

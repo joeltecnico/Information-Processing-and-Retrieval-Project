@@ -35,10 +35,7 @@ def sentences_ToVectorSpace(content, vec): #TF-IDF
 def counts_and_tfs(file_content, vec):
     counts_of_terms=vec.fit_transform(file_content).toarray() 
     sents_without_words = np.where(~counts_of_terms.any(axis=1))
-    print( "count of terms", counts_of_terms )
     counts_of_terms = counts_of_terms[~np.all(counts_of_terms == 0, axis=1)]
-    print( "count of terms", counts_of_terms )
-
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
     return counts_of_terms,tfs, sents_without_words
 

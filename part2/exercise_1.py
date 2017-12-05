@@ -26,26 +26,27 @@ def getFile_and_separete_into_sentences(f):
     return file_content,sentences 
 
 
+def sentences_ToVectorSpace(content, vec): #TF-IDF
+    counts_of_terms_sent, tfs_sent, sents_without_words=counts_and_tfs(content, vec) #(lines=sent, cols=terms)
+    isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))#inverve sentence frequency
+    return tfs_sent*isfs, isfs, counts_of_terms_sent, sents_without_words
+
+
 def counts_and_tfs(file_content, vec):
     counts_of_terms=vec.fit_transform(file_content).toarray() 
+    sents_without_words = np.where(~counts_of_terms.any(axis=1))
+    print( "count of terms", counts_of_terms )
+    counts_of_terms = counts_of_terms[~np.all(counts_of_terms == 0, axis=1)]
+    print( "count of terms", counts_of_terms )
+
     tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
-    return counts_of_terms,tfs
+    return counts_of_terms,tfs, sents_without_words
 
-    
-def sentences_ToVectorSpace(content):
-    vec = CountVectorizer()
-    counts_of_terms_sent, tfs_sent=counts_and_tfs(content, vec) #(lines=sent, cols=terms)
-    isfs=np.log10(len(counts_of_terms_sent)/(counts_of_terms_sent != 0).sum(0))#inverve sentence frequency
-    return tfs_sent*isfs
-    #return tfs_sent*isfs, isfs, counts_of_terms_sent
-
-
-'''
-def sentences_ToVectorSpace(file_content):
-    vec = CountVectorizer()
-    counts_of_terms_sents=vec.fit_transform(file_content).toarray() 
-    return counts_of_terms_sents
-'''
+def doc_ToVectorSpace(isfs, counts_of_terms_sent):#TF-IDF
+    counts_of_terms=np.sum(counts_of_terms_sent, axis=0) #summing the terms counts of each sentence
+    counts_of_terms=np.expand_dims(counts_of_terms, axis=0)  #(lines=documents, cols=terms) 
+    tfs_doc=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
+    return tfs_doc*isfs
 
 
 def cosine_similarity(main_sentence,sentences_vectors ):
@@ -100,12 +101,15 @@ def show_summary(scored_sentences, sentences, number_of_top_sentences):
         
 if __name__ == "__main__":
     file_content, sentences=getFile_and_separete_into_sentences("script1.txt") 
-    sentences_vectors=sentences_ToVectorSpace(sentences)  
+    sentences_vectors,isfs, counts_of_terms_sent, sents_without_words=sentences_ToVectorSpace(sentences, CountVectorizer())  
+    sentences=np.delete(sentences, sents_without_words)
+    
+    print("sentences 2", sentences)
     graph=get_graph(sentences_vectors, 0.2)     
     print("\n Graph", graph)
     PR = calculate_page_rank(graph, 0.15, 50)
     print("PR \n ", PR)
-    summary, summary_to_user=show_summary(PR,sentences,5)
+    summary, summary_to_user=show_summary(PR, sentences,5)
     print("\n SOMA", sum(list(PR.values())))
     print("\n Summmary", summary)
     print(summary_to_user)

@@ -26,32 +26,33 @@ n_docs=0
 
 def get_trainning_dataset(path, n_features):
     i=0
+    
     matrix_tranning=np.array([]).reshape(0,n_features)
+    
     for root, dirs, files in os.walk(path):
         for f in files:
-            if not f.startswith('.'):
+            
+            ranking=[]
+            file_content, sentences=ex1.getFile_and_separete_into_sentences(os.path.join(root, f))
+            features_doc=calculate_features(sentences)
+
+            #print("trainning summaries", training_summaries_filesPath[0])
+            ideal_summary,ideal_summary_sentences =ex1.getFile_and_separete_into_sentences( training_summaries_filesPath[i])  
+            
+
+    
+            for sentence in sentences:
+                if sentence in ideal_summary:
+                    ranking.append(1)                        
+                else:
+                    ranking.append(0)
                     
-                ranking=[]
-                file_content, sentences=ex1.getFile_and_separete_into_sentences(os.path.join(root, f))
-                features_doc=calculate_features(sentences)
-    
-                #print("trainning summaries", training_summaries_filesPath[0])
-                ideal_summary,ideal_summary_sentences =ex1.getFile_and_separete_into_sentences( training_summaries_filesPath[i])  
-    
-        
-                for sentence in sentences:
-                    if sentence in ideal_summary:
-                        ranking.append(1)                        
-                    else:
-                        ranking.append(0)
+            
+            features_doc[:,-1]= ranking
                         
-                
-                features_doc[:,-1]= ranking
-                            
-                        
-                matrix_tranning=np.concatenate((matrix_tranning, features_doc), axis=0)
-                
-            i += 1
+                    
+            matrix_tranning=np.concatenate((matrix_tranning, features_doc), axis=0)
+            i+=1
              
     return matrix_tranning 
 
@@ -114,42 +115,45 @@ def PRank_Algorithm(dataset_trainning, n_loops ):
     w = np.zeros(n_features)
     #print("n_features", n_features)
     b = [0, math.inf]
-    count_corrects=0
+    #print("len", dataset_trainning.shape)
+    #print("dataset", dataset_trainning )
+
     for t in range(0, n_loops) :
+        count_corrects=0
+
+        for x in dataset_trainning:
+            #print("x", x)
+            #print("x", x[:n_features])
+            predict_rank=0
+            for i in range(0, len(r)):
+                value = np.dot(w, x[:n_features])
+                if(value < b[i]):
+                    predict_rank=r[i]
+                    break  
+            real_rank = x[-1] # last value is the target y ([f1,f2,.., y])
+            #print("real_rank",real_rank)
+            if (predict_rank != real_rank) :
+                y_r = np.zeros(len(r)-1)
+                for i in range(0, len(r)-1) :
+                    if (real_rank <= r[i]) :
+                        y_r[i] = -1
+                    else :
+                        y_r[i] = 1
+                T_r = np.zeros(len(r)-1)
+                for i in range(0, len(r)-1) :
+                    if (  (np.dot(w, x[:n_features]) -b[i] ) * y_r[i] <= 0) :  
+                        T_r[i] = y_r[i]
+                    else :
+                        T_r[i] = 0
         
-        x = choice(dataset_trainning)
-        #print("x", x)
-        #print("x", x[:n_features])
-        predict_rank=0
-        for i in range(0, len(r)):
-            value = np.dot(w, x[:n_features])
-            if(value < b[i]):
-                predict_rank=r[i]
-                break  
-        real_rank = x[-1] # last value is the target y ([f1,f2,.., y])
-        #print("real_rank",real_rank)
-        if (predict_rank != real_rank) :
-            y_r = np.zeros(len(r)-1)
-            for i in range(0, len(r)-1) :
-                if (real_rank <= r[i]) :
-                    y_r[i] = -1
-                else :
-                    y_r[i] = 1
-            T_r = np.zeros(len(r)-1)
-            for i in range(0, len(r)-1) :
-                if (  (np.dot(w, x[:n_features]) -b[i] ) * y_r[i] <= 0) :  
-                    T_r[i] = y_r[i]
-                else :
-                    T_r[i] = 0
-    
-            w = w + (np.sum(T_r))*(x[:n_features])
-    
-            for i in range(0, len(r)-1) :
-                b[i] = b[i] - T_r[i]
-        else:
-            count_corrects+=1
-    print("count_corrects", count_corrects)  
-    return w,b 
+                w = w + (np.sum(T_r))*(x[:n_features])
+        
+                for i in range(0, len(r)-1) :
+                    b[i] = b[i] - T_r[i]
+            else:
+                count_corrects+=1
+        print("count_corrects", count_corrects, w)
+        return w,b 
 
 
 
@@ -250,9 +254,11 @@ def scoreWithAdaBoost(dataset, path) :
 if __name__ == "__main__":
     
     training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario 2006/SumariosExtrativos/.")
+
     ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
 
     tranning_dataset=get_trainning_dataset("TeMario 2006/Originais/.",5)
+
     n_docs = scoreWithAdaBoost(tranning_dataset, 'TeMario/Textos-fonte/Textos-fonte com titulo')
     #w,b=PRank_Algorithm(tranning_dataset, 50000 )
     #print("w", w)

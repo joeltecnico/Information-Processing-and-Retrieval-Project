@@ -208,10 +208,10 @@ def calculate_improved_prank(graph, damping, n_iter, priors, indexes_not_linked)
 
 if __name__ == "__main__":
     
-    training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario2006/SumariosExtrativos/.")
+    training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario 2006/SumariosExtrativos/.")
     ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
 
-    tranning_dataset=get_trainning_dataset("TeMario2006/Originais/.",5)
+    tranning_dataset=get_trainning_dataset("TeMario 2006/Originais/.",5)
     w,b=PRank_Algorithm(tranning_dataset, 50000 )
     print("w", w)
     

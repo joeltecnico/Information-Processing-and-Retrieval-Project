@@ -32,7 +32,7 @@ def get_training_dataset(path, n_features):
     i=0
     
     
-    matrix_training=np.array([]).reshape(0,n_features)
+    matrix_training=np.array([]).reshape(0,n_features+1)
     
     for root, dirs, files in os.walk(path):
         for f in files:
@@ -40,10 +40,12 @@ def get_training_dataset(path, n_features):
 
                 ranking=[]
                 file_content, sentences=ex1.getFile_and_separete_into_sentences(os.path.join(root, f))
-                sentences_vectors, isfs, counts_of_terms_sent, sents_without_words= ex1.sentences_ToVectorSpace(sentences, CountVectorizer())
+                vec=CountVectorizer()
+                sentences_vectors, isfs, counts_of_terms_sent, sents_without_words= ex1.sentences_ToVectorSpace(sentences, vec)
                 sentences=np.delete(sentences, sents_without_words)
                 
-                features_doc=calculate_features(sentences_vectors,isfs, counts_of_terms_sent)
+                training_dataset_doc=np.zeros((len(sentences), n_features+1))
+                training_dataset_doc=calculate_features(sentences,sentences_vectors,isfs, counts_of_terms_sent, vec, training_dataset_doc)
     
                 ideal_summary,ideal_summary_sentences =ex1.getFile_and_separete_into_sentences( training_summaries_filesPath[i])  
                     
@@ -53,20 +55,19 @@ def get_training_dataset(path, n_features):
                     else:
                         ranking.append(0)
                                         
-                features_doc[:,-1]= ranking
-                matrix_training=np.concatenate((matrix_training, features_doc), axis=0)
-                i+=1
-             
+                training_dataset_doc[:,-1]= ranking
+                matrix_training=np.concatenate((matrix_training, training_dataset_doc), axis=0)
+                i+=1             
     return matrix_training 
 
 
 
 
-def score_real_dataset(path, training_dataset,  classifier):
+def score_real_dataset(path, training_dataset,  classifier, n_features):
     i=0
     
     # Apply Principal Components with the same number of dimentions
-    pca = PCA(n_components=4)
+    pca = PCA(n_components=n_features)
     pca.fit(training_dataset[:,:-1])
     training_pca = pca.transform(training_dataset[:,:-1])
     
@@ -83,18 +84,18 @@ def score_real_dataset(path, training_dataset,  classifier):
         for f in files:
             #print("files", f)
             file_content, sentences=ex1.getFile_and_separete_into_sentences(os.path.join(root, f))
-            sentences_vectors, isfs, counts_of_terms_sent, sents_without_words= ex1.sentences_ToVectorSpace(sentences, CountVectorizer())
+            vec= CountVectorizer()
+            sentences_vectors, isfs, counts_of_terms_sent, sents_without_words= ex1.sentences_ToVectorSpace(sentences, vec)
             sentences=np.delete(sentences, sents_without_words)
-                
-            dataset=calculate_features(sentences_vectors,isfs, counts_of_terms_sent)[:,:-1]
             
-            pca.fit(dataset)
-            dataset_pca = pca.transform(dataset)
+            dataset_doc=np.zeros((len(sentences), n_features))
+            dataset_doc=calculate_features(sentences,sentences_vectors,isfs, counts_of_terms_sent, vec, dataset_doc)
             
+            prank_summary,prank_summary_to_user=rank_with_Prank(dataset_doc,  w, b, sentences)
 
+            pca.fit(dataset_doc)
+            dataset_pca = pca.transform(dataset_doc)
                         
-            prank_summary,prank_summary_to_user=rank_with_Prank(dataset,  w, b, sentences)
-            
             classifier_summary=predict_rank(dataset_pca, classifier,sentences )
 
             
@@ -109,27 +110,34 @@ def score_real_dataset(path, training_dataset,  classifier):
     return len(files)
 
 
-def calculate_features(sentences_vectors,isfs, counts_of_terms_sent):
-    n_sentences=len(sentences_vectors)
-    features=np.zeros((n_sentences, 5))
-
+def calculate_features(sentences, sentences_vectors,isfs, counts_of_terms, vec, dataset):
+    #n_sentences=len(sentences_vectors)
+    
     #Feature graph centrality
     graph,indexes, indexes_not_linked=ex2.get_graph(sentences_vectors)
-    prior=ex2.get_prior_lenSents(counts_of_terms_sent, indexes_not_linked)
+    prior=ex2.get_prior_lenSents(counts_of_terms, indexes_not_linked)
     PR= calculate_improved_prank(graph, 0.15,50, prior, indexes_not_linked)
-    features[:,1]=PR.ravel()
+    #dataset[:,0]=PR.ravel()
     
-    #Position and Len Sentences
-    features[:,0]=ex2.get_prior_PositionAndLenSents(counts_of_terms_sent, [])
+ 
+    
+    #dataset[:,1]=ex2.get_prior_Position(len(sentences_vectors),[])
+    #dataset[:,2]=ex2.get_prior_lenSents(counts_of_terms,[] )
+    #dataset[:,3]=ex2.get_prior_PositionAndLenSents(counts_of_terms,[] )
+    
+    doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
+    
+    #dataset[:,4]=ex2.get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,[] ) 
+    dataset[:,5]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
+    dataset[:,6]=ex2.get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms,[] )
 
-    #Features TF-IDF
-    doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms_sent)
-    features[:,2]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
+
+
+
+    dataset[:,7]=ex2.get_prior_termsPosition(sentences,counts_of_terms, vec,[])
+
     
-    #Features position
-    features[:,3]=ex2.get_prior_Position(n_sentences,[])
-              
-    return features
+    return dataset
 
 
 def predict_rank(dataset, net, sentences):
@@ -149,40 +157,40 @@ def PRank_Algorithm(dataset_training, n_loops ):
     #print("len", dataset_training.shape)
     #print("dataset", dataset_training )
     
-    for t in range(0, n_loops) :
-        count_corrects=0
-                
-        for x in dataset_training:
-            #x=choice(dataset_training)   #jOEL-> FAZER RANDOM DA MELHOR RESULTADO"
-            #print("x", x)
-            #print("x", x[:n_features])
-            predict_rank=0
-            for i in range(0, len(r)):
-                value = np.dot(w, x[:n_features])
-                if(value < b[i]):
-                    predict_rank=r[i]
-                    break  
-            real_rank = x[-1] # last value is the target y ([f1,f2,.., y])
-            if (predict_rank != real_rank) :
-                y_r = np.zeros(len(r)-1)
-                for i in range(0, len(r)-1) :
-                    if (real_rank <= r[i]) :
-                        y_r[i] = -1
-                    else :
-                        y_r[i] = 1
-                T_r = np.zeros(len(r)-1)
-                for i in range(0, len(r)-1) :
-                    if (  (np.dot(w, x[:n_features]) -b[i] ) * y_r[i] <= 0) :  
-                        T_r[i] = y_r[i]
-                    else :
-                        T_r[i] = 0
-        
-                w = w + (np.sum(T_r))*(x[:n_features])
-        
-                for i in range(0, len(r)-1) :
-                    b[i] = b[i] - T_r[i]
-            else:
-                count_corrects+=1
+    
+    count_corrects=0
+            
+    for x in dataset_training:
+        #x=choice(dataset_training)   #jOEL-> FAZER RANDOM DA MELHOR RESULTADO"
+        #print("x", x)
+        #print("x", x[:n_features])
+        predict_rank=0
+        for i in range(0, len(r)):
+            value = np.dot(w, x[:n_features])
+            if(value < b[i]):
+                predict_rank=r[i]
+                break  
+        real_rank = x[-1] # last value is the target y ([f1,f2,.., y])
+        if (predict_rank != real_rank) :
+            y_r = np.zeros(len(r)-1)
+            for i in range(0, len(r)-1) :
+                if (real_rank <= r[i]) :
+                    y_r[i] = -1
+                else :
+                    y_r[i] = 1
+            T_r = np.zeros(len(r)-1)
+            for i in range(0, len(r)-1) :
+                if (  (np.dot(w, x[:n_features]) -b[i] ) * y_r[i] <= 0) :  
+                    T_r[i] = y_r[i]
+                else :
+                    T_r[i] = 0
+    
+            w = w + (np.sum(T_r))*(x[:n_features])
+    
+            for i in range(0, len(r)-1) :
+                b[i] = b[i] - T_r[i]
+        else:
+            count_corrects+=1
             
     return w,b 
 
@@ -246,11 +254,12 @@ if __name__ == "__main__":
     training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario2006/SumariosExtractivos/.")
     
     ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
-
-    training_dataset=get_training_dataset("TeMario2006/Originais/.",5)
+    
+    n_features=8
+    training_dataset=get_training_dataset("TeMario2006/Originais/.",n_features)
     
     classifier=MLPClassifier(alpha=0.01)
-    n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', training_dataset, classifier)  
+    n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', training_dataset, classifier, n_features)  
     
     print("\n PRANK - MAP", (prank_AP_sum / n_docs))
     print("\n PRANK - Precision", (prank_precision_sum / n_docs))

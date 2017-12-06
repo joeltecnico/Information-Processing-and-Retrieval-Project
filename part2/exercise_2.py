@@ -15,6 +15,8 @@ import re
 import operator
 import os
 import exercise_1 as ex1
+import itertools
+
 
 ex1_AP_sum = 0
 ex2_AP_sum = 0
@@ -42,6 +44,8 @@ def getFile_and_separete_into_sentences(f):
     return file_without_stop_words,sentences_without_stop_words
 
 
+
+
 def get_ideal_summaries_files(path):
     ideal_summaries_filesPath={}
     i=0
@@ -58,9 +62,11 @@ def read_docs(path):
     for root, dirs, files in os.walk(path):
         for f in files:
             file_content, sentences=getFile_and_separete_into_sentences(os.path.join(root, f))
-            
+        
+            vec= CountVectorizer()
             '''Weights (Choose a weight)'''
-            sents_vectors,isfs, counts_of_terms, sents_without_words=ex1.sentences_ToVectorSpace(sentences, CountVectorizer())   
+            sents_vectors,isfs, counts_of_terms, sents_without_words=ex1.sentences_ToVectorSpace(sentences,vec)  
+           
             #sentences_vectors,counts_of_terms, sents_without_words= get_score_BM5(sentences, CountVectorizer())
             #sentences_vectors, isfs, counts_of_terms_sent= ex1.sentences_ToVectorSpace(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
             #sentences_vectors,counts_of_terms_sent, sents_without_words= get_score_BM5(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
@@ -74,11 +80,12 @@ def read_docs(path):
             #prior=get_prior_Position(len(sents_vectors),indexes_not_linked)
             #prior=get_prior_lenSents(counts_of_terms,indexes_not_linked )
             #prior=get_prior_PositionAndLenSents(counts_of_terms,indexes_not_linked )
-            doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
+            #doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
             #prior=get_prior_TFIDF(doc_vector, sents_vectors,indexes_not_linked ) 
             #prior=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sents_vectors,counts_of_terms,indexes_not_linked )
-            prior=get_prior_SimilarityMostRelevantSent(doc_vector, sents_vectors,indexes_not_linked ) 
-            
+            #prior=get_prior_SimilarityMostRelevantSent(doc_vector, sents_vectors,indexes_not_linked ) 
+            prior=get_prior_NaiveBayes(counts_of_terms, indexes_not_linked)
+            #prior=get_prior_tf(counts_of_terms, indexes_not_linked)-> ERRRO
             
             ex2_PR=calculate_improved_prank(ex2_graph, 0.15,50,  prior, indexes)
            
@@ -92,7 +99,7 @@ def read_docs(path):
               ": \n\nEx2- Summary to user:", ex2_summary_to_user)
             
             ideal_summary,ideal_summary_sentences =getFile_and_separete_into_sentences( ideal_summaries_filesPath[i])  
-            
+
             print("ideal_summary", ideal_summary)
             
             global ex1_AP_sum,  ex2_AP_sum, ex1_precision_sum,ex2_precision_sum
@@ -100,7 +107,7 @@ def read_docs(path):
                 ex1_AP_sum,ex1_precision_sum =  calculate_precision_recall_ap(ex1_summary,ideal_summary, ideal_summary_sentences,ex1_AP_sum, ex1_precision_sum)
             ex2_AP_sum, ex2_precision_sum=  calculate_precision_recall_ap(ex2_summary,ideal_summary, ideal_summary_sentences,ex2_AP_sum, ex2_precision_sum)
             
-            
+            break
             i+=1
     
     return len(files)  #retornas n-docs
@@ -162,25 +169,64 @@ def get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_o
     #return np.expand_dims(priors_position_and_sentenceSize_TFIDF, axis=0)
     return get_priors(np.expand_dims(priors_position_and_sentenceSize_TFIDF, axis=0), indexes_not_linked)
 
-
-
 def get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,indexes_not_linked):
     cosines=ex1.cosine_similarity(doc_vector[0], sentences_vectors)
     print("cosines",cosines)
     dict_cosines=dict(enumerate(cosines))
     most_relevant_sent = sorted(dict_cosines.items(),key=operator.itemgetter(1),reverse=True)[0][0]
     priors_cos=ex1.cosine_similarity(sentences_vectors[most_relevant_sent], sentences_vectors)
-    return get_priors(np.expand_dims(priors_cos, axis=0), indexes_not_linked)
+    return get_priors(np.expand_dims(priors_cos, axis=0), indexes_not_linked)        
 
+def get_prior_NaiveBayes(counts_of_terms_sent, indexes_not_linked):    
+    counts_of_terms_doc = np.sum(counts_of_terms_sent, axis=0)
+    lenght_doc = (len(counts_of_terms_doc))
+    prob_term_given_doc = counts_of_terms_doc/lenght_doc #probability of sentences given document
+    Naive_bayes_probability= np.power(prob_term_given_doc,counts_of_terms_sent)
+    priors = np.prod(Naive_bayes_probability,axis=1)
+    return get_priors(np.expand_dims(priors, axis=0), indexes_not_linked)        
+
+def get_prior_tf(counts_of_terms, indexes_not_linked):
+    priors_tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
+    priors_tfs=np.prod(priors_tfs,axis=1)
+    return get_priors(np.expand_dims(priors_tfs, axis=0), indexes_not_linked)        
+
+
+def get_Prior_Inventado1(sentences, vec):
+    list_Of_words=[]
+    lista_sem_repeticoes=[]
+    c=""
+    print("frasessss",sentences)
     
+    for s in sentences:
+        list_Of_words.append(s.split(" "))
+    print(list_Of_words)
+    c=list(itertools.chain.from_iterable(list_Of_words))
+    print ("lista",c)
+    lista_sem_repeticoes=getUniqueWords(c)
+    print(lista_sem_repeticoes)
 
+    len_doc=len(sentences)
 
+ 
+    print(lista_sem_repeticoes)
+    l=list(np.arange(len_doc,0,-1))
+    prior=dict(zip(lista_sem_repeticoes,l))
+
+    return prior   
+    
+def getUniqueWords(words):
+    seen = set()
+    result = []
+    for item in words:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
 
 def get_priors(non_uniform_weights, indexes_not_linked):
     non_uniform_weights=np.delete(non_uniform_weights, indexes_not_linked,1) #delete rows that dont belong to graph (sents are not linked to any sentence)
     return non_uniform_weights/np.sum(non_uniform_weights)
     
-
 def calculate_precision_recall_ap(summary, ideal_summary_allContent,ideal_summary_sentences,
             AP_sum, precision_sum ):
     

@@ -1,0 +1,55 @@
+A regulamentação do artigo 38 e a credibilidade do governo
+
+SÉRGIO RIBEIRO DA COSTA WERLANG
+
+O plano da estabilização econômica ora em vigor é bem estruturado em geral, mas desde sua primeira edição (medida provisória 434, publicada no Diário Oficial da União de 28/2/94) contém uma falha grave: um de seus artigos altera as cláusulas de correção monetária de contratos já em andamento (artigo 36 da MP 434). Atualmente, em sua versão definitiva, a lei 8.880, contém um artigo semelhante, o de número 38.
+
+Um contrato entre duas partes é feito porque ambas as partes ficarão melhor. Claramente, um contrato de longo prazo em uma economia inflacionária tem de conter alguma cláusula de indexação.
+
+Ocorre que qualquer contrato é incompleto, isto é, é impossível que todas as contingências (ou seja, todos os acontecimentos possíveis durante a vida do contrato) sejam definidas com precisão.
+
+Assim, se ocorrer um fenômeno que tem pouca chance de realizar-se, em outras palavras, se ocorrer uma surpresa ou um fato inesperado, é comum haver recontratação, isto é, a renegociação do contrato.
+
+A revisão contratual quando da realização de uma surpresa é não só um princípio econômico saudável e correto –uma vez que nunca se consegue listar em um contrato todas as possíveis ocorrências durante a vida do mesmo– como também uma boa doutrina jurídica.
+
+Aliás, é muito comum que as instituições jurídicas indiquem a experiência passada de uma sociedade, representando os mecanismos legais que se mostraram mais estáveis e mais agregadores de valor adicionado à economia no longo prazo.
+
+Tem estado muito em voga a teoria institucional que cuida de não só verificar quais as instituições que emergem, mas também qual o efeito da ambiência institucional no longo prazo da economia.
+
+Em particular, esta linha de pesquisa tem sido muito popular nas disciplinas de "law and economics" e de história econômica, tendo sido premiada no último Nobel de Economia que foi dado a Douglass North e Robert Fogel. É justamente a visão de longo prazo que deve nortear a correta regulamentação do artigo 38.
+
+É importante que seja entendido qual é o novo critério de correção monetária sugerido pelo artigo 38 e qual seu impacto estimado em contratos corrigidos por índices de preços. Por problemas estatísticos, é impossível medir um índice instantâneo de inflação. Assim, qualquer índice de preços é calculado com base no comportamento dos preços no passado. Dessa forma, toda vez que há uma queda brusca da inflação esta levará algum tempo a ser captada numericamente.
+
+Por exemplo, se a inflação de junho for de 45% ao mês, e se a inflação a partir de 1º de julho for zero (o que significa que o plano econômico foi um sucesso completo), haverá ainda uma inflação residual no IGP-M –lembre-se, isto é apenas um efeito estatístico advindo da metodologia do cálculo de índices– de 35% distribuídos entre os meses de julho e agosto.
+
+A regulamentação sugerida pelo governo no artigo 38 eliminaria por completo estes 35%. A argumentação usada pelos integrantes da equipe econômica é a teoria da surpresa que, como explicada acima, justificaria a revisão dos contratos. No entanto, é fácil ver que a teoria da surpresa nem sempre se aplica ao caso. Com efeito, em muitas situações, a inflação residual nos contratos foi antecipada, isto é, foi levada em consideração quando da negociação inicial.
+
+O exemplo mais óbvio foi na compra de NTNs indexadas ao IGP-M, após as declarações, por sinal muito saudáveis, de Francisco Pinto em dezembro passado em favor da inalterabilidade dos contratos. Note-se que Francisco Pinto era, à época, o diretor do Banco Central responsável pela dívida pública.
+
+Desse modo, suas declarações eram vistas como refletindo o pensamento uníssono da equipe, de forma que o mercado passou imediatamente, a negociar NTNs indexadas ao IGP-M com juros mais baixos –já que estes títulos teriam uma correção adicional em relação, por exemplo, ao dólar, quando a taxa de inflação diminuísse.
+
+Nesse caso específico, não se pode dizer que a queda brusca da inflação representa uma contingência imprevista ou uma surpresa, uma vez que foi antecipado. Assim, não deve haver recontratação.
+
+Por outro lado, imagine um indivíduo não especialmente informado das sutilezas estatísticas de índices de preço, que comprou um imóvel quando a inflação já estava em níveis elevados (por exemplo, 30% ao mês) através de uma financiamento indexado ao IGP-M. Parece claro que esta é uma situação em que a queda brusca da inflação introduz um elemento novo, uma surpresa. Portanto, neste caso, é justo que grande parte (mas não a totalidade) do resíduo da inflação do IGP-M seja expurgado de sua dívida.
+
+Os dois exemplos acima, ilustram que os "ganhadores" e "perdedores" com a queda abrupta da inflação não são claramente identificados a priori. Cada caso é um caso. No primeiro exemplo, a nova regra de indexação proposta pelo artigo 38 é flagrantemente injusta. Já no segundo exemplo, a regra é aproximadamente verdadeira.
+
+Tendo em mente isto, a seguinte pergunta é fundamental: será que ao invés de determinar qual a melhor maneira de identificar a priori qual será a regra de passagem que diminui o grau de conflito (ou seja, diminui o desejo de recontratação) não seria melhor deixar que os agentes insatisfeitos entrassem com ações na Justiça provando (ou tentando provar) que em seus casos particulares a queda brusca da inflação introduz um elemento de surpresa que justifica a revisão dos termos do contrato?
+
+Para responder a esta pergunta, procuro medir o efeito da perda de credibilidade que o governo federal teria com a adoção do artigo 38. Faço-o de modo muito conservador e centro-me especificamente sobre o impacto sobre as contas do setor público do aumento da desconfiança causada na dívida mobiliária interna do governo federal. Isto porque, sendo difícil estimar qual a melhor maneira de alterar os contratos em vigor, ao menos deve-se ter uma medida do custo da decisão de alterar estes contratos.
+
+Para medir-se o efeito líquido nas contas do setor público, devem-se estimar tanto os ganhos quanto as perdas do governo federal. Do lado dos ganhos, note-se que o expurgo nas NTNs reajustadas em IGP-M (NTN-B e NTN-C) seria de cerca de 35% do estoque destas NTNs que vende depois de primeiro de julho. Em dados de 1º de junho, do Banco Central, o governo federal perderia um total de US$ 1,6 bilhões.
+
+Já para estimar as perdas, há dificuldades adicionais. Será que é possível mensurar o efeito da perda de credibilidade que o governo sofrerá com a introdução do expurgo pelo artigo 38?
+
+Um método aproximado para calcular o efeito do artigo 38 é o seguinte. Observa-se que as taxas de juros em NTNs cambiais curtas (de até três meses) no início de fevereiro eram pouco inferiores a 26% ao ano. A MP 434 foi editada no Diário Oficial da União de 28/2/94. No dia seguinte, 1/3/94, o Banco Central leiloou NTNs cambiais curtas (e longas também). As taxas demandadas pelas instituições financeiras para as NTNs curtas variaram de 28% a 30% ao ano. O Banco Central desistiu de colocar os títulos a este preço.
+
+Mas o fato importante é que havia demanda por títulos cambiais a dólar mais 26% ao ano logo antes do plano, e após o mesmo a demanda passou a 28%-30%, sem que houvesse nenhuma alteração substantiva na liquidez da economia. Logo, pelo menos uma diferença de 2% a 4% ao ano na taxa de juros requerida pelo público foi observada, simplesmente pela edição da medida.
+
+Supondo-se que: 1) a dívida mobiliária interna fique constante em termos de dólares reais e 2) o prêmio que a dívida pública tenha que pagar pela perda de credibilidade seja de 2% ao ano, mas caia a zero linearmente em 40 anos; chega-se à conclusão (utilizando-se o juro real de longo prazo em dólares de 2% e 3% ao ano) de que o valor presente da perda de credibilidade em decorrência da edição da MP 434 varia entre US$ 7,6 bilhões e US$ 8,9 bilhões!
+
+Como somente o artigo 36 da MP 434 altera as condições contratuais das dívidas do governo, a fonte desta perda de credibilidade reside aí. Ou seja, no atual artigo 38 da lei 8.880. Conclui-se que o governo acaba por perder muito mais do que os US$ 1,6 bilhão que são computados diretamente. E isto sem levar em consideração a perda de credibilidade que foi imposta a toda a economia brasileira, uma vez que houve intervenção em todos os contratos da economia.
+
+Uma vez que o Executivo propôs uma medida que lhe é danosa, e ao povo brasileiro em geral, cabe ao Legislativo corrigir isso. Basta que, ao regulamentar o artigo 38, o Congresso proponha que não se alterem os contratos em vigor.
+
+SÉRGIO RIBEIRO DA COSTA WERLANG, 35, é doutor em economia pela Universidade de Princeton (EUA) e diretor-geral da Escola de pós-graduação em Economia da Fundação Getúlio Vargas (RJ).

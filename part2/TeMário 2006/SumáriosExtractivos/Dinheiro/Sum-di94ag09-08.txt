@@ -1,0 +1,28 @@
+A questão dos encargos trabalhistas 
+.
+RUBEN D. ALMONACID, MÁRCIO I. NAKANE ; SAMUEL A. PESSÔA
+.
+Um importante debate tem acontecido neste espaço e que diz respeito à importância (ou não) dos encargos trabalhistas na composição dos custos das empresas e, portanto, seu impacto sobre a geração de empregos e competitividade das empresas brasileiras.
+O professor José Pastore, em entrevista na Folha de 23/04/94, comentando os resultados de uma pesquisa recente ("Flexibilização dos Mercados de Trabalho e Contratação Coletiva", Editora LTr, 1994), manifestava a opinião de que os elevados encargos trabalhistas constituem um forte fator de inibição na geração de empregos no Brasil.
+O professor Edward J. Amadeo, em dois artigos (Folha de 04/01/94 e 04/06/94) manifestou posição diversa; enquanto este calculava encargos de 24,5% sobre a folha de salários, o professor Pastore chegava ao total de 102,1% para os mesmos.
+Tal diferença deve-se ao fato de que os dois autores têm conceitos distintos de encargos.
+Para o professor Amadeo os encargos são "a diferença entre o que o trabalhador recebe e o que a empresa paga", enquanto para o professor Pastore "os encargos sociais compõem o custo final do fator trabalho para a empresa".
+Para resumir, diremos que os gastos do empregador dividem-se em dois grupos: aqueles que não retornam ao trabalhador (por exemplo, INSS), que chamaremos de "encargos"; e aqueles que retornam a ele (por exemplo, repouso semanal e décimo terceiro salário), que chamaremos de "salário indireto".
+Do ponto de vista econômico a discussão relevante é saber o impacto destes encargos sobre a eficiência produtiva.
+Quando o professor Amadeo exclui dos encargos o "salário indireto" ele entende que o conceito relevante de salário para as decisões do trabalhador é a soma deste com o "salário direto".
+As empresas tipo um não pagam salário indireto, pagam R$ 1,00 por hora trabalhada e trabalha-se dez horas por dia.
+Portanto, seu trabalhador recebe R$ 10,00 por dia com um salário médio de R$ 1,00.
+As empresas tipo dois pagam R$ 5,00 de salário indireto por dia, R$ 0,50 por hora trabalhada e também trabalha-se dez horas por dia.
+O salário por dia e o salário médio, portanto, são idênticos para os trabalhadores de ambas as empresas.
+Nesta situação, diria o professor Amadeo, os trabalhadores de ambas, por receberem o mesmo salário médio, comportar-se-iam da mesma forma e as empresas, portanto, produziriam com a mesma eficiência.
+A teoria econômica ensina, contudo, que os agentes reagem a incentivos marginais, que no exemplo corresponde ao salário por hora trabalhada.
+É de se esperar que o comportamento dos trabalhadores em ambas as empresas seja, assim, radicalmente distinto: certamente o incentivo à presença no trabalho é maior nas empresas do tipo um onde a falta de um dia acarreta uma perda de R$ 10,00 do que nas empresas do tipo dois que acarreta uma perda de R$ 5,00.
+.
+No que diz respeito, portanto, à eficiência produtiva o conceito relevante de salário é o marginal.
+Note que para o professor Pastore os encargos são entendidos segundo seus impactos sobre o custo do empregador.
+Mas se a discussão refere-se aos efeitos sobre o mercado de trabalho está correto o professor Amadeo ao afirmar que o importante é a diferença entre o custo percebido pelo empregador e o salário recebido pelo trabalhador.
+Outro importante ponto é o tratamento assimétrico dispensado pelo professor Amadeo ao FGTS "vis-à-vis" o INSS.
+O primeiro é contabilizado como salário indireto quando sabe-se que sua correção é feita por índices que subestimam a taxa de inflação e seu acesso é restrito.
+Quanto ao INSS, parte de sua contribuição retorna a ele sob a forma de serviços de saúde e pagamento de pensões.
+Não se justifica, portanto, a sua total exclusão do "salário indireto".
+Estes custos, novamente, podem ser divididos entre aqueles que retornam ao trabalhador (por exemplo, aviso prévio e indenização de 40% calculada sobre o saldo do FGTS) e aqueles que não retornam.

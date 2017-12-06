@@ -44,20 +44,15 @@ def get_trainning_dataset(path, n_features):
                 
                 features_doc=calculate_features(sentences_vectors,isfs, counts_of_terms_sent)
     
-                #print("trainning summaries", training_summaries_filesPath[0])
                 ideal_summary,ideal_summary_sentences =ex1.getFile_and_separete_into_sentences( training_summaries_filesPath[i])  
-                
-    
+                    
                 for sentence in sentences:
                     if sentence in ideal_summary:
-                        ranking.append(1)                        
+                        ranking.append(1)
                     else:
                         ranking.append(0)
-                        
-                
+                                        
                 features_doc[:,-1]= ranking
-                            
-                        
                 matrix_tranning=np.concatenate((matrix_tranning, features_doc), axis=0)
                 i+=1
              
@@ -72,8 +67,7 @@ def score_real_dataset(path, trainning_dataset,  classifier):
     net = classifier
     net.fit(trainning_dataset[:,:-1] , trainning_dataset[:,-1].T) #fit (X, y) samples/classes
     
-    w,b=PRank_Algorithm(tranning_dataset, 1 )
-           
+    w,b=PRank_Algorithm(tranning_dataset, 5 )
            
     for root, dirs, files in os.walk(path):
         for f in files:
@@ -102,16 +96,12 @@ def score_real_dataset(path, trainning_dataset,  classifier):
 
 
 def calculate_features(sentences_vectors,isfs, counts_of_terms_sent):
-    
-
     n_sentences=len(sentences_vectors)
-
     features=np.zeros((n_sentences, 5))
 
-    
+    #Feature graph centrality
     graph,indexes, indexes_not_linked=ex2.get_graph(sentences_vectors)
     prior=ex2.get_prior_lenSents(counts_of_terms_sent, indexes_not_linked)
-
     PR= calculate_improved_prank(graph, 0.15,50, prior, indexes_not_linked)
     features[:,1]=PR.ravel()
     
@@ -128,6 +118,14 @@ def calculate_features(sentences_vectors,isfs, counts_of_terms_sent):
     return features
 
 
+def predict_rank(dataset, net, sentences):
+     predictions=net.predict_proba(dataset)     
+     range = np.expand_dims(np.arange(len(dataset)), axis=1)
+     concat=np.concatenate((predictions, range), axis=1)     
+     sorted_concat = concat[concat[:,1].argsort()[::-1]][0:5]
+     return [sentences[int(item[-1])] for item in sorted_concat]
+    
+
 def PRank_Algorithm(dataset_trainning, n_loops ):
     r = [1,0]
     n_features=dataset_trainning.shape[1]-1  
@@ -136,11 +134,14 @@ def PRank_Algorithm(dataset_trainning, n_loops ):
     b = [0, math.inf]
     #print("len", dataset_trainning.shape)
     #print("dataset", dataset_trainning )
+    
+    print("len data", dataset_trainning.shape)
 
     for t in range(0, n_loops) :
         count_corrects=0
-
+                
         for x in dataset_trainning:
+            x=choice(dataset_trainning)   #jOEL-> FAZER RANDOM DA MELHOR RESULTADO"
             #print("x", x)
             #print("x", x[:n_features])
             predict_rank=0
@@ -150,7 +151,6 @@ def PRank_Algorithm(dataset_trainning, n_loops ):
                     predict_rank=r[i]
                     break  
             real_rank = x[-1] # last value is the target y ([f1,f2,.., y])
-            #print("real_rank",real_rank)
             if (predict_rank != real_rank) :
                 y_r = np.zeros(len(r)-1)
                 for i in range(0, len(r)-1) :
@@ -171,8 +171,8 @@ def PRank_Algorithm(dataset_trainning, n_loops ):
                     b[i] = b[i] - T_r[i]
             else:
                 count_corrects+=1
-        print("count_corrects", count_corrects, w)
-        return w,b 
+            
+    return w,b 
 
 
 
@@ -272,23 +272,13 @@ def scoreWithAdaBoost(dataset, path) :
     return len(files)
 '''   
 
-
-def predict_rank(dataset, net, sentences):
-     predictions=net.predict_proba(dataset)     
-     range = np.expand_dims(np.arange(len(dataset)), axis=1)
-     concat=np.concatenate((predictions, range), axis=1)     
-     sorted_concat = concat[concat[:,1].argsort()[::-1]][0:5]
-     return [sentences[int(item[-1])] for item in sorted_concat]
-    
-
-
 if __name__ == "__main__":
     
-    training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario 2006/SumariosExtrativos/.")
-
+    training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario2006/SumariosExtractivos/.")
+    
     ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
 
-    tranning_dataset=get_trainning_dataset("TeMario 2006/Originais/.",5)
+    tranning_dataset=get_trainning_dataset("TeMario2006/Originais/.",5)
 
     #n_docs=scoreWithAdaBoost( tranning_dataset,'TeMario/Textos-fonte/Textos-fonte com titulo')
     
@@ -300,5 +290,3 @@ if __name__ == "__main__":
     
     print("\n choosen classifier - MAP", (classifier_AP_sum / n_docs))
     print("\n choosen classifier - Precision", (classifier_precision_sum / n_docs))
-
-

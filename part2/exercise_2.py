@@ -80,12 +80,12 @@ def read_docs(path):
             #prior=get_prior_Position(len(sents_vectors),indexes_not_linked)
             #prior=get_prior_lenSents(counts_of_terms,indexes_not_linked )
             #prior=get_prior_PositionAndLenSents(counts_of_terms,indexes_not_linked )
-            #doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
+            #prior=get_prior_SimilarityMostRelevantSent(doc_vector, sents_vectors,indexes_not_linked ) 
+            #prior=get_prior_NaiveBayes(counts_of_terms, indexes_not_linked)
+            prior=get_Prior_Inventado1(sentences,counts_of_terms, vec,indexes_not_linked)
+            doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
             #prior=get_prior_TFIDF(doc_vector, sents_vectors,indexes_not_linked ) 
             #prior=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sents_vectors,counts_of_terms,indexes_not_linked )
-            #prior=get_prior_SimilarityMostRelevantSent(doc_vector, sents_vectors,indexes_not_linked ) 
-            prior=get_prior_NaiveBayes(counts_of_terms, indexes_not_linked)
-            #prior=get_prior_tf(counts_of_terms, indexes_not_linked)-> ERRRO
             
             ex2_PR=calculate_improved_prank(ex2_graph, 0.15,50,  prior, indexes)
            
@@ -107,7 +107,7 @@ def read_docs(path):
                 ex1_AP_sum,ex1_precision_sum =  calculate_precision_recall_ap(ex1_summary,ideal_summary, ideal_summary_sentences,ex1_AP_sum, ex1_precision_sum)
             ex2_AP_sum, ex2_precision_sum=  calculate_precision_recall_ap(ex2_summary,ideal_summary, ideal_summary_sentences,ex2_AP_sum, ex2_precision_sum)
             
-            break
+            
             i+=1
     
     return len(files)  #retornas n-docs
@@ -185,34 +185,32 @@ def get_prior_NaiveBayes(counts_of_terms_sent, indexes_not_linked):
     priors = np.prod(Naive_bayes_probability,axis=1)
     return get_priors(np.expand_dims(priors, axis=0), indexes_not_linked)        
 
-def get_prior_tf(counts_of_terms, indexes_not_linked):
-    priors_tfs=counts_of_terms/np.max(counts_of_terms, axis=1)[:, None]
-    priors_tfs=np.prod(priors_tfs,axis=1)
-    return get_priors(np.expand_dims(priors_tfs, axis=0), indexes_not_linked)        
 
 
-def get_Prior_Inventado1(sentences, vec):
+def get_prior_termsPosition(sentences,counts_of_terms, vec,indexes_not_linked):
     list_Of_words=[]
     lista_sem_repeticoes=[]
-    c=""
-    print("frasessss",sentences)
+    terms_position=[]
     
     for s in sentences:
         list_Of_words.append(s.split(" "))
-    print(list_Of_words)
     c=list(itertools.chain.from_iterable(list_Of_words))
-    print ("lista",c)
     lista_sem_repeticoes=getUniqueWords(c)
-    print(lista_sem_repeticoes)
 
-    len_doc=len(sentences)
-
- 
-    print(lista_sem_repeticoes)
+    len_doc=len(lista_sem_repeticoes)
     l=list(np.arange(len_doc,0,-1))
     prior=dict(zip(lista_sem_repeticoes,l))
+    vec_ordenado = sorted(vec.vocabulary_.items(),
+    key=operator.itemgetter(1),reverse=False)
 
-    return prior   
+    for key in vec_ordenado:
+        terms_position.append(prior[key[0]])
+
+    priorFinal= counts_of_terms.dot(terms_position)
+
+    counts_of_terms[counts_of_terms>1]=1
+   
+    return get_priors(np.expand_dims(priorFinal, axis=0), indexes_not_linked) 
     
 def getUniqueWords(words):
     seen = set()
@@ -271,37 +269,44 @@ def get_score_BM5(content, vec):
     return score_BM5_without_ISF*isfs, counts_of_terms, sents_without_words
 
 
-
-
 '''
-def readTest():
-    file_content,sentences=getFile_and_separete_into_sentences("script1.txt")
+def test():
+    file_content, sentences=file_content,sentences=getFile_and_separete_into_sentences("script1.txt")
+        
+    vec= CountVectorizer()
     
-    ex1_sents_represented=ex1.sentences_ToVectorSpace(sentences)  
-    ex1_graph=ex1.get_graph(ex1_sents_represented, 0.2)     
+    sents_vectors,isfs, counts_of_terms, sents_without_words=ex1.sentences_ToVectorSpace(sentences,vec)  
+   
+    #sentences_vectors,counts_of_terms, sents_without_words= get_score_BM5(sentences, CountVectorizer())
+    #sentences_vectors, isfs, counts_of_terms_sent= ex1.sentences_ToVectorSpace(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
+    #sentences_vectors,counts_of_terms_sent, sents_without_words= get_score_BM5(sentences, CountVectorizer(ngram_range=(1, 2),token_pattern=r'\b\w+\b'))
+    
+    ex1_graph=ex1.get_graph(sents_vectors, 0.2)     
     ex1_PR = ex1.calculate_page_rank(ex1_graph, 0.15, 50)
-    ex1_summary, ex1_summary_to_user=ex1.show_summary(ex1_PR,sentences,5)
+    
+    ex2_graph,indexes, indexes_not_linked=get_graph(sents_vectors)
     
    
-    ex2_summary, ex2_summary_to_user=PR_priorsTFIDFS_weightsTFIDFS(sentences)
     
-    print("\nDoc ",0, ": \n\nEx1- Summary to user:", ex1_summary_to_user, 
-      ": \n\nEx2- Summary to user:", ex2_summary_to_user)
-
+    prior=get_prior_tf(counts_of_terms, indexes_not_linked)
+    
+    ex2_PR=calculate_improved_prank(ex2_graph, 0.15,50,  prior, indexes)
     return 0
-
+ 
 '''
-        
+
         
 if __name__ == "__main__":
     
     ideal_summaries_filesPath=get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
-    n_docs=read_docs('TeMario/Textos-fonte/Textos-fonte com titulo')       
+    n_docs=read_docs('TeMario/Textos-fonte/Textos-fonte com titulo')    
+    
+    
     print("\n exercise 1- MAP", (ex1_AP_sum / n_docs))
     print("\n exercise 1- Precision", (ex1_precision_sum / n_docs))
 
     print("\n exercise 2- MAP", (ex2_AP_sum / n_docs))
     print("\n exercise 2- Precision", (ex2_precision_sum / n_docs))
-
+    
     
     #readTest()

@@ -82,11 +82,13 @@ def read_docs(path):
             #prior=get_prior_PositionAndLenSents(counts_of_terms,indexes_not_linked )
             #prior=get_prior_SimilarityMostRelevantSent(doc_vector, sents_vectors,indexes_not_linked ) 
             #prior=get_prior_NaiveBayes(counts_of_terms, indexes_not_linked)
-            prior=get_Prior_Inventado1(sentences,counts_of_terms, vec,indexes_not_linked)
+            prior=get_prior_termsPosition(sentences,counts_of_terms, vec,indexes_not_linked)
+            
             doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
             #prior=get_prior_TFIDF(doc_vector, sents_vectors,indexes_not_linked ) 
             #prior=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sents_vectors,counts_of_terms,indexes_not_linked )
-            
+
+
             ex2_PR=calculate_improved_prank(ex2_graph, 0.15,50,  prior, indexes)
            
             
@@ -142,6 +144,9 @@ def calculate_improved_prank(graph, damping, n_iter, priors, indexes):
 
 
 
+#FAZER PRIOR BM25
+
+
 def get_prior_TFIDF(doc_vector, sentences_vectors,indexes_not_linked ):
     priors_cos=ex1.cosine_similarity(doc_vector[0], sentences_vectors)
     #return np.expand_dims(priors_cos, axis=0)
@@ -171,7 +176,6 @@ def get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_o
 
 def get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,indexes_not_linked):
     cosines=ex1.cosine_similarity(doc_vector[0], sentences_vectors)
-    print("cosines",cosines)
     dict_cosines=dict(enumerate(cosines))
     most_relevant_sent = sorted(dict_cosines.items(),key=operator.itemgetter(1),reverse=True)[0][0]
     priors_cos=ex1.cosine_similarity(sentences_vectors[most_relevant_sent], sentences_vectors)
@@ -193,8 +197,10 @@ def get_prior_termsPosition(sentences,counts_of_terms, vec,indexes_not_linked):
     terms_position=[]
     
     for s in sentences:
-        list_Of_words.append(s.split(" "))
+        list_Of_words.append([word for word in re.findall(r'(?u)\b\w\w+\b', s.lower())])
+        #print("\n list of words", list_Of_words)
     c=list(itertools.chain.from_iterable(list_Of_words))
+        
     lista_sem_repeticoes=getUniqueWords(c)
 
     len_doc=len(lista_sem_repeticoes)

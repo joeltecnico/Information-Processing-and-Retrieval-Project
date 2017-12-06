@@ -73,10 +73,11 @@ def read_docs(path):
             '''Testar aqui cm os priors, é so descomentar aquele q se quer'''
             #prior=get_prior_Position(len(sents_vectors),indexes_not_linked)
             #prior=get_prior_lenSents(counts_of_terms,indexes_not_linked )
-            prior=get_prior_PositionAndLenSents(counts_of_terms,indexes_not_linked )
-            #doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
+            #prior=get_prior_PositionAndLenSents(counts_of_terms,indexes_not_linked )
+            doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
             #prior=get_prior_TFIDF(doc_vector, sents_vectors,indexes_not_linked ) 
             #prior=get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sents_vectors,counts_of_terms,indexes_not_linked )
+            prior=get_prior_SimilarityMostRelevantSent(doc_vector, sents_vectors,indexes_not_linked ) 
             
             
             ex2_PR=calculate_improved_prank(ex2_graph, 0.15,50,  prior, indexes)
@@ -99,7 +100,7 @@ def read_docs(path):
                 ex1_AP_sum,ex1_precision_sum =  calculate_precision_recall_ap(ex1_summary,ideal_summary, ideal_summary_sentences,ex1_AP_sum, ex1_precision_sum)
             ex2_AP_sum, ex2_precision_sum=  calculate_precision_recall_ap(ex2_summary,ideal_summary, ideal_summary_sentences,ex2_AP_sum, ex2_precision_sum)
             
-            #break
+            
             i+=1
     
     return len(files)  #retornas n-docs
@@ -162,11 +163,23 @@ def get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_o
     return get_priors(np.expand_dims(priors_position_and_sentenceSize_TFIDF, axis=0), indexes_not_linked)
 
 
+
+def get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,indexes_not_linked):
+    cosines=ex1.cosine_similarity(doc_vector[0], sentences_vectors)
+    print("cosines",cosines)
+    dict_cosines=dict(enumerate(cosines))
+    most_relevant_sent = sorted(dict_cosines.items(),key=operator.itemgetter(1),reverse=True)[0][0]
+    priors_cos=ex1.cosine_similarity(sentences_vectors[most_relevant_sent], sentences_vectors)
+    return get_priors(np.expand_dims(priors_cos, axis=0), indexes_not_linked)
+
+    
+
+
+
 def get_priors(non_uniform_weights, indexes_not_linked):
     non_uniform_weights=np.delete(non_uniform_weights, indexes_not_linked,1) #delete rows that dont belong to graph (sents are not linked to any sentence)
     return non_uniform_weights/np.sum(non_uniform_weights)
     
-
 
 def calculate_precision_recall_ap(summary, ideal_summary_allContent,ideal_summary_sentences,
             AP_sum, precision_sum ):
@@ -175,7 +188,7 @@ def calculate_precision_recall_ap(summary, ideal_summary_allContent,ideal_summar
     
     RuA = sum(1 for x in summary if x in ideal_summary_allContent)
     precision= RuA / len(summary)
-    print("Precision", precision)
+    #print("Precision", precision)
     precision_sum+=precision
 
     correct_until_now = 0

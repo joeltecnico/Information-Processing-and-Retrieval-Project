@@ -131,9 +131,9 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
     html_file.close()
     print("All done!")
     
-def priorsPositionAndLenSents_weightsTFIDFS(sentences_vectors,counts_of_terms_sent):
+def priorslenSents(sentences_vectors,counts_of_terms_sent):
     graph,indexes, indexes_sents_not_linked=exercise_2.get_graph(sentences_vectors)
-    prior=exercise_2.get_prior_PositionAndLenSents(counts_of_terms_sent, indexes_sents_not_linked)
+    prior=exercise_2.get_prior_lenSents(counts_of_terms_sent, indexes_sents_not_linked)
     matrix_priors=exercise_2.get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
     return graph,matrix_priors,indexes
 
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     news_sentences = np.delete(news_sentences, sentences_without_words)
     connections = np.delete(connections, sentences_without_words)
     
-    ex2_graph,ex2_priors,indexes=priorsPositionAndLenSents_weightsTFIDFS(sentences_vectors,counts_of_terms_sent)
+    ex2_graph,ex2_priors,indexes=priorslenSents(sentences_vectors,counts_of_terms_sent)
     PR=exercise_2.calculate_improved_prank(ex2_graph, 0.15, 50,  ex2_priors, indexes)
     #graph=exercise_1.get_graph(sentences_vectors, 0.2)
     #PR = exercise_1.calculate_page_rank(graph, 0.15, 50)

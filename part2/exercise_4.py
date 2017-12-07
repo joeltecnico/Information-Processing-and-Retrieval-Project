@@ -36,7 +36,7 @@ def sentences_ToVectorSpace(content):
     return sentences_without_words,tfs_sent*isfs,counts_of_terms_sent
 
 def getParsesPages(f): 
-    news = []
+    news_sentences = []
     sources = []
     items = []
     connections = np.array([],dtype=np.int16)
@@ -54,7 +54,7 @@ def getParsesPages(f):
         root = ET.parse(url)
         for ele in root.findall(".//item"):
             item = {}
-            news_contents = []
+            news_sentences_contents = []
             
             title = parseHTML(ele.findtext('title'))
             description = parseHTML(ele.findtext('description'))
@@ -62,7 +62,7 @@ def getParsesPages(f):
             date = ele.findtext('pubDate')
             
             item['title'] = title
-            item['description'] = description
+            item['description'] = parseHTML(ele.findtext('description'))
             item['link'] = link
             item['date'] = date
             item['source'] = sourceIndex
@@ -78,10 +78,10 @@ def getParsesPages(f):
             
             items.append(item)
             
-            news += splitTitle
-            news += splitDescription
+            news_sentences += splitTitle
+            news_sentences += splitDescription
             
-    return sources, items, connections, np.array(news)
+    return sources, items, connections, np.array(news_sentences)
     
 def parseHTML(html) :
     soup = BeautifulSoup(html, 'html5lib')
@@ -102,9 +102,9 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
     with open('template.html','r') as f:
         html = f.read()
     
-    content = "<table>\n    <tr>\n        <td><h2>Sentence</h2></td>\n        <td><h2>Source</td></h2>\n        <td><h2>Content</h2></td>\n    </tr>\n"
+    content = "<table id=table>\n     <tr >\n    <td></td>    <td><h2>SUMMARY</h2></td>\n        <td><h2>SOURCE</td></h2>\n        <td><h2>CONTENT</h2></td>\n    </tr><hr>\n"
     for i in range(0, number_of_top_sentences) :
-        top_sentence = top_sentences[i]
+        top_sentence = '<p class="p1">'+top_sentences[i]+'</p>'
         source = sources[items[top_connections[i]]["source"]][0]
         source_link = sources[items[top_connections[i]]["source"]][1]
         
@@ -117,10 +117,10 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
         
         content_html = '<b><a href="' + link + '">' + title + '</a></b><br>\n'
         if date is not None :
-            content_html = content_html + date + '<br><br>\n'
-        content_html = content_html + description + '<br><br>\n'
+            content_html = content_html + '<p>'+date+'</p>' + '<br><br>\n'
+        content_html = '<p class="p1">'+content_html + description+'</p><hr><br><br>\n'
         
-        content = content + '    <tr>\n        <td>' + top_sentence + '</td>\n        <td>' + source_html + '</td>\n        <td>' + content_html + '</td>\n    </tr>\n'
+        content = content + ' <tr>\n    <td>'+'<h3>'+str(i+1)+str('.')+'</h3></td>     <td id=tdnumber>' + top_sentence + '</td>\n        <td>' + source_html + '</td>\n        <td>' + '<p class="p1">'+content_html + '</p></td>\n    </tr>\n'
         
     content = content + "</table>"
     html = html.replace("%CONTENT%", content.strip())
@@ -138,16 +138,16 @@ def priorslenSents(sentences_vectors,counts_of_terms_sent):
     return graph,matrix_priors,indexes
 
 if __name__ == "__main__":
-    sources,items,connections,news=getParsesPages('sources.txt')
-    sentences_without_words,sentences_vectors,counts_of_terms_sent = sentences_ToVectorSpace(news)
+    sources,items,connections,news_sentences=getParsesPages('sources.txt')
+    sentences_without_words,sentences_vectors,counts_of_terms_sent = sentences_ToVectorSpace(news_sentences)
     
-    news = np.delete(news, sentences_without_words)
+    news_sentences = np.delete(news_sentences, sentences_without_words)
     connections = np.delete(connections, sentences_without_words)
     
     ex2_graph,ex2_priors,indexes=priorslenSents(sentences_vectors,counts_of_terms_sent)
     PR=exercise_2.calculate_improved_prank(ex2_graph, 0.15, 50,  ex2_priors, indexes)
     #graph=exercise_1.get_graph(sentences_vectors, 0.2)
     #PR = exercise_1.calculate_page_rank(graph, 0.15, 50)
-    generateHTML(PR,news,5)
+    generateHTML(PR,news_sentences,5)
     
     

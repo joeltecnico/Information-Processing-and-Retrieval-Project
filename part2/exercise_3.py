@@ -16,12 +16,16 @@ import math
 from sklearn.neural_network import MLPClassifier
 from sklearn.decomposition import PCA
 #from imblearn.over_sampling import SMOTE
+#from sklearn.linear_model import SGDClassifier
+#from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
+
 
 prank_AP_sum = 0
 prank_precision_sum=0
 classifier_AP_sum = 0
 classifier_precision_sum=0
 n_docs=0
+features=[]
 
 def get_training_dataset(path, n_features):
     i=0
@@ -67,7 +71,7 @@ def score_real_dataset(path, training_dataset,  classifier, n_features):
     
     classifier.fit(training_pca , training_dataset[:,-1].T) #fit (X, y) samples/classes    
     
-    w,b=PRank_Algorithm(training_dataset, 5 )
+    w,b=PRank_Algorithm(training_dataset )
            
     for root, dirs, files in os.walk(path):
         for f in files:
@@ -103,16 +107,25 @@ def calculate_features(sentences, sentences_vectors,isfs, counts_of_terms, vec, 
     graph,indexes, indexes_not_linked=ex2.get_graph(sentences_vectors)
     prior=ex2.get_prior_lenSents(counts_of_terms, indexes_not_linked)
     PR= calculate_improved_prank(graph, 0.15,50, prior, indexes_not_linked)
-    dataset[:,0]=PR.ravel()
-    dataset[:,1]=ex2.get_prior_Position(len(sentences_vectors),[])
-    dataset[:,2]=ex2.get_prior_lenSents(counts_of_terms,[] )
-    dataset[:,3]=ex2.get_prior_PositionAndLenSents(counts_of_terms,[] )
-    doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
-    dataset[:,4]=ex2.get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,[] ) 
-    dataset[:,5]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
-    dataset[:,6]=ex2.get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms,[] )
-    dataset[:,7]=ex2.get_prior_termsPosition(sentences,counts_of_terms, vec,[])
     
+    # We use this list to perform feature selection
+    my_features = []
+    
+    my_features.append(PR.ravel()) # Feature 0
+    my_features.append(ex2.get_prior_Position(len(sentences_vectors),[])) # Feature 0
+    my_features.append(ex2.get_prior_lenSents(counts_of_terms,[] )) # Feature 1
+    my_features.append(ex2.get_prior_PositionAndLenSents(counts_of_terms,[] )) # Feature 2
+    doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms) # Feature 3
+    my_features.append(ex2.get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,[] ) ) # Feature 4
+    my_features.append(ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])) # Feature 5
+    my_features.append(ex2.get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms,[] )) # Feature 6
+    my_features.append(ex2.get_prior_termsPosition(sentences,counts_of_terms, vec,[])) # Feature 7
+
+    count = 0
+    for f in features :
+        dataset[:,count]=my_features[f]
+        count += 1
+        
     return dataset
 
 
@@ -123,7 +136,7 @@ def predict_rank(dataset, net, sentences):
      sorted_concat = concat[concat[:,1].argsort()[::-1]][0:5]
      return [sentences[int(item[-1])] for item in sorted_concat]
     
-def PRank_Algorithm(dataset_training, n_loops ):
+def PRank_Algorithm(dataset_training):
     r = [1,0]
     n_features=dataset_training.shape[1]-1  
     w = np.zeros(n_features)
@@ -209,12 +222,18 @@ if __name__ == "__main__":
     training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario2006/SumariosExtractivos/.")
     ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
     
-    n_features=8
+    features = [0,1,2,3,4,5,6,7] #Best one is only 7 for PRank
+    n_features=len(features)
     training_dataset=get_training_dataset("TeMario2006/Originais/.",n_features)
     
     
     
     classifier=MLPClassifier(alpha=0.01)
+    #classifier=SGDClassifier(loss='log')
+    #classifier=SGDClassifier(loss='modified_huber')
+    #classifier=AdaBoostClassifier()
+    #classifier=RandomForestClassifier()
+    
     n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', training_dataset, classifier, n_features)  
     
     print("\n PRANK - MAP", (prank_AP_sum / n_docs))

@@ -18,7 +18,7 @@ from random import choice
 import math
 from sklearn.neural_network import MLPClassifier
 from sklearn.decomposition import PCA
-from imblearn.over_sampling import SMOTE
+#from imblearn.over_sampling import SMOTE
 
 prank_AP_sum = 0
 prank_precision_sum=0
@@ -72,11 +72,11 @@ def score_real_dataset(path, training_dataset,  classifier, n_features):
     training_pca = pca.transform(training_dataset[:,:-1])
     
     #Apply SMOTE to balance the dataset
-    sm = SMOTE(kind='regular')
-    X_res, y_res = sm.fit_sample(training_pca , training_dataset[:,-1].T)
+    #sm = SMOTE(kind='regular')
+    #X_res, y_res = sm.fit_sample(training_pca , training_dataset[:,-1].T)
     
     
-    classifier.fit(X_res , y_res) #fit (X, y) samples/classes    
+    classifier.fit(training_pca , training_dataset[:,-1].T) #fit (X, y) samples/classes    
     
     w,b=PRank_Algorithm(training_dataset, 5 )
            

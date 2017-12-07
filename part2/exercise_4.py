@@ -127,7 +127,7 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
     
     print("Saving HTML")
     html_file = open("news.html", "w")
-    html_file.write(html)
+    html_file.write(html.encode('utf-8').strip())
     html_file.close()
     print("All done!")
     

@@ -117,24 +117,24 @@ def calculate_features(sentences, sentences_vectors,isfs, counts_of_terms, vec, 
     graph,indexes, indexes_not_linked=ex2.get_graph(sentences_vectors)
     prior=ex2.get_prior_lenSents(counts_of_terms, indexes_not_linked)
     PR= calculate_improved_prank(graph, 0.15,50, prior, indexes_not_linked)
-    #dataset[:,0]=PR.ravel()
+    dataset[:,0]=PR.ravel()
     
  
     
-    #dataset[:,1]=ex2.get_prior_Position(len(sentences_vectors),[])
+    dataset[:,1]=ex2.get_prior_Position(len(sentences_vectors),[])
     #dataset[:,2]=ex2.get_prior_lenSents(counts_of_terms,[] )
     #dataset[:,3]=ex2.get_prior_PositionAndLenSents(counts_of_terms,[] )
     
     doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
     
     #dataset[:,4]=ex2.get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,[] ) 
-    dataset[:,5]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
-    dataset[:,6]=ex2.get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms,[] )
+    #dataset[:,5]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
+    #dataset[:,6]=ex2.get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms,[] )
 
 
 
 
-    dataset[:,7]=ex2.get_prior_termsPosition(sentences,counts_of_terms, vec,[])
+    #dataset[:,7]=ex2.get_prior_termsPosition(sentences,counts_of_terms, vec,[])
 
     
     return dataset

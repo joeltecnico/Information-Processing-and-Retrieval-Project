@@ -6,15 +6,12 @@ Created on Fri Dec  1 15:21:03 2017
 @author: RitaRamos
 """
 
-import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
-import re
 import operator
 import exercise_2 as ex2
 import exercise_1 as ex1
 import os
-from random import choice
 import math
 from sklearn.neural_network import MLPClassifier
 from sklearn.decomposition import PCA
@@ -22,22 +19,17 @@ from sklearn.decomposition import PCA
 
 prank_AP_sum = 0
 prank_precision_sum=0
-
 classifier_AP_sum = 0
 classifier_precision_sum=0
-
 n_docs=0
 
 def get_training_dataset(path, n_features):
     i=0
-    
-    
     matrix_training=np.array([]).reshape(0,n_features+1)
     
     for root, dirs, files in os.walk(path):
         for f in files:
             if not f.startswith('.'):
-
                 ranking=[]
                 file_content, sentences=ex1.getFile_and_separete_into_sentences(os.path.join(root, f))
                 vec=CountVectorizer()
@@ -61,8 +53,6 @@ def get_training_dataset(path, n_features):
     return matrix_training 
 
 
-
-
 def score_real_dataset(path, training_dataset,  classifier, n_features):
     i=0
     
@@ -74,7 +64,6 @@ def score_real_dataset(path, training_dataset,  classifier, n_features):
     #Apply SMOTE to balance the dataset
     #sm = SMOTE(kind='regular')
     #X_res, y_res = sm.fit_sample(training_pca , training_dataset[:,-1].T)
-    
     
     classifier.fit(training_pca , training_dataset[:,-1].T) #fit (X, y) samples/classes    
     
@@ -95,10 +84,8 @@ def score_real_dataset(path, training_dataset,  classifier, n_features):
 
             pca.fit(dataset_doc)
             dataset_pca = pca.transform(dataset_doc)
-                        
             classifier_summary=predict_rank(dataset_pca, classifier,sentences )
 
-            
             ideal_summary,ideal_summary_sentences =ex1.getFile_and_separete_into_sentences( ideal_summaries_filesPath[i])  
             
             global prank_AP_sum,prank_precision_sum, classifier_AP_sum, classifier_precision_sum     
@@ -111,31 +98,20 @@ def score_real_dataset(path, training_dataset,  classifier, n_features):
 
 
 def calculate_features(sentences, sentences_vectors,isfs, counts_of_terms, vec, dataset):
-    #n_sentences=len(sentences_vectors)
     
     #Feature graph centrality
     graph,indexes, indexes_not_linked=ex2.get_graph(sentences_vectors)
     prior=ex2.get_prior_lenSents(counts_of_terms, indexes_not_linked)
     PR= calculate_improved_prank(graph, 0.15,50, prior, indexes_not_linked)
     dataset[:,0]=PR.ravel()
-    
- 
-    
     dataset[:,1]=ex2.get_prior_Position(len(sentences_vectors),[])
-    #dataset[:,2]=ex2.get_prior_lenSents(counts_of_terms,[] )
-    #dataset[:,3]=ex2.get_prior_PositionAndLenSents(counts_of_terms,[] )
-    
+    dataset[:,2]=ex2.get_prior_lenSents(counts_of_terms,[] )
+    dataset[:,3]=ex2.get_prior_PositionAndLenSents(counts_of_terms,[] )
     doc_vector=ex1.doc_ToVectorSpace(isfs, counts_of_terms)
-    
-    #dataset[:,4]=ex2.get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,[] ) 
-    #dataset[:,5]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
-    #dataset[:,6]=ex2.get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms,[] )
-
-
-
-
-    #dataset[:,7]=ex2.get_prior_termsPosition(sentences,counts_of_terms, vec,[])
-
+    dataset[:,4]=ex2.get_prior_SimilarityMostRelevantSent(doc_vector, sentences_vectors,[] ) 
+    dataset[:,5]=ex2.get_prior_TFIDF(doc_vector, sentences_vectors,[])
+    dataset[:,6]=ex2.get_prior_PositionAndLenSentsAndTFIDF(doc_vector, sentences_vectors,counts_of_terms,[] )
+    dataset[:,7]=ex2.get_prior_termsPosition(sentences,counts_of_terms, vec,[])
     
     return dataset
 
@@ -147,23 +123,13 @@ def predict_rank(dataset, net, sentences):
      sorted_concat = concat[concat[:,1].argsort()[::-1]][0:5]
      return [sentences[int(item[-1])] for item in sorted_concat]
     
-
 def PRank_Algorithm(dataset_training, n_loops ):
     r = [1,0]
     n_features=dataset_training.shape[1]-1  
     w = np.zeros(n_features)
-    #print("n_features", n_features)
     b = [0, math.inf]
-    #print("len", dataset_training.shape)
-    #print("dataset", dataset_training )
-    
-    
-    count_corrects=0
             
     for x in dataset_training:
-        #x=choice(dataset_training)   #jOEL-> FAZER RANDOM DA MELHOR RESULTADO"
-        #print("x", x)
-        #print("x", x[:n_features])
         predict_rank=0
         for i in range(0, len(r)):
             value = np.dot(w, x[:n_features])
@@ -189,12 +155,7 @@ def PRank_Algorithm(dataset_training, n_loops ):
     
             for i in range(0, len(r)-1) :
                 b[i] = b[i] - T_r[i]
-        else:
-            count_corrects+=1
-            
     return w,b 
-
-
 
 def rank_with_Prank(real_dataset, w, b, sentences ):
     r = [1,0]  #Important vs Non-important
@@ -218,9 +179,7 @@ def rank_with_Prank(real_dataset, w, b, sentences ):
         values_predicted[predict_rank][sent_index]=value 
                         
     if 1 in values_predicted:
-            summary, summary_to_user=show_summary(values_predicted[1], sentences, 5) #E senao houver 5?
-            #if len(values_predicted[1])>=5:
-                #summary, summary_to_user=show_summary(values_predicted[0], sentences, 5)
+            summary, summary_to_user=show_summary(values_predicted[1], sentences, 5) 
     else:
         summary, summary_to_user=show_summary(values_predicted[0], sentences, 5)
     return summary, summary_to_user
@@ -233,30 +192,27 @@ def show_summary(scored_sentences, sentences, number_of_top_sentences):
     summary_to_user= [sentences[line] for line,sim in scores_sorted_byAppearance]
     return summary, summary_to_user  
 
-    
 def calculate_improved_prank(graph, damping, n_iter, priors, indexes_not_linked):
     transition_probs=graph/np.sum(graph,axis=0) 
     n_docs=len(transition_probs)
     #Compute Matrix -> 1-d[Transition_Probabilities] + d* [priors] 
-    matrix=  (((1-damping)*transition_probs).T + (damping)*(priors)).T #(since prior is a scaler, sum it up to each collum of Transition probs)
+    matrix=  (((1-damping)*transition_probs).T + (damping)*(priors)).T 
     r=np.ones((n_docs, 1))/n_docs    
-    #print("\n Matrix", matrix)
     for i in range(n_iter) :
         r_new=matrix.dot(r)
         r=r_new
-        
     for i in indexes_not_linked[0]:
-        r= np.insert(r, i, 0 , axis=0)
+        r= np.insert(r, i, 0 , axis=0) #add page rank of 0, for sents not link
     return r
 
 if __name__ == "__main__":
-    
     training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario2006/SumariosExtractivos/.")
-    
     ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
     
     n_features=8
     training_dataset=get_training_dataset("TeMario2006/Originais/.",n_features)
+    
+    
     
     classifier=MLPClassifier(alpha=0.01)
     n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', training_dataset, classifier, n_features)  

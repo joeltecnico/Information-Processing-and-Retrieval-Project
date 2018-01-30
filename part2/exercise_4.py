@@ -134,8 +134,7 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
 def priorslenSents(sentences_vectors,counts_of_terms_sent):
     graph,indexes, indexes_sents_not_linked=exercise_2.get_graph(sentences_vectors)
     prior=exercise_2.get_prior_lenSents(counts_of_terms_sent, indexes_sents_not_linked)
-    matrix_priors=exercise_2.get_priors(prior, indexes_sents_not_linked) #Prior/Sum_Priors
-    return graph,matrix_priors,indexes
+    return graph,prior,indexes
 
 if __name__ == "__main__":
     sources,items,connections,news_sentences=getParsesPages('sources.txt')

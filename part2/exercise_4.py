@@ -98,7 +98,7 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
     top_sentences= [sentences[line] for line,sim in scores_sorted_bySimilarity]
     top_connections = [connections[line] for line,sim in scores_sorted_bySimilarity]
     
-    with open('news.html','rb') as f:
+    with open('template.html','rb') as f:
         html = f.read().decode('iso-8859-1')
     
     content = "<table id=table>\n     <tr >\n    <td></td>    <td><h2>SUMMARY</h2></td>\n        <td><h2>SOURCE</td></h2>\n        <td><h2>CONTENT</h2></td>\n    </tr><hr>\n"

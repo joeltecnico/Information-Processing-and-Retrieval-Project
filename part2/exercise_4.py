@@ -54,7 +54,6 @@ def getParsesPages(f):
         root = ET.parse(url)
         for ele in root.findall(".//item"):
             item = {}
-            news_sentences_contents = []
             
             title = parseHTML(ele.findtext('title'))
             description = parseHTML(ele.findtext('description'))
@@ -99,7 +98,7 @@ def generateHTML(scored_sentences, sentences, number_of_top_sentences):
     top_sentences= [sentences[line] for line,sim in scores_sorted_bySimilarity]
     top_connections = [connections[line] for line,sim in scores_sorted_bySimilarity]
     
-    with open('template.html','rb') as f:
+    with open('news.html','rb') as f:
         html = f.read().decode('iso-8859-1')
     
     content = "<table id=table>\n     <tr >\n    <td></td>    <td><h2>SUMMARY</h2></td>\n        <td><h2>SOURCE</td></h2>\n        <td><h2>CONTENT</h2></td>\n    </tr><hr>\n"
@@ -145,8 +144,6 @@ if __name__ == "__main__":
     
     ex2_graph,ex2_priors,indexes=priorslenSents(sentences_vectors,counts_of_terms_sent)
     PR=exercise_2.calculate_improved_prank(ex2_graph, 0.15, 50,  ex2_priors, indexes)
-    #graph=exercise_1.get_graph(sentences_vectors, 0.2)
-    #PR = exercise_1.calculate_page_rank(graph, 0.15, 50)
     generateHTML(PR,news_sentences,5)
     
     

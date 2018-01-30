@@ -1,14 +1,12 @@
 # Information Processing and Retrieval
 
-Joel Almeida
-Matilde Gonçalves
-Rita Ramos
+<b> Authors: </b> Joel Almeida; Matilde Gonçalves; Rita Ramos
 
 This project was realized in the scope of the curriculum subject "Information Processing and Retrieval" from our Master of Computer Science in IST (Instituto Superior Técnico), Lisbon. 
 
-The aim of this project is to perform automatic document summarization, which concerns with shortening text document(s) through an automated method, in order to create a summary with the major points of the original document(s).
+The aim of this project was to perform automatic document summarization, which concerns with shortening text document(s) through an automated method, in order to create a summary with the major points of the original document(s).
 
-The project was composed by two parts, both with 4 exercises each to be implemented in python, for which we had a score of 20/20 (for each part). We describe in more detail the project in the following section:
+The project was composed by two parts, both with 4 exercises each to be implemented in python, for which we had a score of 20/20 (for each part). We describe in more detail the project in the following subsections:
 
 ## Part 1 
 

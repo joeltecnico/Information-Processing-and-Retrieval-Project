@@ -94,7 +94,7 @@ def show_summary(scored_sentences, sentences, number_of_top_sentences):
     return summary, summary_to_user  
         
 if __name__ == "__main__":
-    file_content, sentences=getFile_and_separete_into_sentences("TeMario/Textos-fonte/Textos-fonte com titulo/ce94ab10-a.txt") 
+    file_content, sentences=getFile_and_separete_into_sentences("datasets/TeMario/Textos-fonte/Textos-fonte com titulo/ce94ab10-a.txt") 
     sentences_vectors,isfs, counts_of_terms_sent, sents_without_words=sentences_ToVectorSpace(sentences, CountVectorizer())  
     sentences=np.delete(sentences, sents_without_words)
     

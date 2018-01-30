@@ -219,12 +219,12 @@ def calculate_improved_prank(graph, damping, n_iter, priors, indexes_not_linked)
     return r
 
 if __name__ == "__main__":
-    training_summaries_filesPath=ex2.get_ideal_summaries_files("TeMario2006/SumariosExtractivos/.")
-    ideal_summaries_filesPath=ex2.get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
+    training_summaries_filesPath=ex2.get_ideal_summaries_files("datasets/TeMario2006/SumariosExtractivos/.")
+    ideal_summaries_filesPath=ex2.get_ideal_summaries_files('datasets/TeMario/Sumarios/Extratos ideais automaticos')
     
     features = [0,1,2,3,4,5,6,7] #Best one is only 7 for PRank
     n_features=len(features)
-    training_dataset=get_training_dataset("TeMario2006/Originais/.",n_features)
+    training_dataset=get_training_dataset("datasets/TeMario2006/Originais/.",n_features)
     
     
     
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     #classifier=AdaBoostClassifier()
     #classifier=RandomForestClassifier()
     
-    n_docs=score_real_dataset('TeMario/Textos-fonte/Textos-fonte com titulo', training_dataset, classifier, n_features)  
+    n_docs=score_real_dataset('datasets/TeMario/Textos-fonte/Textos-fonte com titulo', training_dataset, classifier, n_features)  
     
     print("\n PRANK - MAP", (prank_AP_sum / n_docs))
     print("\n PRANK - Precision", (prank_precision_sum / n_docs))

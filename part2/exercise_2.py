@@ -239,8 +239,8 @@ def get_score_BM5(content, vec):
 
 if __name__ == "__main__":
     
-    ideal_summaries_filesPath=get_ideal_summaries_files('TeMario/Sumarios/Extratos ideais automaticos')
-    n_docs=read_docs('TeMario/Textos-fonte/Textos-fonte com titulo')    
+    ideal_summaries_filesPath=get_ideal_summaries_files('datasets/TeMario/Sumarios/Extratos ideais automaticos')
+    n_docs=read_docs('datasets/TeMario/Textos-fonte/Textos-fonte com titulo')    
         
     print("\n exercise 1- MAP", (ex1_AP_sum / n_docs))
     print("\n exercise 1- Precision", (ex1_precision_sum / n_docs))
